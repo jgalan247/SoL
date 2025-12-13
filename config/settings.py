@@ -156,18 +156,15 @@ LOGIN_URL = '/accounts/login/'
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'tailwind'
 CRISPY_TEMPLATE_PACK = 'tailwind'
 
-# Email Configuration (use console in development)
+# Email Configuration - Resend
+RESEND_API_KEY = env('RESEND_API_KEY', default='')
+
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
-    EMAIL_PORT = env('EMAIL_PORT', default=587)
-    EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='')
-    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
+    EMAIL_BACKEND = 'core.email_backend.ResendEmailBackend'
 
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='noreply@tuitionhub.co.uk')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='TuitionHub <noreply@tuitionhub.co.uk>')
 
 # SumUp Payment Configuration
 SUMUP_API_KEY = env('SUMUP_API_KEY', default='')
