@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BBC Micro:bit Programming - Y9</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        nav a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        nav a.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .intro-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .intro-text h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .intro-text p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .microbit-image {
+            text-align: center;
+        }
+
+        .microbit-image img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .microbit-diagram {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .microbit-diagram h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .version-note {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .version-note h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .version-note p {
+            color: #856404;
+        }
+
+        .getting-started {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .getting-started h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .getting-started p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .btn-start {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .intro-section {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>BBC Micro:bit Programming</h1>
+            <p>Year 9 - Introduction to Physical Computing</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="beginner.html">Beginner Projects</a></li>
+                <li><a href="intermediate.html">Intermediate Projects</a></li>
+                <li><a href="advanced.html">Advanced Projects</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <section class="intro-section">
+                <div class="intro-text">
+                    <h2>What is a BBC Micro:bit?</h2>
+                    <p>The BBC Micro:bit is a pocket-sized programmable computer designed to make learning to code fun and accessible. It was created by the BBC in partnership with technology companies and educational organisations to inspire a new generation of digital creators.</p>
+                    <p>The Micro:bit allows you to write code that interacts with the physical world through its built-in sensors and outputs. You can create games, musical instruments, fitness trackers, and much more!</p>
+                    <p>In this course, we will be using the <strong>Micro:bit V1</strong>, which provides all the essential features needed to learn programming concepts while creating exciting projects.</p>
+                </div>
+                <div class="microbit-diagram">
+                    <h3>Micro:bit V1 Layout</h3>
+                    <p style="color: #666; margin-top: 10px;">The Micro:bit is about half the size of a credit card but packed with technology!</p>
+                </div>
+            </section>
+
+            <div class="version-note">
+                <h4>Important: We are using Micro:bit V1</h4>
+                <p>This course uses the original Micro:bit V1. Some features like the built-in speaker, microphone, and touch logo are only available on V2. All projects in this course are compatible with V1.</p>
+            </div>
+
+            <h2 style="color: #667eea; margin-bottom: 20px;">Micro:bit V1 Features</h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">💡</div>
+                    <h3>25 LED Display</h3>
+                    <p>A 5x5 grid of red LEDs that can display text, numbers, images, and animations. Each LED can be controlled individually for creating patterns and graphics.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🔘</div>
+                    <h3>Two Programmable Buttons</h3>
+                    <p>Button A and Button B on either side of the display. Use them to control your programs, play games, or trigger different actions when pressed.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">📐</div>
+                    <h3>Accelerometer</h3>
+                    <p>Detects movement and orientation. Knows when you shake, tilt, or drop the Micro:bit. Perfect for motion-controlled games and step counters!</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🧭</div>
+                    <h3>Compass (Magnetometer)</h3>
+                    <p>Measures magnetic field strength and can detect which direction is North. Create your own digital compass or detect nearby magnets.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🌡️</div>
+                    <h3>Temperature Sensor</h3>
+                    <p>Measures the temperature of the processor (close to ambient temperature). Build your own thermometer to monitor the environment.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">☀️</div>
+                    <h3>Light Sensor</h3>
+                    <p>The LEDs can also detect light levels! Use this to create automatic nightlights or light-reactive projects.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">📻</div>
+                    <h3>Radio Communication</h3>
+                    <p>Send and receive messages wirelessly between Micro:bits. Create multiplayer games, walkie-talkies, or secret messaging systems!</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🔌</div>
+                    <h3>Edge Connector</h3>
+                    <p>25 pins including GPIO, power, and ground. Connect external components like motors, speakers, sensors, and LEDs to extend functionality.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🔋</div>
+                    <h3>Power Options</h3>
+                    <p>Power via USB connection or battery pack (2x AAA batteries). Take your projects anywhere with portable battery power!</p>
+                </div>
+            </div>
+
+            <div class="getting-started">
+                <h3>Ready to Start Coding?</h3>
+                <p>We'll be using Microsoft MakeCode - a free, browser-based coding environment that makes programming visual and fun!</p>
+                <a href="beginner.html" class="btn-start">Start with Beginner Projects</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>Y9 Computing - BBC Micro:bit Programming Course</p>
+        </footer>
+    </div>
+</body>
+</html>

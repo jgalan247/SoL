@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intermediate Projects - BBC Micro:bit Y9</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        nav a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(240, 147, 251, 0.5);
+        }
+
+        nav a.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+            border-left: 4px solid #f5576c;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .intro-box h2 {
+            color: #c2185b;
+            margin-bottom: 15px;
+        }
+
+        .intro-box p {
+            color: #880e4f;
+        }
+
+        .skills-learned {
+            background: #fff5f7;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .skills-learned h4 {
+            color: #c2185b;
+            margin-bottom: 10px;
+        }
+
+        .skills-learned ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .prerequisite-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .prerequisite-box h4 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+
+        .prerequisite-box p {
+            color: #bf360c;
+        }
+
+        .projects-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 20px;
+            align-items: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid #f5576c;
+        }
+
+        .project-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .project-number {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .project-info h3 {
+            color: #c2185b;
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .project-info p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .project-concepts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .concept-tag {
+            background: #fce4ec;
+            color: #c2185b;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            white-space: nowrap;
+        }
+
+        .project-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .section-divider {
+            text-align: center;
+            margin: 40px 0;
+            color: #c2185b;
+        }
+
+        .section-divider h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .section-divider p {
+            color: #666;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .project-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .project-number {
+                margin: 0 auto;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Intermediate Projects</h1>
+            <p>Build on your skills with more challenging projects</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="beginner.html">Beginner Projects</a></li>
+                <li><a href="intermediate.html" class="active">Intermediate Projects</a></li>
+                <li><a href="advanced.html">Advanced Projects</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <div class="intro-box">
+                <h2>Welcome to Intermediate Level!</h2>
+                <p>You've mastered the basics - now it's time to challenge yourself! These projects introduce more complex programming concepts like radio communication, functions, and data handling. You'll also learn to connect external components to expand your Micro:bit's capabilities.</p>
+
+                <div class="skills-learned">
+                    <h4>Skills You'll Learn:</h4>
+                    <ul>
+                        <li>Radio communication between Micro:bits</li>
+                        <li>Working with external components (speakers, sensors)</li>
+                        <li>Creating and using functions</li>
+                        <li>Working with lists/arrays</li>
+                        <li>More complex conditional logic</li>
+                        <li>Data collection and analysis</li>
+                        <li>Scientific investigations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="prerequisite-box">
+                <h4>Prerequisites</h4>
+                <p>Before starting these projects, make sure you've completed the Beginner level projects or are confident with: displaying on LEDs, using buttons, variables, basic loops, and using sensors.</p>
+            </div>
+
+            <div class="section-divider">
+                <h3>Radio Communication</h3>
+                <p>Learn to send messages wirelessly between Micro:bits</p>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-number">1</div>
+                    <div class="project-info">
+                        <h3>Teleporting Duck</h3>
+                        <p>Make a duck appear to teleport between two Micro:bits! This fun project introduces radio communication - a way for Micro:bits to talk to each other wirelessly.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Radio Send</span>
+                            <span class="concept-tag">Radio Receive</span>
+                            <span class="concept-tag">Groups</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/teleporting-duck/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">2</div>
+                    <div class="project-info">
+                        <h3>Tell Me a Secret</h3>
+                        <p>Send secret messages to your friends! Learn to transmit text wirelessly between Micro:bits. Choose different radio groups for private conversations.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Radio Messages</span>
+                            <span class="concept-tag">Text Strings</span>
+                            <span class="concept-tag">Privacy</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/tell-me-a-secret/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">3</div>
+                    <div class="project-info">
+                        <h3>Voting System</h3>
+                        <p>Create a wireless voting system! Collect votes from multiple Micro:bits and display results. Great for classroom polls and decisions.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Radio</span>
+                            <span class="concept-tag">Counting</span>
+                            <span class="concept-tag">Data Collection</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/voting-system/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">4</div>
+                    <div class="project-info">
+                        <h3>Secure Messaging</h3>
+                        <p>Take secret messages further with encryption! Learn about cryptography by creating a simple cipher to encode your messages before sending them.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Encryption</span>
+                            <span class="concept-tag">Cryptography</span>
+                            <span class="concept-tag">Security</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/secure-messaging/" target="_blank" class="project-link">Start Project</a>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <h3>Sound and Music</h3>
+                <p>Connect speakers to make your Micro:bit sing! (Requires external speaker/headphones)</p>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-number">5</div>
+                    <div class="project-info">
+                        <h3>Make Some Noise</h3>
+                        <p>Connect headphones or a speaker to your Micro:bit to make sounds! Learn how to use the edge connector pins for audio output. (V1 requires external speaker)</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Pin Output</span>
+                            <span class="concept-tag">External Speaker</span>
+                            <span class="concept-tag">Tones</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/make-some-noise/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">6</div>
+                    <div class="project-info">
+                        <h3>Jukebox</h3>
+                        <p>Turn your Micro:bit into a music player! Select and play different tunes using the buttons. Learn about melodies and musical notes in code.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Melodies</span>
+                            <span class="concept-tag">Selection</span>
+                            <span class="concept-tag">Music</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/jukebox/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">7</div>
+                    <div class="project-info">
+                        <h3>Banana Keyboard</h3>
+                        <p>Make music by touching bananas! Learn about capacitive touch and how conductive materials can be used as inputs. Fun with fruit!</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Touch Input</span>
+                            <span class="concept-tag">Conductivity</span>
+                            <span class="concept-tag">Edge Pins</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/banana-keyboard/" target="_blank" class="project-link">Start Project</a>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <h3>Advanced Programming Concepts</h3>
+                <p>Learn functions, lists, and more complex logic</p>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-number">8</div>
+                    <div class="project-info">
+                        <h3>Activity Selector</h3>
+                        <p>Can't decide what to do? Build a random activity picker! Learn to store multiple items in a list and select randomly from them.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Lists/Arrays</span>
+                            <span class="concept-tag">Random Selection</span>
+                            <span class="concept-tag">Data Storage</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/activity-selector/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">9</div>
+                    <div class="project-info">
+                        <h3>Sensitive Step Counter</h3>
+                        <p>Improve your step counter with better accuracy! Learn about thresholds, calibration, and how to make your sensor readings more reliable.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Calibration</span>
+                            <span class="concept-tag">Thresholds</span>
+                            <span class="concept-tag">Accuracy</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/sensitive-step-counter/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">10</div>
+                    <div class="project-info">
+                        <h3>Stopwatch</h3>
+                        <p>Build a precise stopwatch with start, stop, and reset functions. Learn about timing, elapsed time calculations, and displaying formatted numbers.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Timing</span>
+                            <span class="concept-tag">Running Time</span>
+                            <span class="concept-tag">State Management</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/stopwatch/" target="_blank" class="project-link">Start Project</a>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <h3>Science Investigations</h3>
+                <p>Use your Micro:bit for real scientific experiments</p>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-number">11</div>
+                    <div class="project-info">
+                        <h3>Max-Min Thermometer</h3>
+                        <p>Record maximum and minimum temperatures over time! Learn how to track and store extreme values - just like a real weather station.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Data Logging</span>
+                            <span class="concept-tag">Min/Max Values</span>
+                            <span class="concept-tag">Weather</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/max-min-thermometer/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">12</div>
+                    <div class="project-info">
+                        <h3>Light Level Meter</h3>
+                        <p>Measure and compare light levels in different locations. Conduct a scientific investigation about light in your school or home.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Light Sensor</span>
+                            <span class="concept-tag">Measurement</span>
+                            <span class="concept-tag">Comparison</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/light-level-meter/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">13</div>
+                    <div class="project-info">
+                        <h3>Soil Moisture Sensor</h3>
+                        <p>Build a plant watering reminder! Use the edge connector pins to detect moisture levels in soil. Keep your plants happy and healthy.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Analog Input</span>
+                            <span class="concept-tag">External Sensors</span>
+                            <span class="concept-tag">Thresholds</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/soil-moisture/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">14</div>
+                    <div class="project-info">
+                        <h3>Sound Insulation Meter</h3>
+                        <p>Test which materials are best at blocking sound! Connect a sound sensor to investigate acoustics and conduct experiments.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">External Sensor</span>
+                            <span class="concept-tag">Scientific Method</span>
+                            <span class="concept-tag">Comparison</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/sound-insulation-meter/" target="_blank" class="project-link">Start Project</a>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <h3>Games and Entertainment</h3>
+                <p>Create more complex interactive experiences</p>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-number">15</div>
+                    <div class="project-info">
+                        <h3>Keepie-Uppie Counter</h3>
+                        <p>Count your football keepie-uppies! Mount the Micro:bit on your shoe and count kicks automatically using the accelerometer.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Motion Detection</span>
+                            <span class="concept-tag">Thresholds</span>
+                            <span class="concept-tag">Sports</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/keepie-uppie-counter/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">16</div>
+                    <div class="project-info">
+                        <h3>Catch the Egg Game</h3>
+                        <p>Tilt your Micro:bit to catch falling eggs! A more complex game that uses the accelerometer for smooth tilt-based controls.</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Game Logic</span>
+                            <span class="concept-tag">Tilt Controls</span>
+                            <span class="concept-tag">Sprites</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/catch-the-egg-game/" target="_blank" class="project-link">Start Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-number">17</div>
+                    <div class="project-info">
+                        <h3>Hot Potato</h3>
+                        <p>A multiplayer game using radio! Pass a virtual "potato" between Micro:bits - whoever has it when the timer ends loses!</p>
+                        <div class="project-concepts">
+                            <span class="concept-tag">Multiplayer</span>
+                            <span class="concept-tag">Radio</span>
+                            <span class="concept-tag">Random Timing</span>
+                        </div>
+                    </div>
+                    <a href="https://microbit.org/projects/make-it-code-it/hot-potato/" target="_blank" class="project-link">Start Project</a>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 15px; padding: 30px; text-align: center; margin-top: 40px;">
+                <h3 style="margin-bottom: 15px;">Ready for the Ultimate Challenge?</h3>
+                <p style="margin-bottom: 20px;">You've mastered intermediate concepts! Take on our advanced projects to become a Micro:bit expert.</p>
+                <a href="advanced.html" style="display: inline-block; padding: 15px 40px; background: white; color: #f5576c; text-decoration: none; border-radius: 30px; font-weight: bold;">Move to Advanced Level</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>Y9 Computing - BBC Micro:bit Programming Course</p>
+        </footer>
+    </div>
+</body>
+</html>
