@@ -1,0 +1,770 @@
+================================================================================
+    THE JOURNEY TO GCSE COMPUTER SCIENCE: A PEDAGOGICAL NARRATIVE
+    Edexcel GCSE Computer Science (1CP2) - Scheme of Learning Y7-Y11
+================================================================================
+
+OVERVIEW: THE FIVE-YEAR STORY
+─────────────────────────────────────────────────────────────────────────────────
+
+This scheme of learning tells the story of a student's transformation from a
+curious digital consumer into a confident, exam-ready computer scientist. Each
+year has a distinct identity and purpose, building systematically toward GCSE
+success while maintaining engagement and developing genuine computational
+thinking skills.
+
+The journey follows five phases:
+
+  Y7  → THE DIGITAL EXPLORER      (1 hr/week)  - Discover & Wonder
+  Y8  → THE PROBLEM SOLVER        (1 hr/week)  - Understand & Apply
+  Y9  → THE PROGRAMMER            (2 hrs/week) - Master & Create
+  Y10 → THE COMPUTER SCIENTIST    (3 hrs/week) - Deepen & Connect
+  Y11 → THE EXAM-READY CANDIDATE  (3 hrs/week) - Consolidate & Excel
+
+================================================================================
+YEAR 7: THE DIGITAL EXPLORER
+"From User to Creator"
+================================================================================
+
+AUTUMN 1: E-Safety & Digital Citizenship
+─────────────────────────────────────────
+WHY WE START HERE:
+Students arrive as digital natives but digital innocents. They use technology
+daily but rarely understand its risks or their responsibilities. Before we
+can teach them to create with technology, we must ensure they can navigate
+it safely.
+
+PEDAGOGICAL REASONING:
+• Establishes trust and relevance - we care about THEM, not just the subject
+• Creates a foundation of responsible digital citizenship that underpins all
+  future work
+• Connects to their lived experience - every student uses the internet
+• Introduces key GCSE Topic 4 (Networks) and Topic 5 (Issues) concepts gently
+• Sets behavioural expectations for online work throughout the course
+
+THE HOOK: "You leave digital footprints everywhere. Let's discover yours."
+
+───────────────────────────────────────────────────────────────────────────────
+
+AUTUMN 2: Binary & Number Systems
+─────────────────────────────────────────
+WHY THIS COMES SECOND:
+Now that students understand the digital world they inhabit, we reveal its
+fundamental secret: everything is just 1s and 0s. This is the "magic trick
+revealed" moment that transforms how they see every device around them.
+
+PEDAGOGICAL REASONING:
+• Binary is the foundation of ALL computing - without understanding this,
+  nothing else makes sense
+• It's mathematical but accessible - students can physically hold binary cards
+• Creates immediate "aha!" moments when they realise images, music, and games
+  are just numbers
+• Directly addresses GCSE Topic 2 (Data) - one of the highest-weighted areas
+• Develops logical, systematic thinking that transfers to programming
+
+THE HOOK: "Your phone, your games, Netflix - all just 1s and 0s. Let's prove it."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SPRING 1: Edublocks - Turtle Graphics
+─────────────────────────────────────────
+WHY BLOCKS BEFORE TEXT-BASED CODE:
+Students need to experience the JOY of programming before wrestling with
+syntax. Block-based coding removes the barrier of typing errors while
+teaching the fundamental constructs they'll use forever.
+
+PEDAGOGICAL REASONING:
+• Visual blocks make abstract concepts concrete and tangible
+• Immediate visual feedback - students SEE their code work
+• Introduces sequence, selection, and iteration without syntax frustration
+• Turtle graphics creates beautiful, shareable outputs - builds pride
+• Scaffolds toward Python - the blocks map directly to text code
+• Establishes that programming is CREATIVE, not just technical
+
+GCSE SPECIFICATION LINK:
+Turtle graphics is explicitly included in the Edexcel GCSE specification
+as part of Topic 6 (Problem Solving with Programming). By introducing it
+in Y7, students gain early familiarity with a tool that appears in the
+GCSE examination. The turtle commands (forward, backward, left, right,
+penup, pendown) are part of the Programming Language Subset (PLS) that
+students can reference during Paper 2. Early exposure means turtle-based
+exam questions feel familiar, not foreign.
+
+THE HOOK: "Make the computer draw whatever you imagine."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SPRING 2: Programming Constructs in Python
+─────────────────────────────────────────
+WHY PYTHON NOW:
+Students have seen programming concepts work in blocks. Now we reveal that
+"real" programmers write text - but the IDEAS are exactly the same. This
+transition is carefully scaffolded.
+
+PEDAGOGICAL REASONING:
+• Python is the GCSE examination language - early exposure is essential
+• Students already understand the constructs - now they learn the syntax
+• Introduces precise vocabulary: integer, real, string, Boolean, char
+• Builds muscle memory for syntax through practice
+• Connects directly to GCSE Topic 6 (Problem Solving with Programming)
+• Error messages become learning opportunities, not frustrations
+
+THE HOOK: "You already know how to think like a programmer. Now learn to write like one."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SUMMER 1: Flowcharts & Algorithm Design
+─────────────────────────────────────────
+WHY DESIGN AFTER CODING:
+Counterintuitively, we teach coding BEFORE flowcharts. Why? Because students
+need to understand what code DOES before they can plan it effectively. Now
+they learn that professionals DESIGN before they code.
+
+PEDAGOGICAL REASONING:
+• Flowcharts are abstract - students now have concrete coding experience to
+  anchor them
+• Introduces the crucial GCSE skill of translating between representations
+• Establishes the "design first, code second" professional practice
+• Flowchart→Python translation is a key Paper 2 question type
+• Develops algorithmic thinking independent of any programming language
+• Links directly to GCSE Topic 1 (Computational Thinking)
+
+THE HOOK: "Professionals don't just code - they design first. Now you will too."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SUMMER 2: Creative Coding with Kodu
+─────────────────────────────────────────
+WHY END WITH A PROJECT:
+Year 7 culminates in CREATION. Students apply everything learned to build
+something they're proud of. This is the payoff - the reason we learned all
+those skills.
+
+PEDAGOGICAL REASONING:
+• Synthesises all learning into a meaningful project
+• Event-driven programming introduces a new paradigm (prepares for Micro:bit)
+• Game design is intrinsically motivating for this age group
+• Demonstrates that programming is powerful and fun
+• Builds confidence and identity as a "creator"
+• Ends the year on a high - students return in Y8 eager to continue
+
+THE HOOK: "Build your own game. Show everyone what you can create."
+
+================================================================================
+YEAR 8: THE PROBLEM SOLVER
+"From Following Instructions to Finding Solutions"
+================================================================================
+
+AUTUMN 1: Boolean Logic & Truth Tables
+─────────────────────────────────────────
+WHY LOGIC FIRST IN Y8:
+Year 8 opens with a shift from "doing" to "understanding deeply." Boolean
+logic reveals HOW computers make decisions - the very foundation of selection
+statements students used in Y7.
+
+PEDAGOGICAL REASONING:
+• Connects to Y7 selection: "Remember if statements? Here's what's REALLY
+  happening inside the computer"
+• Truth tables with up to 3 inputs is a specific GCSE requirement (Topic 1.3.1)
+• Develops systematic, rigorous thinking - list ALL possibilities
+• Mathematical but accessible - True/False is intuitive
+• Prepares for more complex conditions in programming
+• Shows computing as a LOGICAL discipline, not just creative
+
+THE HOOK: "How does a computer decide? Let's look inside its brain."
+
+───────────────────────────────────────────────────────────────────────────────
+
+AUTUMN 2: BBC Micro:bit Programming
+─────────────────────────────────────────
+WHY PHYSICAL COMPUTING NOW:
+After the abstract logic of truth tables, students need something TANGIBLE.
+Micro:bit brings code into the physical world - they can hold their program
+in their hand.
+
+PEDAGOGICAL REASONING:
+• Physical computing is highly engaging - code becomes real
+• Sensors and outputs introduce INPUT → PROCESS → OUTPUT model
+• Reinforces Y7 programming constructs in a new context
+• Introduces embedded systems concept (GCSE Topic 3.1.3)
+• Students take devices home - learning extends beyond classroom
+• Perfect platform for iteration (FOR) and repetition (WHILE) practice
+
+THE HOOK: "Your code isn't trapped on screen anymore. Make the real world respond."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SPRING 1: Algorithms - Searching & Sorting
+─────────────────────────────────────────
+WHY STANDARD ALGORITHMS NOW:
+Students can now program. It's time to learn that some problems have been
+solved before - and those solutions are worth studying. This is the shift
+from "coding" to "computer science."
+
+PEDAGOGICAL REASONING:
+• Linear search, binary search, bubble sort, merge sort are GCSE requirements
+• Introduces the concept of algorithmic efficiency - not all solutions are equal
+• Students trace algorithms by hand - builds deep understanding
+• Comparison counting develops analytical thinking
+• These algorithms appear repeatedly in Paper 1 - early exposure pays off
+• Connects to data structures they'll learn in Y9
+
+THE HOOK: "Programmers don't reinvent the wheel. Learn the solutions that work."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SPRING 2: Computer Hardware & Storage
+─────────────────────────────────────────
+WHY HARDWARE IN SPRING:
+After physical computing with Micro:bit, students are curious about what's
+inside computers. We leverage this curiosity to teach RAM, ROM, and storage
+- essential GCSE Topic 3 content.
+
+PEDAGOGICAL REASONING:
+• Natural follow-on from Micro:bit - "what's inside YOUR computer?"
+• RAM vs ROM distinction is frequently examined
+• Storage comparison (magnetic, optical, solid state) is a core requirement
+• NO cache or virtual memory - these are NOT in Edexcel spec
+• Practical relevance - students buy devices, should understand specs
+• Prepares for CPU architecture in Y10
+
+THE HOOK: "You know what computers DO. Now discover what they're MADE of."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SUMMER 1: Cybersecurity & Threats
+─────────────────────────────────────────
+WHY SECURITY NOW:
+Building on Y7 e-safety, we now go deeper. Students understand hardware -
+now they learn how it can be attacked and protected. This is "e-safety
+grown up."
+
+PEDAGOGICAL REASONING:
+• Directly addresses GCSE Topic 5.3 - malware types and protection
+• Edexcel-specific malware: viruses, worms, Trojans, ransomware, key loggers
+• Social engineering connects to their online lives
+• Encryption introduces a key security concept
+• Highly relevant - cybersecurity is constantly in the news
+• Students become informed digital citizens, not just users
+
+THE HOOK: "Hackers are real. Learn to think like one - so you can stop them."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SUMMER 2: Robotics & Problem Decomposition
+─────────────────────────────────────────
+WHY END Y8 WITH ROBOTICS:
+Year 8 culminates in applying EVERYTHING to a real challenge. Decomposition
+and abstraction are formalised as students tackle robot problems that require
+systematic thinking.
+
+PEDAGOGICAL REASONING:
+• Capstone project synthesises the year's learning
+• Decomposition and abstraction explicitly taught (GCSE Topic 1.1)
+• Embedded systems revisited in practical context
+• Competition element drives engagement
+• Prepares for the rigour of GCSE content in Y9
+• Students leave Y8 as confident problem solvers
+
+THE HOOK: "One final challenge. Everything you've learned. Can you solve it?"
+
+================================================================================
+YEAR 9: THE PROGRAMMER
+"From Hobbyist to Serious Student"
+================================================================================
+
+THE TRANSITION YEAR:
+Year 9 is pivotal. Students go from 1 hour to 2 hours per week. This is where
+casual interest transforms into genuine GCSE preparation. Every topic now maps
+directly to the specification.
+
+───────────────────────────────────────────────────────────────────────────────
+
+AUTUMN 1: Computational Thinking & Algorithms
+─────────────────────────────────────────
+WHY FORMALISE CT NOW:
+Students have been using decomposition and abstraction informally. Now we
+give these skills names, structures, and exam-style practice. GCSE preparation
+begins in earnest.
+
+PEDAGOGICAL REASONING:
+• Directly addresses GCSE Topic 1.1 and 1.2 - heavily examined content
+• Formalises skills students developed in KS3
+• Introduces pseudocode conventions - a Paper 1 and Paper 2 requirement
+• Trace tables become a rigorous tool, not just a classroom activity
+• Past paper questions introduced - students see the exam they're preparing for
+• Efficiency comparison (counting operations) is explicitly taught
+
+THE PIVOT: "You've been doing this all along. Now we give it proper names."
+
+───────────────────────────────────────────────────────────────────────────────
+
+AUTUMN 2: Python - Variables, Selection, Iteration & Repetition
+─────────────────────────────────────────
+WHY INTENSIVE PYTHON NOW:
+With 2 hours per week, we can build serious programming fluency. Every
+construct is revisited with GCSE rigour and Edexcel terminology.
+
+PEDAGOGICAL REASONING:
+• Paper 2 is 50% of the GCSE - programming must be fluent, not fumbling
+• Edexcel terminology enforced: Iteration (FOR) vs Repetition (WHILE)
+• All five data types explicitly named: integer, real, string, Boolean, char
+• Nested structures introduced - Paper 2 requires complex programs
+• Code tracing becomes a formal skill - predicting outputs exactly
+• This is where programming becomes automatic, not effortful
+
+KEY DISTINCTION: "FOR loops ITERATE a set number of times. WHILE loops REPEAT
+until a condition is met. Edexcel cares about these words."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SPRING 1: Python - Data Structures & String Manipulation
+─────────────────────────────────────────
+WHY DATA STRUCTURES NOW:
+Simple variables aren't enough for real programs. Students need lists, 2D
+arrays, and string manipulation - the tools of practical programming.
+
+PEDAGOGICAL REASONING:
+• Lists and 2D arrays are essential for Paper 2 questions
+• String manipulation (length, slicing, case conversion) is heavily examined
+• Builds on iteration - "loop through every element" becomes natural
+• Record structures introduced - grouping related data
+• File handling preparation - data structures hold what files contain
+• Students can now build substantial programs
+
+THE SHIFT: "One variable holds one thing. Data structures hold many things."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SPRING 2: Python - File Handling & Error Types
+─────────────────────────────────────────
+WHY FILES AND ERRORS TOGETHER:
+Real programs save data and handle errors. These skills transform student
+programs from classroom exercises into tools that could actually be used.
+
+PEDAGOGICAL REASONING:
+• CSV file handling is a specific Paper 2 question type
+• Persistent data makes programs meaningful - high scores that save!
+• Error types (syntax, logic, runtime) are examined in Paper 1 AND Paper 2
+• "Find and fix errors" is a guaranteed Paper 2 question type
+• Debugging strategies become systematic, not random
+• Students complete substantial file-based projects
+
+THE REALITY CHECK: "Professional programs don't lose data when you close them."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SUMMER 1: Networks - Types, Topologies & Hardware
+─────────────────────────────────────────
+WHY NETWORKS NOW:
+After intensive programming, we shift to theory - but theory that connects
+to students' daily experience. Every time they use WiFi, they're using
+networks.
+
+PEDAGOGICAL REASONING:
+• GCSE Topic 4 is substantial - early start essential
+• LAN vs WAN, topologies (star, mesh, bus) are frequently examined
+• Network hardware (NIC, switch, router, WAP) must be memorised
+• Wired vs wireless comparison is a common exam question
+• Links to their Micro:bit radio experience from Y8
+• Prepares for protocols in Y10
+
+THE CONNECTION: "Every message you send travels through what we're learning now."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SUMMER 2: Data Representation - Text, Images, Sound & Compression
+─────────────────────────────────────────
+WHY DATA REPRESENTATION TO END Y9:
+This returns to the binary foundation from Y7 Autumn 2, but now with GCSE
+depth. Calculations become rigorous. The full picture emerges.
+
+PEDAGOGICAL REASONING:
+• GCSE Topic 2 is calculation-heavy - practice time essential
+• ASCII, bitmap images, sound sampling all require understanding AND calculation
+• Storage units (bit to tebibyte) with correct terminology (kibibyte, not kilobyte)
+• Sample rate AND sample interval - both are in Edexcel spec
+• File size calculations are guaranteed exam questions
+• Lossy vs lossless compression completes the picture
+
+THE FULL CIRCLE: "Remember binary in Y7? Now you can calculate EXACTLY how
+much storage a song or image needs."
+
+================================================================================
+YEAR 10: THE COMPUTER SCIENTIST
+"From Programmer to Professional"
+================================================================================
+
+THE DEEP DIVE:
+Year 10 adds another hour (3 per week) and shifts focus to depth over breadth.
+Each topic is explored thoroughly. Students begin to think like computer
+scientists, not just coders.
+
+───────────────────────────────────────────────────────────────────────────────
+
+AUTUMN 1: Systems Architecture - CPU & FDE Cycle
+─────────────────────────────────────────
+WHY CPU NOW:
+This is the heart of computer science - understanding how the processor
+actually works. It's abstract and challenging, so it gets full focus at
+the start of Y10.
+
+PEDAGOGICAL REASONING:
+• GCSE Topic 3.1.1 is detailed - CPU components, registers, buses, FDE cycle
+• Von Neumann architecture is foundational to the discipline
+• MAR, MDR, PC, Accumulator must be understood, not just memorised
+• FDE cycle tracing is a common extended-answer question
+• 18 lessons allows thorough exploration and practice
+• Students emerge understanding computers at a fundamental level
+
+THE DEPTH: "You've used computers for years. Now understand how they actually work."
+
+───────────────────────────────────────────────────────────────────────────────
+
+AUTUMN 2: Programming - Subprograms & Scope
+─────────────────────────────────────────
+WHY SUBPROGRAMS NOW:
+Students can write programs. Now they learn to write GOOD programs -
+reusable, maintainable, professional. Functions and procedures are the
+tools of real software development.
+
+PEDAGOGICAL REASONING:
+• Paper 2 expects modular solutions - subprograms are essential
+• Functions (return values) vs procedures (no return) distinction matters
+• Local vs global scope is conceptually challenging - needs time
+• Parameters and arguments require careful teaching
+• Library functions (math, random) extend student capabilities
+• Refactoring existing code builds quality instincts
+
+THE PROFESSIONAL STANDARD: "Programmers don't copy-paste. They write reusable code."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SPRING 1: Networks - Protocols & The Internet
+─────────────────────────────────────────
+WHY PROTOCOLS NOW:
+Building on Y9 network foundations, we now explore HOW networks communicate.
+The TCP/IP model and specific protocols are examined in detail.
+
+PEDAGOGICAL REASONING:
+• TCP/IP 4-layer model is a core GCSE requirement
+• Each layer (application, transport, internet, link) must be understood
+• Specific protocols: HTTP, HTTPS, FTP, SMTP, POP3, IMAP, Ethernet, WiFi
+• Encapsulation concept is abstract but important
+• Network speed calculations link to data representation
+• Students understand the internet at a technical level
+
+THE RULES: "Networks only work because everyone follows the same rules - protocols."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SPRING 2: Programming - Validation, Authentication & Maintainability
+─────────────────────────────────────────
+WHY DEFENSIVE DESIGN NOW:
+Good programs don't just work - they work SAFELY. Validation prevents bad
+data; authentication controls access; maintainability ensures longevity.
+
+PEDAGOGICAL REASONING:
+• Validation types (length, presence, range, type, pattern) are examined
+• Authentication implementation is a Paper 2 skill
+• Code maintainability (comments, indentation, naming) is explicitly assessed
+• Defensive design anticipates user misuse
+• This transforms student code from "works for me" to "works for anyone"
+• Paper 2 often asks students to ADD validation to given code
+
+THE QUALITY STANDARD: "Your code should still work when users do stupid things."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SUMMER 1: Software - Operating Systems & Utilities
+─────────────────────────────────────────
+WHY OS AND UTILITIES NOW:
+Students understand hardware (Y8) and CPU (Y10 Autumn). Now they learn the
+software layer that makes it all usable.
+
+PEDAGOGICAL REASONING:
+• GCSE Topic 3.2 covers OS functions and utility software
+• OS functions: user interface, file management, peripheral management,
+  user management, memory management, process management
+• Utility software: file repair, backup, compression, defragmentation,
+  anti-malware
+• Connects to their everyday experience with Windows/macOS
+• Relatively accessible content after challenging CPU topic
+
+THE LAYER: "Between you and the hardware is the operating system. Here's what it does."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SUMMER 2: Ethical, Legal & Environmental Issues
+─────────────────────────────────────────
+WHY ISSUES TO END Y10:
+Year 10 ends with the human side of computing - the responsibilities that
+come with the power students now understand.
+
+PEDAGOGICAL REASONING:
+• GCSE Topic 5.1 and 5.2 are discussion-heavy - different from technical content
+• Environmental issues: energy, manufacture, disposal, sustainability
+• Privacy, consent, data protection connect to Y7 e-safety, but deeper
+• AI, robotics, algorithmic bias are current and engaging
+• Copyright, patents, trademarks, licensing are practical knowledge
+• Students see computing in its societal context
+
+THE RESPONSIBILITY: "Computing changes the world. That power comes with responsibility."
+
+================================================================================
+YEAR 11: THE EXAM-READY CANDIDATE
+"From Learning to Demonstrating"
+================================================================================
+
+THE FINAL PHASE:
+Year 11 shifts from learning new content to mastering, consolidating, and
+preparing to demonstrate knowledge under exam conditions.
+
+───────────────────────────────────────────────────────────────────────────────
+
+AUTUMN 1: Advanced Programming & Robust Software
+─────────────────────────────────────────
+WHY ADVANCED PROGRAMMING FIRST:
+Paper 2 is 50% of the GCSE. Students need their programming to be automatic,
+robust, and exam-ready. This half-term elevates their code to exam standard.
+
+PEDAGOGICAL REASONING:
+• All programming constructs reviewed and consolidated
+• Defensive design applied comprehensively
+• Testing with normal, boundary, and erroneous data becomes habitual
+• Paper 2 question types practised: error correction, code completion,
+  flowchart conversion
+• PLS (Programming Language Subset) usage practised - this is available
+  in the exam, so students should know how to use it efficiently
+• Complex algorithm implementation builds confidence
+
+THE STANDARD: "Your code isn't just correct. It's robust, tested, and exam-ready."
+
+───────────────────────────────────────────────────────────────────────────────
+
+AUTUMN 2: Programming Languages & Binary Operations
+─────────────────────────────────────────
+WHY THIS CONTENT NOW:
+These are the remaining GCSE topics that weren't covered earlier: high/low
+level languages, translators, and advanced binary (two's complement, shifts).
+
+PEDAGOGICAL REASONING:
+• High-level vs low-level languages is examined conceptually
+• Interpreters vs compilers requires understanding, not just definition
+• Two's complement for signed numbers is mathematically challenging
+• Binary shifts (logical and arithmetic) need practice
+• 8-bit range (-128 to +127) must be understood
+• Completes the GCSE content before revision begins
+
+THE COMPLETION: "The last pieces of the puzzle before we start revising."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SPRING 1: Paper 1 Content Review
+─────────────────────────────────────────
+WHY STRUCTURED REVISION NOW:
+With all content taught, systematic revision begins. Paper 1 (theory) is
+reviewed topic by topic, with past paper practice throughout.
+
+PEDAGOGICAL REASONING:
+• Topics 1-5 systematically revisited
+• Past paper questions integrated throughout
+• Weaknesses identified and addressed
+• Exam technique explicitly taught: command words, time allocation
+• Mock exam builds exam stamina
+• Students see how topics connect and overlap
+
+THE CONSOLIDATION: "You've learned it all. Now let's make sure you can show it."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SPRING 2: Paper 2 Programming Revision
+─────────────────────────────────────────
+WHY PAPER 2 FOCUS NOW:
+Paper 2 is onscreen programming. It requires different preparation -
+fluency, speed, and familiarity with the PLS reference document.
+
+PEDAGOGICAL REASONING:
+• All Topic 6 content reviewed through practice
+• Each Paper 2 question type drilled: debug, complete, convert, subprograms, files
+• PLS usage becomes efficient - students know where to find syntax
+• Full mock exam under timed, onscreen conditions
+• Feedback targets remaining gaps
+• Programming becomes automatic, not effortful
+
+THE FLUENCY: "In the exam, you don't have time to think about syntax. It must be automatic."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SUMMER 1: Final Revision & Exam Preparation
+─────────────────────────────────────────
+WHY INTENSIVE PREP NOW:
+The final push. Past papers, targeted intervention, exam technique, and
+wellbeing support prepare students for success.
+
+PEDAGOGICAL REASONING:
+• Full past papers under exam conditions
+• Individual weaknesses targeted based on mock performance
+• Common mistakes explicitly addressed
+• Calculation practice (binary, file sizes, network speeds)
+• Programming intensive sessions build speed
+• Wellbeing and stress management - healthy students perform better
+
+THE FINAL PUSH: "You're ready. Now we make sure you believe it."
+
+───────────────────────────────────────────────────────────────────────────────
+
+SUMMER 2: GCSE Examinations
+─────────────────────────────────────────
+THE CULMINATION:
+Everything leads here. Paper 1 (1hr 30min, written) and Paper 2 (2hrs,
+onscreen Python) are the demonstration of five years of learning.
+
+THE PAYOFF: "Show them everything you know."
+
+================================================================================
+THE POWER OF INTERLEAVING: WHY TOPICS ALTERNATE
+================================================================================
+
+A critical feature of this scheme is the deliberate INTERLEAVING of topics -
+alternating between programming, theory, and application rather than teaching
+in isolated blocks. This is not accidental; it is grounded in cognitive science.
+
+WHY WE INTERLEAVE:
+
+When students move from one topic to another and then return, they are forced
+to RETRIEVE previously learned material. This retrieval practice strengthens
+long-term memory far more effectively than massed practice (studying one topic
+intensively before moving on).
+
+For example:
+• Y7: Binary (Autumn 2) → Programming (Spring) → Binary returns in flowcharts
+• Y8: Boolean logic → Micro:bit programming → Algorithms (uses Boolean thinking)
+• Y9: Programming → Networks → Data Representation (applies binary from Y7)
+• Y10: CPU theory → Programming → Networks → Programming again
+
+Each time a topic reappears, students must recall what they learned before.
+This "desirable difficulty" creates stronger, more durable learning.
+
+THE SCIENCE BEHIND IT:
+
+• SPACED REPETITION: Revisiting content at intervals (not cramming) leads to
+  better retention. Topics taught in Y7 reappear in Y8, Y9, and beyond.
+
+• RETRIEVAL PRACTICE: The act of recalling information strengthens memory
+  pathways. When students return to programming after studying networks,
+  they must retrieve their programming knowledge - this consolidates it.
+
+• INTERLEAVING EFFECT: Mixing different types of problems or topics improves
+  the ability to distinguish between concepts and apply the right approach.
+
+• ELABORATIVE INTERROGATION: Returning to a topic with new knowledge allows
+  students to ask "how does this connect?" - deepening understanding.
+
+EXAMPLE - THE BINARY JOURNEY:
+
+  Y7 Autumn 2:  Binary introduced (conversions, addition, hex)
+       ↓
+  Y7 Spring:    Programming - binary seems unrelated, but it's consolidating
+       ↓
+  Y8 Autumn 1:  Boolean logic - binary thinking returns (True=1, False=0)
+       ↓
+  Y8 Spring 2:  Hardware - "RAM stores binary data" - connection made
+       ↓
+  Y9 Summer 2:  Data representation - binary CALCULATIONS at GCSE depth
+       ↓
+  Y11 Autumn 2: Two's complement, shifts - binary MASTERY
+
+Each return to binary requires retrieval of previous learning, building
+stronger and more interconnected understanding over time.
+
+THIS IS NOT ROTE LEARNING:
+
+Rote learning is memorisation without understanding - repeating facts until
+they stick. What this scheme does is fundamentally different:
+
+• Students UNDERSTAND concepts first, then REVISIT them in new contexts
+• Each return adds DEPTH, not just repetition
+• Connections between topics create MEANING, not just memory
+• Application in programming provides PURPOSE for theoretical knowledge
+
+The interleaving ensures that by the time students reach Y11, core concepts
+like binary, Boolean logic, and programming constructs are deeply embedded
+in long-term memory - not because they were drilled repeatedly, but because
+they were retrieved, applied, and connected over five years.
+
+================================================================================
+THE THREADS THAT BIND
+================================================================================
+
+Throughout this journey, several threads weave continuously:
+
+PROGRAMMING PRACTICE:
+Programming appears in EVERY year, building from blocks (Y7) through Python
+fundamentals (Y7-8) to fluency (Y9) to professional standards (Y10-11).
+Students never go long without coding.
+
+BINARY FOUNDATION:
+Binary is introduced in Y7, applied in Y8 (Boolean logic), deepened in Y9
+(data representation), and completed in Y11 (two's complement, shifts).
+The understanding grows with the student.
+
+COMPUTATIONAL THINKING:
+Decomposition, abstraction, and algorithmic thinking appear informally in Y7,
+are applied in Y8, formalised in Y9, and examined in Y11. Students develop
+these skills before naming them.
+
+REAL-WORLD RELEVANCE:
+E-safety (Y7) → Cybersecurity (Y8) → Networks (Y9-10) → Ethics (Y10).
+Students see computing in context, not just as abstract theory.
+
+EXAM PREPARATION:
+Past papers appear in Y9, increase in Y10, and dominate Y11. Students are
+never surprised by exam format or question types.
+
+================================================================================
+CONCLUSION: THE TRANSFORMATION
+================================================================================
+
+A student entering Year 7 might say:
+"I like games and use my phone a lot."
+
+A student leaving Year 11 should say:
+"I understand how computers store, process, and transmit data. I can
+design algorithms, write robust Python code, evaluate technical solutions,
+and discuss the ethical implications of technology. I am a computer scientist."
+
+This scheme of learning makes that transformation systematic, engaging, and
+successful.
+
+================================================================================
+EDEXCEL TERMINOLOGY NOTE
+================================================================================
+
+This scheme uses Edexcel-specific terminology throughout:
+
+• ITERATION = Count-controlled loops (FOR) - runs a definite number of times
+• REPETITION = Condition-controlled loops (WHILE) - runs until condition met
+
+This distinction is important for examination success and is reinforced
+from Y7 onwards.
+
+================================================================================
+DOCUMENT INFORMATION
+================================================================================
+
+Scheme of Learning: Edexcel GCSE Computer Science (1CP2) 2020 Specification
+Coverage: Year 7 to Year 11 (5-year programme)
+Total Teaching Hours:
+  - Y7: 36 hours (1 hr/week × 36 weeks)
+  - Y8: 36 hours (1 hr/week × 36 weeks)
+  - Y9: 72 hours (2 hrs/week × 36 weeks)
+  - Y10: 108 hours (3 hrs/week × 36 weeks)
+  - Y11: 108 hours (3 hrs/week × 36 weeks)
+  - TOTAL: 360 hours across 5 years
+
+Assessment Structure:
+  - Paper 1: Principles of Computer Science (1hr 30min, 75 marks, 50%)
+  - Paper 2: Application of Computational Thinking (2hrs, 75 marks, 50%, onscreen Python)
+  - NO NEA/Coursework - 100% examination
+
+================================================================================
