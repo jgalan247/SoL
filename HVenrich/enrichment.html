@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Making the Most of Your Money</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #f0f7f4;
+  color: #1a2a1a;
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+
+/* ===== PROGRESS BAR ===== */
+#progress-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: #fff; border-bottom: 1px solid #d0e0d0;
+  padding: 8px 16px;
+  display: flex; align-items: center; gap: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+#progress-bar .step {
+  flex: 1; height: 8px; border-radius: 4px;
+  background: #dce8dc; transition: background 0.4s;
+  cursor: pointer;
+  position: relative;
+}
+#progress-bar .step.done { background: #2e9e6a; }
+#progress-bar .step.active { background: #5ec49a; }
+#progress-bar .step:hover::after {
+  content: attr(data-label);
+  position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+  background: #1a3a2a; color: #fff; padding: 4px 10px; border-radius: 4px;
+  font-size: 0.72rem; white-space: nowrap; pointer-events: none;
+}
+#progress-label {
+  font-size: 0.75rem; color: #4a6a4a; min-width: 40px; text-align: right; font-weight: 600;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  max-width: 820px; margin: 0 auto; padding: 60px 20px 40px;
+}
+.section:first-of-type { padding-top: 80px; }
+.section-number {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #2e9e6a; color: #fff; font-weight: 700; font-size: 1rem;
+  margin-bottom: 8px;
+}
+.section h2 {
+  font-size: 1.7rem; color: #1a3a2a; margin-bottom: 8px;
+}
+.section .intro {
+  font-size: 1.05rem; color: #3a5a3a; margin-bottom: 24px; max-width: 640px;
+}
+
+/* ===== CARDS & CONTAINERS ===== */
+.activity-box {
+  background: #fff; border-radius: 16px; padding: 28px;
+  box-shadow: 0 2px 12px rgba(0,80,40,0.07);
+  margin-top: 20px;
+}
+.activity-box h3 {
+  font-size: 1.2rem; color: #1a6a3a; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.activity-box h3 .icon { font-size: 1.4rem; }
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 22px; border: none; border-radius: 8px;
+  font-size: 0.95rem; font-weight: 600; cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: #2e9e6a; color: #fff; }
+.btn-primary:hover { background: #258a5a; }
+.btn-secondary { background: #e8f5ee; color: #1a6a3a; }
+.btn-secondary:hover { background: #d0ebdd; }
+.btn-small { padding: 6px 14px; font-size: 0.85rem; }
+
+/* ===== SPEND £100 SLIDERS ===== */
+.slider-group { margin-bottom: 14px; }
+.slider-group label {
+  display: flex; justify-content: space-between; font-weight: 600;
+  font-size: 0.92rem; margin-bottom: 4px;
+}
+.slider-group label span.amount { color: #2e9e6a; min-width: 40px; text-align: right; }
+.slider-group input[type=range] {
+  width: 100%; accent-color: #2e9e6a; height: 6px;
+}
+#spend-chart {
+  display: flex; height: 32px; border-radius: 8px; overflow: hidden;
+  margin: 16px 0 12px; background: #eee;
+}
+#spend-chart div {
+  transition: width 0.3s; display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700; color: #fff; min-width: 0; overflow: hidden;
+}
+#spend-total {
+  font-size: 1.1rem; font-weight: 700; text-align: center; padding: 8px;
+  border-radius: 8px; transition: background 0.3s;
+}
+.tag-need, .tag-want {
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 0.78rem; font-weight: 700; margin-left: 6px;
+}
+.tag-need { background: #d4f5e4; color: #1a6a3a; }
+.tag-want { background: #fde8d8; color: #a04a00; }
+
+/* ===== DRAG & DROP ===== */
+.dd-container { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
+.dd-column {
+  flex: 1; min-width: 220px; min-height: 220px;
+  border: 2px dashed #b0d0c0; border-radius: 12px; padding: 14px;
+  background: #f8fcf9; transition: background 0.2s;
+}
+.dd-column.drag-over { background: #e0f5ea; border-color: #2e9e6a; }
+.dd-column h4 {
+  text-align: center; margin-bottom: 10px; font-size: 1rem;
+  color: #1a6a3a; padding-bottom: 8px; border-bottom: 2px solid #d0e8d8;
+}
+.dd-items { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px; }
+.dd-card {
+  padding: 8px 16px; background: #fff; border: 2px solid #c0d8cc;
+  border-radius: 10px; cursor: grab; font-size: 0.9rem; font-weight: 600;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.3s, background 0.3s;
+  user-select: none; touch-action: none;
+}
+.dd-card:active { cursor: grabbing; }
+.dd-card.correct { border-color: #2e9e6a; background: #e8f8ee; }
+.dd-card.incorrect { border-color: #d44; background: #fde8e8; }
+.dd-card.placed { opacity: 0.85; }
+.dd-score { text-align: center; font-weight: 700; font-size: 1.05rem; color: #2e9e6a; margin-top: 10px; }
+
+/* ===== FLIP CARDS ===== */
+.flip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; margin: 16px 0; }
+.flip-card {
+  perspective: 600px; height: 170px; cursor: pointer;
+}
+.flip-card-inner {
+  position: relative; width: 100%; height: 100%;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute; inset: 0; border-radius: 12px;
+  backface-visibility: hidden; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: 18px; text-align: center;
+}
+.flip-front {
+  background: linear-gradient(135deg, #2e9e6a, #1a7a4a);
+  color: #fff; font-weight: 700; font-size: 1.05rem;
+}
+.flip-front .flip-icon { font-size: 2rem; margin-bottom: 6px; }
+.flip-back {
+  background: #fff; border: 2px solid #2e9e6a;
+  transform: rotateY(180deg); font-size: 0.88rem; color: #2a4a2a; line-height: 1.5;
+}
+
+/* ===== SCENARIO MATCH ===== */
+.scenario-item {
+  background: #fff; border-radius: 10px; padding: 16px;
+  margin-bottom: 12px; border-left: 4px solid #2e9e6a;
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+}
+.scenario-item p { flex: 1; min-width: 200px; font-size: 0.92rem; }
+.scenario-item select {
+  padding: 8px 12px; border-radius: 8px; border: 2px solid #c0d8cc;
+  font-size: 0.9rem; font-weight: 600; background: #f8fcf9; cursor: pointer;
+  min-width: 170px;
+}
+.scenario-item select:focus { border-color: #2e9e6a; outline: none; }
+.scenario-item .feedback {
+  font-size: 0.85rem; font-weight: 700; min-width: 30px;
+}
+
+/* ===== BUDGET CHALLENGE ===== */
+.budget-header {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px; margin-bottom: 18px;
+  padding: 14px 18px; border-radius: 10px;
+}
+.budget-header.positive { background: #e0f8ea; }
+.budget-header.negative { background: #fde8e8; }
+.budget-header .balance-label { font-size: 0.9rem; color: #444; }
+.budget-header .balance-amount { font-size: 1.5rem; font-weight: 800; }
+.budget-header .balance-amount.positive { color: #1a8a4a; }
+.budget-header .balance-amount.negative { color: #c03030; }
+.budget-item {
+  display: grid; grid-template-columns: auto 1fr auto auto;
+  align-items: center; gap: 10px; padding: 10px 0;
+  border-bottom: 1px solid #e8f0e8;
+}
+.budget-item input[type=checkbox] {
+  width: 20px; height: 20px; accent-color: #2e9e6a;
+}
+.budget-item .expense-name { font-weight: 600; font-size: 0.92rem; }
+.budget-item .expense-name small { display: block; font-weight: 400; color: #666; font-size: 0.78rem; }
+.budget-item .expense-amount {
+  font-weight: 700; color: #c04040; min-width: 70px; text-align: right; font-size: 0.95rem;
+}
+.budget-item input[type=range] { width: 100%; accent-color: #2e9e6a; }
+.budget-goal {
+  margin-top: 16px; padding: 14px; border-radius: 10px; background: #f0f0ff;
+  text-align: center; font-size: 0.95rem;
+}
+.budget-goal strong { color: #2e6e9e; }
+
+/* ===== SUPERMARKET SWEEP ===== */
+.product-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+.product-table th {
+  background: #2e9e6a; color: #fff; padding: 10px 8px; text-align: center;
+  font-size: 0.82rem;
+}
+.product-table th:first-child { text-align: left; border-radius: 8px 0 0 0; }
+.product-table th:last-child { border-radius: 0 8px 0 0; }
+.product-table td { padding: 8px; text-align: center; border-bottom: 1px solid #e0ece0; }
+.product-table td:first-child { text-align: left; font-weight: 600; }
+.product-table input[type=number] {
+  width: 80px; padding: 6px; border: 2px solid #c0d8cc; border-radius: 6px;
+  text-align: center; font-weight: 600; font-size: 0.9rem;
+}
+.product-table input[type=number]:focus { border-color: #2e9e6a; outline: none; }
+.product-table input.correct { border-color: #2e9e6a; background: #e8f8ee; }
+.product-table input.incorrect { border-color: #d44; background: #fde8e8; }
+.product-table tr:nth-child(even) { background: #f8fcf9; }
+
+/* ===== TRUE / FALSE QUIZ ===== */
+.tf-card {
+  background: #fff; border-radius: 12px; padding: 20px;
+  margin-bottom: 14px; border: 2px solid #e0ece0;
+  transition: border-color 0.3s;
+}
+.tf-card p { font-size: 0.95rem; margin-bottom: 12px; line-height: 1.5; }
+.tf-buttons { display: flex; gap: 10px; }
+.tf-btn {
+  flex: 1; padding: 10px; border: 2px solid #c0d8cc; border-radius: 8px;
+  background: #fff; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+  transition: all 0.2s;
+}
+.tf-btn:hover { background: #f0f8f4; }
+.tf-btn.selected-correct { background: #d4f5e4; border-color: #2e9e6a; color: #1a6a3a; }
+.tf-btn.selected-incorrect { background: #fde8e8; border-color: #d44; color: #c03030; }
+.tf-btn:disabled { cursor: default; opacity: 0.7; }
+.tf-explanation {
+  margin-top: 12px; padding: 12px; border-radius: 8px;
+  background: #f0f7ff; font-size: 0.88rem; display: none; line-height: 1.5;
+}
+.tf-explanation.visible { display: block; }
+
+/* ===== SUMMARY ===== */
+.summary-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px; margin: 20px 0;
+}
+.summary-card {
+  background: #fff; border-radius: 12px; padding: 16px; text-align: center;
+  border: 2px solid #e0ece0;
+}
+.summary-card.completed { border-color: #2e9e6a; }
+.summary-card .check { font-size: 1.5rem; }
+.summary-card h4 { font-size: 0.9rem; margin-top: 4px; color: #2a4a2a; }
+.overall-score {
+  text-align: center; padding: 28px; background: #fff;
+  border-radius: 16px; margin: 20px 0;
+  box-shadow: 0 2px 12px rgba(0,80,40,0.07);
+}
+.overall-score .big-score {
+  font-size: 3.5rem; font-weight: 800; color: #2e9e6a;
+}
+.overall-score p { color: #4a6a4a; margin-top: 4px; }
+.key-takeaways {
+  background: #fff; border-radius: 12px; padding: 22px; margin-top: 16px;
+  border-left: 4px solid #2e9e6a;
+}
+.key-takeaways li {
+  margin-bottom: 8px; font-size: 0.95rem; list-style: none; padding-left: 24px;
+  position: relative;
+}
+.key-takeaways li::before {
+  content: '✓'; position: absolute; left: 0; color: #2e9e6a; font-weight: 800;
+}
+
+/* ===== ACCORDION ===== */
+.accordion-item {
+  background: #fff; border-radius: 10px; margin-bottom: 8px;
+  border: 1px solid #e0ece0; overflow: hidden;
+}
+.accordion-header {
+  padding: 14px 18px; cursor: pointer; font-weight: 700;
+  font-size: 0.95rem; display: flex; justify-content: space-between;
+  align-items: center; transition: background 0.2s;
+}
+.accordion-header:hover { background: #f0f8f4; }
+.accordion-header .arrow { transition: transform 0.3s; font-size: 0.8rem; }
+.accordion-item.open .accordion-header .arrow { transform: rotate(180deg); }
+.accordion-body {
+  max-height: 0; overflow: hidden; transition: max-height 0.35s ease;
+  padding: 0 18px;
+}
+.accordion-item.open .accordion-body { max-height: 400px; padding: 0 18px 14px; }
+.accordion-body p { font-size: 0.9rem; color: #3a5a3a; line-height: 1.6; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .section { padding: 50px 14px 30px; }
+  .section h2 { font-size: 1.35rem; }
+  .dd-container { flex-direction: column; }
+  .budget-item { grid-template-columns: auto 1fr auto; }
+  .budget-item input[type=range] { grid-column: 1 / -1; }
+  .flip-grid { grid-template-columns: 1fr 1fr; }
+  .flip-card { height: 150px; }
+  .product-table { font-size: 0.8rem; }
+  .product-table input[type=number] { width: 60px; }
+}
+@media (max-width: 400px) {
+  .flip-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== PROGRESS BAR ===== -->
+<div id="progress-bar">
+  <div class="step" data-section="section-1" data-label="Welcome"></div>
+  <div class="step" data-section="section-2" data-label="Needs vs Wants"></div>
+  <div class="step" data-section="section-3" data-label="Influences"></div>
+  <div class="step" data-section="section-4" data-label="Budgeting"></div>
+  <div class="step" data-section="section-5" data-label="Value for Money"></div>
+  <div class="step" data-section="section-6" data-label="Consumer Rights"></div>
+  <div class="step" data-section="section-7" data-label="Summary"></div>
+  <span id="progress-label">0%</span>
+</div>
+
+<!-- ========== SECTION 1: WELCOME & STARTER ========== -->
+<div class="section" id="section-1">
+  <div class="section-number">1</div>
+  <h2>Welcome &mdash; Spend &pound;100!</h2>
+  <p class="intro">Imagine someone hands you &pound;100 right now. How would you spend it? Use the sliders below to share out your money, then find out which of your choices are <em>needs</em> and which are <em>wants</em>.</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">💷</span> Activity: Allocate Your &pound;100</h3>
+
+    <div id="spend-sliders"></div>
+    <div id="spend-chart"></div>
+    <div id="spend-total"></div>
+
+    <div style="text-align:center; margin-top:16px;">
+      <button class="btn btn-primary" id="reveal-needs-btn" onclick="revealNeedsWants()">Reveal: Need or Want?</button>
+    </div>
+    <div id="needs-reveal" style="display:none; margin-top:14px;"></div>
+  </div>
+</div>
+
+<!-- ========== SECTION 2: NEEDS VS WANTS ========== -->
+<div class="section" id="section-2">
+  <div class="section-number">2</div>
+  <h2>Needs vs Wants</h2>
+  <p class="intro"><strong>Needs</strong> are the absolute necessities &mdash; things you really can't do without.
+  <strong>Wants</strong> are items or experiences you'd like if you have the money. Your job: sort these items!</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">🎯</span> Activity: Drag &amp; Drop Sort</h3>
+    <p style="font-size:0.88rem; color:#666; margin-bottom:10px;">Drag each item into the correct column. On mobile, tap an item then tap the column.</p>
+
+    <div class="dd-items" id="dd-items"></div>
+
+    <div class="dd-container">
+      <div class="dd-column" id="col-need" data-col="need">
+        <h4>🏠 Needs</h4>
+      </div>
+      <div class="dd-column" id="col-want" data-col="want">
+        <h4>🎮 Wants</h4>
+      </div>
+    </div>
+
+    <div class="dd-score" id="dd-score"></div>
+    <div style="text-align:center; margin-top:10px;">
+      <button class="btn btn-secondary btn-small" onclick="resetDragDrop()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION 3: INFLUENCES ========== -->
+<div class="section" id="section-3">
+  <div class="section-number">3</div>
+  <h2>What Influences Your Spending?</h2>
+  <p class="intro">Many things shape how we spend. Tap each card to learn more, then match the scenarios below.</p>
+
+  <div class="flip-grid" id="flip-grid"></div>
+
+  <div class="activity-box" style="margin-top:24px;">
+    <h3><span class="icon">🔗</span> Activity: Scenario Match</h3>
+    <p style="font-size:0.88rem; color:#666; margin-bottom:14px;">Read each scenario and pick the spending influence it best matches.</p>
+
+    <div id="scenario-list"></div>
+    <div style="text-align:center; margin-top:14px;">
+      <button class="btn btn-primary" onclick="checkScenarios()">Check Answers</button>
+      <span id="scenario-score" style="margin-left:12px; font-weight:700; color:#2e9e6a;"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION 4: BUDGETING ========== -->
+<div class="section" id="section-4">
+  <div class="section-number">4</div>
+  <h2>Budgeting Basics</h2>
+  <p class="intro">A budget tracks your <strong>income</strong> (money in), <strong>outgoings</strong> (money out), and your <strong>balance</strong> (what's left). If outgoings &gt; income, you're in trouble!</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">📊</span> Activity: Awurabena's Budget Challenge</h3>
+    <p style="font-size:0.88rem; color:#666; margin-bottom:6px;">Awurabena just started her first job after university. She earns <strong>&pound;1,540/month</strong> and rents her own flat. Right now she's overspending! Adjust her budget so she can <strong>save &pound;150/month</strong> towards a car.</p>
+    <p style="font-size:0.85rem; color:#888; margin-bottom:14px;">Untick items to remove them, or use sliders to reduce amounts.</p>
+
+    <div class="budget-header" id="budget-header">
+      <div>
+        <div class="balance-label">Monthly Income</div>
+        <div style="font-size:1.2rem; font-weight:700; color:#1a6a3a;">&pound;1,540</div>
+      </div>
+      <div>
+        <div class="balance-label">Spending</div>
+        <div id="budget-spending" style="font-size:1.2rem; font-weight:700; color:#c04040;"></div>
+      </div>
+      <div>
+        <div class="balance-label">Balance</div>
+        <div class="balance-amount" id="budget-balance"></div>
+      </div>
+    </div>
+
+    <div id="budget-items"></div>
+
+    <div class="budget-goal" id="budget-goal"></div>
+  </div>
+</div>
+
+<!-- ========== SECTION 5: VALUE FOR MONEY ========== -->
+<div class="section" id="section-5">
+  <div class="section-number">5</div>
+  <h2>Value for Money</h2>
+  <p class="intro">The cheapest option isn't always obvious. Work out how much you'd spend weekly and yearly on these products &mdash; and how much you could save!</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">🛒</span> Activity: Supermarket Sweep</h3>
+    <p style="font-size:0.88rem; color:#666; margin-bottom:14px;">Fill in the weekly and yearly cost for each product &amp; brand. Costs are per item. Round to 2 decimal places (e.g. 4.16).</p>
+
+    <div style="overflow-x:auto;">
+      <table class="product-table" id="product-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Qty/wk</th>
+            <th>Luxury (each)</th>
+            <th>Luxury &pound;/wk</th>
+            <th>Own Brand (each)</th>
+            <th>Own Brand &pound;/wk</th>
+            <th>Value (each)</th>
+            <th>Value &pound;/wk</th>
+          </tr>
+        </thead>
+        <tbody id="product-tbody"></tbody>
+      </table>
+    </div>
+
+    <h4 style="margin-top:20px; color:#1a6a3a; font-size:1rem;">Yearly Savings Calculator</h4>
+    <p style="font-size:0.88rem; color:#666; margin-bottom:10px;">How much would you save in a year (52 weeks) by switching from Luxury to each option? Enter the total across all 4 products.</p>
+
+    <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:10px;">
+      <div style="flex:1; min-width:200px;">
+        <label style="font-size:0.9rem; font-weight:600; display:block; margin-bottom:4px;">Yearly saving: Luxury → Own Brand</label>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <span>&pound;</span>
+          <input type="number" id="yearly-save-own" step="0.01" style="padding:8px; border:2px solid #c0d8cc; border-radius:8px; width:120px; font-weight:600;">
+          <span id="yearly-save-own-fb" class="feedback"></span>
+        </div>
+      </div>
+      <div style="flex:1; min-width:200px;">
+        <label style="font-size:0.9rem; font-weight:600; display:block; margin-bottom:4px;">Yearly saving: Luxury → Value</label>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <span>&pound;</span>
+          <input type="number" id="yearly-save-val" step="0.01" style="padding:8px; border:2px solid #c0d8cc; border-radius:8px; width:120px; font-weight:600;">
+          <span id="yearly-save-val-fb" class="feedback"></span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:16px;">
+      <button class="btn btn-primary" onclick="checkSupermarket()">Check All Answers</button>
+      <span id="supermarket-score" style="margin-left:12px; font-weight:700; color:#2e9e6a;"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION 6: CONSUMER RIGHTS ========== -->
+<div class="section" id="section-6">
+  <div class="section-number">6</div>
+  <h2>Consumer Rights</h2>
+  <p class="intro">When you buy something, you have legal rights. Here are the key ones to know.</p>
+
+  <div id="rights-accordion"></div>
+
+  <div class="activity-box" style="margin-top:24px;">
+    <h3><span class="icon">⚖️</span> Activity: True or False?</h3>
+    <p style="font-size:0.88rem; color:#666; margin-bottom:14px;">Read each scenario and decide — is the statement true or false?</p>
+    <div id="tf-cards"></div>
+    <div class="dd-score" id="tf-score"></div>
+  </div>
+</div>
+
+<!-- ========== SECTION 7: SUMMARY ========== -->
+<div class="section" id="section-7">
+  <div class="section-number">7</div>
+  <h2>Summary &amp; Score</h2>
+  <p class="intro">Great work! Here's how you did across all the activities.</p>
+
+  <div class="summary-grid" id="summary-grid"></div>
+
+  <div class="overall-score" id="overall-score-box">
+    <div class="big-score" id="final-score">0%</div>
+    <p id="final-msg">Complete the activities above to see your score!</p>
+  </div>
+
+  <div class="key-takeaways">
+    <h3 style="margin-bottom:10px; color:#1a3a2a;">Key Takeaways</h3>
+    <ul>
+      <li>Separate your <strong>needs</strong> from your <strong>wants</strong> &mdash; this is the foundation of smart spending.</li>
+      <li>Always <strong>budget</strong> your income against your outgoings. If spending &gt; income, look for cuts in discretionary items first.</li>
+      <li>Know your <strong>consumer rights</strong> &mdash; faulty goods must be dealt with by the retailer, and paying by credit card gives you extra protection.</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ===================================================================== -->
+<!-- ===== JAVASCRIPT ===== -->
+<!-- ===================================================================== -->
+<script>
+/* ---------- DATA ---------- */
+
+const spendCategories = [
+  { name: 'Food & Drink', color: '#2e9e6a', type: 'need' },
+  { name: 'Rent / Housing', color: '#1a7a4a', type: 'need' },
+  { name: 'Clothing', color: '#e08030', type: 'want' },
+  { name: 'Entertainment', color: '#c04080', type: 'want' },
+  { name: 'Transport', color: '#3070c0', type: 'need' },
+  { name: 'Savings', color: '#6a40c0', type: 'need' },
+  { name: 'Tech / Gadgets', color: '#c04040', type: 'want' },
+  { name: 'Gifts', color: '#c09020', type: 'want' }
+];
+
+const ddItems = [
+  { text: 'Water', answer: 'need' },
+  { text: 'Rent', answer: 'need' },
+  { text: 'Food', answer: 'need' },
+  { text: 'Electricity', answer: 'need' },
+  { text: 'Car Insurance', answer: 'need' },
+  { text: 'Wi-Fi', answer: 'need' },
+  { text: 'Netflix', answer: 'want' },
+  { text: 'Designer Trainers', answer: 'want' },
+  { text: 'Concert Tickets', answer: 'want' },
+  { text: 'Gym Membership', answer: 'want' },
+  { text: 'Spotify', answer: 'want' },
+  { text: 'Holiday', answer: 'want' }
+];
+
+const influences = [
+  { title: 'Family', icon: '👨‍👩‍👧', desc: 'What your family buys tends to influence what you buy, and how they use money affects how you use it too.' },
+  { title: 'Peers', icon: '👥', desc: 'Most of us want to be accepted by friends, so we buy what they buy to be part of the group.' },
+  { title: 'Culture', icon: '🌍', desc: 'Your cultural and religious background can shape your view of money and how it should be spent.' },
+  { title: 'Seasonal', icon: '🎄', desc: 'Events like Christmas, Eid and Rosh Hashanah promote spending money on certain things at certain times.' },
+  { title: 'Disposable Income', icon: '💰', desc: 'The more spare money you have, the more likely you are to buy things you don\'t really need.' },
+  { title: 'Advertising & Social Media', icon: '📱', desc: 'Businesses and influencers work hard to create wants in our minds for things we often don\'t need at all.' }
+];
+
+const scenarios = [
+  { text: 'You buy a new jacket because your friends all have one.', answer: 'Peers' },
+  { text: 'You spend more on gifts during December than any other month.', answer: 'Seasonal' },
+  { text: 'You see an influencer promoting a skincare product and order it immediately.', answer: 'Advertising & Social Media' },
+  { text: 'Your parents always shop at budget supermarkets, so you do the same.', answer: 'Family' },
+  { text: 'You get a pay rise and start buying takeaway coffee every day.', answer: 'Disposable Income' },
+  { text: 'You donate to charity during Ramadan because it is important in your faith.', answer: 'Culture' }
+];
+
+const budgetItems = [
+  { name: 'Rent', detail: 'per month', base: 550, min: 550, max: 550, step: 10, fixed: true },
+  { name: 'Gas & Electricity', detail: 'per month', base: 65, min: 40, max: 100, step: 5 },
+  { name: 'Water Bill', detail: 'per month', base: 27.5, min: 20, max: 40, step: 2.5 },
+  { name: 'Food Shopping', detail: '£55/wk → monthly', base: 220, min: 120, max: 300, step: 10 },
+  { name: 'Subscriptions', detail: 'music & movies', base: 19, min: 0, max: 30, step: 1 },
+  { name: 'Contents Insurance', detail: 'per month', base: 23.87, min: 23.87, max: 23.87, step: 1, fixed: true },
+  { name: 'Going Out', detail: 'colleagues, 2x/wk', base: 240, min: 0, max: 300, step: 10 },
+  { name: 'Mobile Phone', detail: 'contract', base: 34, min: 10, max: 50, step: 2 },
+  { name: 'Travel to Work', detail: '£78/wk → monthly', base: 312, min: 200, max: 400, step: 10 },
+  { name: 'Clothes', detail: 'per month', base: 90, min: 0, max: 150, step: 10 },
+  { name: 'Coffee', detail: '£12.50/wk → monthly', base: 50, min: 0, max: 80, step: 5 }
+];
+
+const products = [
+  { name: 'Baked Beans', qty: 4, luxury: 1.04, own: 0.65, value: 0.23 },
+  { name: 'Cereal', qty: 1, luxury: 3.65, own: 2.21, value: 1.68 },
+  { name: 'Crisps', qty: 6, luxury: 1.20, own: 0.99, value: 0.45 },
+  { name: 'Batteries', qty: 2, luxury: 3.95, own: 2.89, value: 0.99 }
+];
+
+const consumerRights = [
+  { title: 'Goods Must Be Fit for Purpose', body: 'Anything you buy must work as expected. A waterproof coat must keep water out. A kettle must boil water. If it doesn\'t, the retailer must put it right.' },
+  { title: 'Your Contract Is with the Retailer', body: 'If something goes wrong, complain to the shop — not the manufacturer. It\'s the retailer\'s responsibility to fix, replace, or refund.' },
+  { title: 'Online Shopping: 14-Day Cooling Off', body: 'Under the Consumer Contracts Regulation 2013, you can cancel an online purchase within 14 days of receiving the goods (and then have 14 more days to return them).' },
+  { title: 'Credit Card Protection (Section 75)', body: 'If you pay by credit card for items over £100, your card provider must protect the purchase. This does NOT work with PayPal or debit cards.' }
+];
+
+const tfQuestions = [
+  {
+    text: 'You bought a kettle in a store sale and it doesn\'t heat water. The store says you should complain to the manufacturer.',
+    answer: false,
+    explanation: 'FALSE — The item is faulty and not fit for purpose. Your contract is with the retailer, so it\'s their responsibility. Sale goods still have to be fit for purpose.'
+  },
+  {
+    text: 'You accidentally picked up the wrong size T-shirt in a store. Your friend says the shop doesn\'t have to exchange it.',
+    answer: true,
+    explanation: 'TRUE — The shop has no legal obligation to exchange goods if you simply changed your mind or made a mistake (though many shops do offer this as goodwill).'
+  },
+  {
+    text: 'You bought trainers with your debit card but the sole is coming unstuck. You\'ve lost the receipt so you can\'t return them.',
+    answer: false,
+    explanation: 'FALSE — You don\'t need the receipt. Since you paid by debit card, your bank has a record of the purchase — that counts as proof of purchase.'
+  },
+  {
+    text: 'You ordered a necklace online for your birthday. It was due on the day but arrived the day after. You\'re entitled to a full refund.',
+    answer: true,
+    explanation: 'TRUE — The delivery date was agreed upon. Since it wasn\'t met, you are entitled to a full refund under consumer contract regulations.'
+  },
+  {
+    text: 'You bought a book from a private seller at an online auction, but it turned out to be one you\'d already read. You can return it just like a shop purchase.',
+    answer: false,
+    explanation: 'FALSE — Auction purchases from private sellers are treated as second-hand sales. As long as the seller didn\'t mislead you, your rights are very limited. Caveat emptor (buyer beware)!'
+  },
+  {
+    text: 'Your holiday company goes bust and you lose all the money you paid. A friend says you should have used a credit card.',
+    answer: true,
+    explanation: 'TRUE — Under Section 75, credit card providers must protect purchases over £100. If you\'d paid by credit card, you could have claimed the money back from your card provider.'
+  }
+];
+
+/* ---------- SCORES TRACKER ---------- */
+const scores = {
+  dd: { got: 0, max: 12, done: false },
+  scenario: { got: 0, max: 6, done: false },
+  supermarket: { got: 0, max: 0, done: false },
+  tf: { got: 0, max: 6, done: false }
+};
+
+/* ========== SECTION 1: SPEND £100 ========== */
+(function initSpend() {
+  const container = document.getElementById('spend-sliders');
+  const chart = document.getElementById('spend-chart');
+  const totalDiv = document.getElementById('spend-total');
+  const vals = spendCategories.map(() => 0);
+
+  spendCategories.forEach((cat, i) => {
+    const grp = document.createElement('div');
+    grp.className = 'slider-group';
+    grp.innerHTML = `<label><span>${cat.name}</span><span class="amount" id="sa-${i}">£0</span></label>
+      <input type="range" min="0" max="100" value="0" step="5" data-i="${i}">`;
+    container.appendChild(grp);
+
+    const bar = document.createElement('div');
+    bar.style.background = cat.color;
+    bar.id = `sb-${i}`;
+    chart.appendChild(bar);
+  });
+
+  function update() {
+    let total = 0;
+    container.querySelectorAll('input[type=range]').forEach(inp => {
+      const i = +inp.dataset.i;
+      vals[i] = +inp.value;
+      total += vals[i];
+      document.getElementById(`sa-${i}`).textContent = `£${vals[i]}`;
+    });
+    spendCategories.forEach((_, i) => {
+      const pct = total ? (vals[i] / total * 100) : 0;
+      const bar = document.getElementById(`sb-${i}`);
+      bar.style.width = pct + '%';
+      bar.textContent = pct > 8 ? `£${vals[i]}` : '';
+    });
+    const over = total > 100;
+    totalDiv.textContent = `Total: £${total} / £100`;
+    totalDiv.style.background = over ? '#fde8e8' : total === 100 ? '#d4f5e4' : '#f0f0f0';
+    totalDiv.style.color = over ? '#c03030' : total === 100 ? '#1a6a3a' : '#444';
+  }
+
+  container.addEventListener('input', update);
+  update();
+})();
+
+function revealNeedsWants() {
+  const div = document.getElementById('needs-reveal');
+  div.style.display = 'block';
+  div.innerHTML = '<p style="font-weight:700; margin-bottom:10px;">Here\'s how your categories break down:</p>' +
+    spendCategories.map(c =>
+      `<span style="font-weight:600;">${c.name}</span> ${c.type === 'need' ? '<span class="tag-need">Need</span>' : '<span class="tag-want">Want</span>'}`
+    ).join(' &nbsp;·&nbsp; ');
+  document.getElementById('reveal-needs-btn').disabled = true;
+  document.getElementById('reveal-needs-btn').style.opacity = '0.5';
+  markSectionDone(1);
+}
+
+/* ========== SECTION 2: DRAG & DROP ========== */
+let ddSelectedCard = null;
+
+function initDragDrop() {
+  const itemsDiv = document.getElementById('dd-items');
+  const shuffled = [...ddItems].sort(() => Math.random() - 0.5);
+
+  shuffled.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'dd-card';
+    card.textContent = item.text;
+    card.dataset.answer = item.answer;
+    card.dataset.idx = i;
+    card.draggable = true;
+
+    // Desktop drag
+    card.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', i);
+      card.style.opacity = '0.5';
+    });
+    card.addEventListener('dragend', () => { card.style.opacity = '1'; });
+
+    // Touch/click for mobile
+    card.addEventListener('click', () => {
+      if (card.classList.contains('placed')) return;
+      if (ddSelectedCard === card) {
+        card.style.boxShadow = '';
+        ddSelectedCard = null;
+      } else {
+        if (ddSelectedCard) ddSelectedCard.style.boxShadow = '';
+        ddSelectedCard = card;
+        card.style.boxShadow = '0 0 0 3px #2e9e6a';
+      }
+    });
+
+    itemsDiv.appendChild(card);
+  });
+
+  ['col-need', 'col-want'].forEach(id => {
+    const col = document.getElementById(id);
+    col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('drag-over'); });
+    col.addEventListener('dragleave', () => { col.classList.remove('drag-over'); });
+    col.addEventListener('drop', e => {
+      e.preventDefault();
+      col.classList.remove('drag-over');
+      const idx = e.dataTransfer.getData('text/plain');
+      const card = itemsDiv.querySelector(`[data-idx="${idx}"]`);
+      if (card && !card.classList.contains('placed')) placeCard(card, col);
+    });
+    col.addEventListener('click', () => {
+      if (ddSelectedCard && !ddSelectedCard.classList.contains('placed')) {
+        placeCard(ddSelectedCard, col);
+        ddSelectedCard.style.boxShadow = '';
+        ddSelectedCard = null;
+      }
+    });
+  });
+}
+
+function placeCard(card, col) {
+  const correct = card.dataset.answer === col.dataset.col;
+  card.classList.add('placed', correct ? 'correct' : 'incorrect');
+  card.draggable = false;
+  col.appendChild(card);
+  if (correct) scores.dd.got++;
+  updateDDScore();
+}
+
+function updateDDScore() {
+  const placed = document.querySelectorAll('.dd-card.placed').length;
+  const el = document.getElementById('dd-score');
+  el.textContent = `${scores.dd.got} / ${placed} correct`;
+  if (placed === ddItems.length) {
+    scores.dd.done = true;
+    el.textContent += placed === scores.dd.got ? '  — Perfect! 🎉' : '  — Good effort!';
+    markSectionDone(2);
+  }
+}
+
+function resetDragDrop() {
+  scores.dd.got = 0;
+  ddSelectedCard = null;
+  document.getElementById('dd-items').innerHTML = '';
+  document.querySelectorAll('.dd-column .dd-card').forEach(c => c.remove());
+  document.getElementById('dd-score').textContent = '';
+  initDragDrop();
+}
+
+initDragDrop();
+
+/* ========== SECTION 3: FLIP CARDS & SCENARIO MATCH ========== */
+(function initInfluences() {
+  const grid = document.getElementById('flip-grid');
+  influences.forEach(inf => {
+    const card = document.createElement('div');
+    card.className = 'flip-card';
+    card.innerHTML = `<div class="flip-card-inner">
+      <div class="flip-front"><div class="flip-icon">${inf.icon}</div>${inf.title}</div>
+      <div class="flip-back">${inf.desc}</div>
+    </div>`;
+    card.addEventListener('click', () => card.classList.toggle('flipped'));
+    grid.appendChild(card);
+  });
+
+  const list = document.getElementById('scenario-list');
+  const opts = influences.map(i => i.title);
+  scenarios.forEach((s, i) => {
+    const item = document.createElement('div');
+    item.className = 'scenario-item';
+    item.innerHTML = `<p>${i + 1}. ${s.text}</p>
+      <select id="sc-${i}"><option value="">— Pick one —</option>${opts.map(o => `<option value="${o}">${o}</option>`).join('')}</select>
+      <span class="feedback" id="scfb-${i}"></span>`;
+    list.appendChild(item);
+  });
+})();
+
+function checkScenarios() {
+  let correct = 0;
+  scenarios.forEach((s, i) => {
+    const sel = document.getElementById(`sc-${i}`);
+    const fb = document.getElementById(`scfb-${i}`);
+    if (sel.value === s.answer) {
+      correct++;
+      fb.textContent = '✓';
+      fb.style.color = '#2e9e6a';
+      sel.style.borderColor = '#2e9e6a';
+    } else {
+      fb.textContent = '✗ ' + s.answer;
+      fb.style.color = '#d44';
+      sel.style.borderColor = '#d44';
+    }
+    sel.disabled = true;
+  });
+  scores.scenario = { got: correct, max: 6, done: true };
+  document.getElementById('scenario-score').textContent = `${correct} / 6`;
+  markSectionDone(3);
+}
+
+/* ========== SECTION 4: BUDGET CHALLENGE ========== */
+(function initBudget() {
+  const container = document.getElementById('budget-items');
+  const income = 1540;
+
+  budgetItems.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'budget-item';
+    const checked = 'checked';
+    const disabled = item.fixed ? 'disabled' : '';
+    div.innerHTML = `
+      <input type="checkbox" id="bc-${i}" ${checked} ${item.fixed ? 'onclick="return false"' : ''}>
+      <div class="expense-name">${item.name}<small>${item.detail}</small></div>
+      <span class="expense-amount" id="ba-${i}">£${item.base.toFixed(2)}</span>
+      ${item.fixed ? '' : `<input type="range" min="${item.min}" max="${item.max}" value="${item.base}" step="${item.step}" id="br-${i}">`}
+    `;
+    container.appendChild(div);
+  });
+
+  function calc() {
+    let total = 0;
+    budgetItems.forEach((item, i) => {
+      const cb = document.getElementById(`bc-${i}`);
+      const slider = document.getElementById(`br-${i}`);
+      let val = slider ? +slider.value : item.base;
+      if (!cb.checked) val = 0;
+      document.getElementById(`ba-${i}`).textContent = `£${val.toFixed(2)}`;
+      document.getElementById(`ba-${i}`).style.opacity = cb.checked ? '1' : '0.3';
+      total += val;
+    });
+    const balance = income - total;
+    document.getElementById('budget-spending').textContent = `£${total.toFixed(2)}`;
+    const balEl = document.getElementById('budget-balance');
+    balEl.textContent = `£${balance.toFixed(2)}`;
+    balEl.className = 'balance-amount ' + (balance >= 0 ? 'positive' : 'negative');
+    const hdr = document.getElementById('budget-header');
+    hdr.className = 'budget-header ' + (balance >= 0 ? 'positive' : 'negative');
+
+    const goalEl = document.getElementById('budget-goal');
+    if (balance >= 150) {
+      goalEl.innerHTML = `🎉 <strong>Goal reached!</strong> Awurabena can save £${balance.toFixed(2)}/month — enough for her car!`;
+      goalEl.style.background = '#d4f5e4';
+      markSectionDone(4);
+    } else {
+      const needed = (150 - balance).toFixed(2);
+      goalEl.innerHTML = `🎯 <strong>Goal: save £150/month.</strong> She needs to cut another <strong>£${needed}</strong> from her spending.`;
+      goalEl.style.background = '#fde8d8';
+    }
+  }
+
+  container.addEventListener('input', calc);
+  container.addEventListener('change', calc);
+  calc();
+})();
+
+/* ========== SECTION 5: SUPERMARKET SWEEP ========== */
+(function initSupermarket() {
+  const tbody = document.getElementById('product-tbody');
+  products.forEach((p, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${p.name}</td>
+      <td>${p.qty}</td>
+      <td>£${p.luxury.toFixed(2)}</td>
+      <td><input type="number" step="0.01" id="pw-l-${i}" placeholder="?"></td>
+      <td>£${p.own.toFixed(2)}</td>
+      <td><input type="number" step="0.01" id="pw-o-${i}" placeholder="?"></td>
+      <td>£${p.value.toFixed(2)}</td>
+      <td><input type="number" step="0.01" id="pw-v-${i}" placeholder="?"></td>
+    `;
+    tbody.appendChild(tr);
+  });
+})();
+
+function checkSupermarket() {
+  let correct = 0;
+  let total = 0;
+  let luxuryWeekly = 0, ownWeekly = 0, valWeekly = 0;
+
+  products.forEach((p, i) => {
+    const expected = {
+      l: +(p.qty * p.luxury).toFixed(2),
+      o: +(p.qty * p.own).toFixed(2),
+      v: +(p.qty * p.value).toFixed(2)
+    };
+    luxuryWeekly += expected.l;
+    ownWeekly += expected.o;
+    valWeekly += expected.v;
+
+    ['l', 'o', 'v'].forEach(k => {
+      total++;
+      const inp = document.getElementById(`pw-${k}-${i}`);
+      const val = parseFloat(inp.value);
+      if (Math.abs(val - expected[k]) < 0.02) {
+        correct++;
+        inp.className = 'correct';
+      } else {
+        inp.className = 'incorrect';
+        inp.title = `Answer: £${expected[k].toFixed(2)}`;
+      }
+    });
+  });
+
+  // Yearly savings
+  const yOwn = +((luxuryWeekly - ownWeekly) * 52).toFixed(2);
+  const yVal = +((luxuryWeekly - valWeekly) * 52).toFixed(2);
+
+  const inpOwn = document.getElementById('yearly-save-own');
+  const inpVal = document.getElementById('yearly-save-val');
+  const fbOwn = document.getElementById('yearly-save-own-fb');
+  const fbVal = document.getElementById('yearly-save-val-fb');
+
+  total += 2;
+  if (Math.abs(parseFloat(inpOwn.value) - yOwn) < 1) {
+    correct++;
+    fbOwn.textContent = '✓';
+    fbOwn.style.color = '#2e9e6a';
+    inpOwn.style.borderColor = '#2e9e6a';
+  } else {
+    fbOwn.textContent = `✗ £${yOwn.toFixed(2)}`;
+    fbOwn.style.color = '#d44';
+    inpOwn.style.borderColor = '#d44';
+  }
+
+  if (Math.abs(parseFloat(inpVal.value) - yVal) < 1) {
+    correct++;
+    fbVal.textContent = '✓';
+    fbVal.style.color = '#2e9e6a';
+    inpVal.style.borderColor = '#2e9e6a';
+  } else {
+    fbVal.textContent = `✗ £${yVal.toFixed(2)}`;
+    fbVal.style.color = '#d44';
+    inpVal.style.borderColor = '#d44';
+  }
+
+  scores.supermarket = { got: correct, max: total, done: true };
+  document.getElementById('supermarket-score').textContent = `${correct} / ${total}`;
+  markSectionDone(5);
+}
+
+/* ========== SECTION 6: CONSUMER RIGHTS ========== */
+(function initRights() {
+  const acc = document.getElementById('rights-accordion');
+  consumerRights.forEach((r, i) => {
+    const item = document.createElement('div');
+    item.className = 'accordion-item';
+    item.innerHTML = `<div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+      <span>${r.title}</span><span class="arrow">▼</span>
+    </div><div class="accordion-body"><p>${r.body}</p></div>`;
+    acc.appendChild(item);
+  });
+
+  const container = document.getElementById('tf-cards');
+  tfQuestions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'tf-card';
+    card.id = `tfc-${i}`;
+    card.innerHTML = `<p><strong>Scenario ${i + 1}:</strong> ${q.text}</p>
+      <div class="tf-buttons">
+        <button class="tf-btn" onclick="answerTF(${i}, true)">True</button>
+        <button class="tf-btn" onclick="answerTF(${i}, false)">False</button>
+      </div>
+      <div class="tf-explanation" id="tfex-${i}">${q.explanation}</div>`;
+    container.appendChild(card);
+  });
+})();
+
+let tfAnswered = 0;
+function answerTF(i, answer) {
+  const q = tfQuestions[i];
+  const card = document.getElementById(`tfc-${i}`);
+  const btns = card.querySelectorAll('.tf-btn');
+  const correct = answer === q.answer;
+
+  btns.forEach(b => {
+    b.disabled = true;
+    const bVal = b.textContent === 'True';
+    if (bVal === answer) {
+      b.classList.add(correct ? 'selected-correct' : 'selected-incorrect');
+    }
+    if (bVal === q.answer && !correct) {
+      b.classList.add('selected-correct');
+    }
+  });
+
+  document.getElementById(`tfex-${i}`).classList.add('visible');
+  if (correct) scores.tf.got++;
+  tfAnswered++;
+
+  const scoreEl = document.getElementById('tf-score');
+  scoreEl.textContent = `${scores.tf.got} / ${tfAnswered} correct`;
+
+  if (tfAnswered === tfQuestions.length) {
+    scores.tf.done = true;
+    scoreEl.textContent += scores.tf.got === tfQuestions.length ? '  — Perfect! 🎉' : '  — Well done!';
+    markSectionDone(6);
+  }
+}
+
+/* ========== PROGRESS & SUMMARY ========== */
+const sectionsDone = new Set();
+
+function markSectionDone(num) {
+  sectionsDone.add(num);
+  updateProgress();
+  updateSummary();
+}
+
+function updateProgress() {
+  const steps = document.querySelectorAll('#progress-bar .step');
+  const sections = document.querySelectorAll('.section');
+  const scrollY = window.scrollY + 120;
+  let activeIdx = 0;
+
+  sections.forEach((s, i) => {
+    if (scrollY >= s.offsetTop) activeIdx = i;
+  });
+
+  steps.forEach((step, i) => {
+    step.classList.remove('done', 'active');
+    if (sectionsDone.has(i + 1)) step.classList.add('done');
+    else if (i === activeIdx) step.classList.add('active');
+  });
+
+  const pct = Math.round(sectionsDone.size / 7 * 100);
+  document.getElementById('progress-label').textContent = pct + '%';
+}
+
+function updateSummary() {
+  const grid = document.getElementById('summary-grid');
+  const labels = ['Spend £100', 'Needs vs Wants', 'Influences', 'Budgeting', 'Value for Money', 'Consumer Rights', 'Summary'];
+  grid.innerHTML = '';
+
+  labels.forEach((label, i) => {
+    const done = sectionsDone.has(i + 1);
+    const card = document.createElement('div');
+    card.className = 'summary-card' + (done ? ' completed' : '');
+    card.innerHTML = `<div class="check">${done ? '✅' : '⬜'}</div><h4>${label}</h4>`;
+    grid.appendChild(card);
+  });
+
+  // Calculate overall score
+  const totalGot = scores.dd.got + scores.scenario.got + scores.supermarket.got + scores.tf.got;
+  const totalMax = scores.dd.max + scores.scenario.max + (scores.supermarket.max || 14) + scores.tf.max;
+  const pct = totalMax ? Math.round(totalGot / totalMax * 100) : 0;
+
+  const anyDone = scores.dd.done || scores.scenario.done || scores.supermarket.done || scores.tf.done;
+  document.getElementById('final-score').textContent = anyDone ? pct + '%' : '—';
+  document.getElementById('final-msg').textContent = anyDone
+    ? `You scored ${totalGot} out of ${totalMax} across the scored activities.`
+    : 'Complete the activities above to see your score!';
+
+  if (sectionsDone.size >= 6) {
+    markSectionDone(7);
+  }
+}
+
+/* Progress bar click-to-scroll */
+document.querySelectorAll('#progress-bar .step').forEach(step => {
+  step.addEventListener('click', () => {
+    const target = document.getElementById(step.dataset.section);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* Scroll listener for active section */
+window.addEventListener('scroll', updateProgress);
+updateProgress();
+updateSummary();
+</script>
+
+</body>
+</html>
