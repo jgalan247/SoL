@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 5 &ndash; Risk and Reward</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #fdf8ef;
+  color: #1a1a1a;
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+
+/* ===== PROGRESS BAR ===== */
+#progress-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: #fff; border-bottom: 1px solid #e0d6c0;
+  padding: 8px 16px;
+  display: flex; align-items: center; gap: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+#progress-bar .step {
+  flex: 1; height: 8px; border-radius: 4px;
+  background: #e8dfc8; transition: background 0.4s;
+  cursor: pointer; position: relative;
+}
+#progress-bar .step.done { background: #d4a017; }
+#progress-bar .step.active { background: #f0c850; }
+#progress-bar .step:hover::after {
+  content: attr(data-label);
+  position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+  background: #3a2a0a; color: #fff; padding: 4px 10px; border-radius: 4px;
+  font-size: 0.72rem; white-space: nowrap; pointer-events: none;
+}
+#progress-label {
+  font-size: 0.75rem; color: #6a5a2a; min-width: 40px; text-align: right; font-weight: 600;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  max-width: 860px; margin: 0 auto; padding: 50px 20px 40px;
+}
+.section:first-of-type { padding-top: 80px; }
+.section-number {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #d4a017; color: #fff; font-weight: 700; font-size: 1rem;
+  margin-bottom: 8px;
+}
+.section h2 { font-size: 1.7rem; color: #3a2a0a; margin-bottom: 8px; }
+.section .intro {
+  font-size: 1.05rem; color: #5a4a2a; margin-bottom: 24px; max-width: 700px;
+}
+
+/* ===== CARDS ===== */
+.activity-box {
+  background: #fff; border-radius: 16px; padding: 28px;
+  box-shadow: 0 2px 12px rgba(100,80,0,0.07); margin-top: 20px;
+}
+.activity-box h3 {
+  font-size: 1.2rem; color: #8a6d0a; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.activity-box h3 .icon { font-size: 1.4rem; }
+
+/* ===== INFO BOXES ===== */
+.info-blue {
+  background: #e8f0fe; border-left: 4px solid #4a90d9; padding: 18px 22px;
+  border-radius: 0 12px 12px 0; margin: 16px 0;
+}
+.info-green {
+  background: #e8f8ee; border-left: 4px solid #2e9e6a; padding: 18px 22px;
+  border-radius: 0 12px 12px 0; margin: 16px 0;
+}
+.info-yellow {
+  background: #fef9e0; border-left: 4px solid #d4a017; padding: 18px 22px;
+  border-radius: 0 12px 12px 0; margin: 16px 0;
+}
+.info-red {
+  background: #fef0f0; border-left: 4px solid #e04040; padding: 18px 22px;
+  border-radius: 0 12px 12px 0; margin: 16px 0;
+}
+
+/* ===== STAT CARDS ===== */
+.stat-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px; margin: 20px 0;
+}
+.stat-card {
+  background: #fff; border-radius: 12px; padding: 20px; text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid #d4a017;
+}
+.stat-card .number { font-size: 2rem; font-weight: 800; color: #d4a017; }
+.stat-card .label { font-size: 0.85rem; color: #6a5a2a; margin-top: 4px; }
+
+/* ===== RISK CARDS ===== */
+.risk-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;
+}
+@media (max-width: 600px) { .risk-grid { grid-template-columns: 1fr; } }
+.risk-card {
+  border-radius: 12px; padding: 20px; border: 2px solid #e8dfc8;
+}
+.risk-card h4 { margin-bottom: 8px; font-size: 1rem; }
+.risk-card p { font-size: 0.92rem; }
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 22px; border: none; border-radius: 8px;
+  font-size: 0.95rem; font-weight: 600; cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: #d4a017; color: #fff; }
+.btn-primary:hover { background: #b8890f; }
+.btn-secondary { background: #fef3d0; color: #8a6d0a; }
+.btn-secondary:hover { background: #fde9a8; }
+.btn-sm { padding: 6px 14px; font-size: 0.85rem; }
+.btn-check { background: #2e9e6a; color: #fff; }
+.btn-check:hover { background: #258a5a; }
+
+/* ===== DISCUSSION CARDS ===== */
+.discuss-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;
+}
+@media (max-width: 600px) { .discuss-grid { grid-template-columns: 1fr; } }
+.discuss-card {
+  background: #f8f4e8; border-radius: 12px; padding: 18px;
+  border: 2px solid #e8dfc8;
+}
+.discuss-card textarea {
+  width: 100%; min-height: 70px; border: 1px solid #d0c8a8;
+  border-radius: 8px; padding: 10px; font-family: inherit;
+  font-size: 0.92rem; resize: vertical; margin-top: 8px; background: #fff;
+}
+
+/* ===== COMPARISON TABLE ===== */
+.compare-table {
+  width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem;
+}
+.compare-table th {
+  background: #8a2040; color: #fff; padding: 12px; text-align: left;
+}
+.compare-table td { padding: 10px 12px; border-bottom: 1px solid #e8dfc8; }
+.compare-table tr:nth-child(even) td { background: #fdf8ef; }
+.compare-table tr:hover td { background: #fef3d0; }
+
+/* ===== DRAG RANKING ===== */
+.rank-list {
+  list-style: none; margin: 16px 0; counter-reset: rank;
+}
+.rank-list li {
+  counter-increment: rank;
+  display: flex; align-items: center; gap: 12px;
+  background: #fff; border: 2px solid #e8dfc8; border-radius: 10px;
+  padding: 14px 18px; margin-bottom: 8px; cursor: grab;
+  user-select: none; transition: all 0.2s; font-size: 0.95rem;
+}
+.rank-list li::before {
+  content: counter(rank);
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 30px; height: 30px; border-radius: 50%;
+  background: #d4a017; color: #fff; font-weight: 700; font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.rank-list li:hover { border-color: #d4a017; box-shadow: 0 2px 8px rgba(200,160,0,0.15); }
+.rank-list li.dragging { opacity: 0.5; border-color: #d4a017; }
+
+/* ===== SCENARIO BOX ===== */
+.scenario-box {
+  background: #f0f7ff; border-radius: 12px; padding: 22px;
+  border-left: 4px solid #4a90d9; margin: 16px 0;
+}
+.scenario-box h4 { color: #2a5a9a; margin-bottom: 8px; }
+
+/* ===== MATCHING GAME ===== */
+.match-container {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px;
+}
+@media (max-width: 600px) { .match-container { grid-template-columns: 1fr; } }
+.match-item {
+  background: #fef9e0; border: 2px solid #e8dfc8; border-radius: 10px;
+  padding: 14px; cursor: grab; user-select: none; transition: all 0.2s; font-size: 0.92rem;
+}
+.match-item:hover { border-color: #d4a017; box-shadow: 0 2px 8px rgba(200,160,0,0.15); }
+.match-item.selected { border-color: #d4a017; background: #fde9a8; }
+.match-item.correct { border-color: #2e9e6a; background: #d4f5e0; }
+.match-item.wrong { border-color: #e04040; background: #fde0e0; }
+.match-target {
+  background: #f0f7ff; border: 2px dashed #a0c0e0; border-radius: 10px;
+  padding: 14px; min-height: 60px; cursor: pointer; transition: all 0.2s; font-size: 0.92rem;
+}
+.match-target:hover { border-color: #4a90d9; }
+.match-target.selected { border-color: #4a90d9; background: #d8eaff; }
+.match-target.correct { border-color: #2e9e6a; background: #d4f5e0; }
+.match-target.wrong { border-color: #e04040; background: #fde0e0; }
+
+/* ===== SORTING ACTIVITY ===== */
+.sort-items {
+  display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0;
+}
+.sort-item {
+  background: #fff; border: 2px solid #e8dfc8; border-radius: 8px;
+  padding: 10px 18px; cursor: pointer; transition: all 0.2s;
+  user-select: none; font-size: 0.9rem;
+}
+.sort-item:hover { border-color: #d4a017; }
+.sort-item.placed { opacity: 0.4; pointer-events: none; }
+.sort-bucket {
+  border: 2px dashed #d0c8a8; border-radius: 12px; padding: 16px;
+  min-height: 80px; margin: 10px 0; transition: all 0.2s;
+}
+.sort-bucket h4 { color: #8a6d0a; margin-bottom: 8px; font-size: 0.95rem; }
+.sort-bucket.over { border-color: #d4a017; background: #fef9e0; }
+.sort-placed-item {
+  display: inline-block; background: #fde9a8; border-radius: 6px;
+  padding: 6px 12px; margin: 4px; font-size: 0.85rem;
+}
+.sort-placed-item .remove {
+  cursor: pointer; margin-left: 6px; color: #c04040; font-weight: 700;
+}
+
+/* ===== REVEAL BOXES ===== */
+.reveal-btn {
+  background: #e8f0fe; border: 2px solid #a0c0e0; border-radius: 10px;
+  padding: 14px; cursor: pointer; text-align: center; transition: all 0.3s;
+  font-weight: 600; color: #2a5a9a;
+}
+.reveal-btn:hover { background: #d8eaff; }
+.reveal-content {
+  display: none; background: #f0f7ff; border-radius: 10px;
+  padding: 16px; margin-top: 8px; animation: fadeIn 0.3s;
+}
+.reveal-content.show { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== INVESTMENT CARDS ===== */
+.invest-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px; margin: 20px 0;
+}
+.invest-card {
+  background: #fff; border-radius: 12px; padding: 18px; text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 2px solid #e8dfc8; transition: all 0.2s; cursor: default;
+}
+.invest-card:hover { border-color: #d4a017; transform: translateY(-2px); }
+.invest-card .invest-icon { font-size: 2rem; margin-bottom: 6px; }
+.invest-card .invest-name { font-weight: 700; font-size: 0.95rem; color: #3a2a0a; }
+
+/* ===== RISK SLIDER ===== */
+.risk-meter {
+  display: flex; align-items: center; gap: 10px; margin: 12px 0;
+}
+.risk-meter input[type="range"] { flex: 1; accent-color: #d4a017; }
+.risk-meter .risk-label { font-size: 0.8rem; color: #6a5a2a; min-width: 60px; }
+
+/* ===== SPIDER / MIND MAP ===== */
+.spider-container {
+  display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0;
+}
+.spider-input {
+  background: #fff; border: 2px solid #e8dfc8; border-radius: 8px;
+  padding: 8px 14px; font-family: inherit; font-size: 0.9rem;
+  width: 180px; transition: border-color 0.2s;
+}
+.spider-input:focus { border-color: #d4a017; outline: none; }
+
+/* ===== QUIZ ===== */
+.quiz-question {
+  background: #fff; border-radius: 12px; padding: 22px;
+  margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border-left: 4px solid #d4a017; transition: border-color 0.3s, background 0.3s;
+}
+.quiz-question.correct { border-color: #2e9e6a; background: #edfbf2; }
+.quiz-question.wrong { border-color: #e04040; background: #fef0f0; }
+.quiz-question h4 { margin-bottom: 12px; color: #3a2a0a; }
+.quiz-question .options label {
+  display: block; padding: 10px 14px; margin: 6px 0;
+  background: #fdf8ef; border: 2px solid #e8dfc8; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.quiz-question .options label:hover { border-color: #d4a017; background: #fef3d0; }
+.quiz-question .options input { margin-right: 8px; }
+.quiz-question .feedback {
+  display: none; margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem;
+}
+.quiz-question.correct .feedback { display: block; background: #d4f5e0; color: #1a6a3a; }
+.quiz-question.wrong .feedback { display: block; background: #fde0e0; color: #a02020; }
+.quiz-score {
+  background: #fff; border-radius: 16px; padding: 30px; text-align: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-top: 24px;
+}
+.quiz-score .score-number { font-size: 3rem; font-weight: 800; color: #d4a017; }
+.quiz-score .score-text { font-size: 1.1rem; color: #5a4a2a; margin-top: 8px; }
+.quiz-score .score-bar {
+  height: 12px; border-radius: 6px; background: #e8dfc8; margin-top: 16px; overflow: hidden;
+}
+.quiz-score .score-fill { height: 100%; border-radius: 6px; transition: width 0.6s; }
+
+/* ===== NAVIGATION ===== */
+.nav-buttons { display: flex; justify-content: space-between; margin-top: 30px; }
+
+/* ===== MISC ===== */
+.hidden { display: none; }
+.tag {
+  display: inline-block; background: #fde9a8; color: #8a6d0a;
+  padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+}
+strong.highlight { color: #d4a017; }
+ul.spaced li { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<!-- ===== PROGRESS BAR ===== -->
+<div id="progress-bar">
+  <div class="step" data-label="Risk Ranking" data-section="0"></div>
+  <div class="step" data-label="Learning Objectives" data-section="1"></div>
+  <div class="step" data-label="Types of Risk" data-section="2"></div>
+  <div class="step" data-label="Scenario: Mei &amp; Simone" data-section="3"></div>
+  <div class="step" data-label="Risk Analysis" data-section="4"></div>
+  <div class="step" data-label="Investments" data-section="5"></div>
+  <div class="step" data-label="Gambling" data-section="6"></div>
+  <div class="step" data-label="Case Study: Loot Boxes" data-section="7"></div>
+  <div class="step" data-label="Protecting Yourself" data-section="8"></div>
+  <div class="step" data-label="Insurance Risks" data-section="9"></div>
+  <div class="step" data-label="Quiz" data-section="10"></div>
+  <span id="progress-label">0%</span>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 0 : DNA Starter – Risk Ranking -->
+<!-- ============================================================ -->
+<div class="section" id="sec-0">
+  <span class="section-number">1</span>
+  <h2>Risk and Reward</h2>
+  <p class="intro">Rank these activities from the <strong>most risky</strong> (top) to the <strong>least risky</strong> (bottom). Drag items to reorder them.</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#9888;&#65039;</span> DNA: Rank the Risk</h3>
+    <p style="margin-bottom:12px;">Drag and drop to reorder. Position 1 = most risky, position 7 = least risky.</p>
+    <ul class="rank-list" id="rank-list">
+      <li draggable="true" data-id="1">Keeping your money in a bank or building society savings account</li>
+      <li draggable="true" data-id="2">Buying a flight ticket on a credit card</li>
+      <li draggable="true" data-id="3">Borrowing money from the bank to buy a second-hand car from a friend of a friend</li>
+      <li draggable="true" data-id="4">Booking an expensive holiday with a little-known or unregistered travel company</li>
+      <li draggable="true" data-id="5">Giving a colleague your debit card and PIN to get money out of the cash machine for you</li>
+      <li draggable="true" data-id="6">Getting a credit card</li>
+      <li draggable="true" data-id="7">Borrowing &pound;100 from someone who approaches you on social media</li>
+    </ul>
+    <div class="reveal-btn" onclick="toggleReveal('rank-answer')">Click to reveal a suggested ranking</div>
+    <div class="reveal-content" id="rank-answer">
+      <p><strong>Most risky to least risky (suggested):</strong></p>
+      <ol class="spaced" style="padding-left:20px; margin-top:8px;">
+        <li>Borrowing &pound;100 from someone on social media (could be a loan shark or scam)</li>
+        <li>Giving a colleague your debit card and PIN (exposes you to fraud)</li>
+        <li>Booking with a little-known/unregistered travel company (could be a scam, may not be ATOL protected)</li>
+        <li>Borrowing to buy a second-hand car from a friend of a friend (car may have hidden problems)</li>
+        <li>Getting a credit card (risk of building up debt if not managed)</li>
+        <li>Buying a flight ticket on a credit card (some risk with debt, but offers consumer protection)</li>
+        <li>Keeping money in a bank savings account (very low risk &ndash; protected by FSCS)</li>
+      </ol>
+      <p style="margin-top:8px; font-size:0.9rem; color:#5a4a2a;">There is no single &ldquo;right&rdquo; answer &ndash; the important thing is to be able to justify your reasoning!</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn btn-primary" onclick="goSection(1)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 1 : Learning Objectives -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-1">
+  <span class="section-number">2</span>
+  <h2>Risk and Reward</h2>
+  <p class="intro">Every financial decision involves some element of risk. Understanding risk helps you make better choices.</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#127919;</span> By the end of this lesson, you will know:</h3>
+    <ul class="spaced" style="padding-left:20px; margin-top:8px;">
+      <li>The type of financial risks we&rsquo;re all exposed to</li>
+      <li>The link between risk and reward in different types of investment and in gambling</li>
+      <li>How you can protect yourself against financial risks</li>
+    </ul>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(0)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(2)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 2 : Types of Personal Financial Risks -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-2">
+  <span class="section-number">3</span>
+  <h2>Types of Personal Financial Risks</h2>
+  <p class="intro">In order to gain financial rewards, there is often some element of risk involved &ndash; the outcome of a financial decision may not be certain or guaranteed.</p>
+
+  <div class="info-yellow">
+    <p>There could be the possibility of a significant financial gain, but there could also be the risk of no gain or even a loss, leaving you worse off than when you started.</p>
+  </div>
+
+  <div class="risk-grid">
+    <div class="risk-card" style="background:#fef9e0; border-color:#d4a017;">
+      <h4 style="color:#8a6d0a;">Risks associated with your income</h4>
+      <p>For most people, their most valuable asset is their ability to earn an income, but there are risks that could affect this: you may become ill, injured or disabled and unable to work, or you may lose your job and become unemployed.</p>
+    </div>
+    <div class="risk-card" style="background:#e8f0fe; border-color:#4a90d9;">
+      <h4 style="color:#2a5a9a;">Risks associated with spending and borrowing</h4>
+      <p>You could be spending more than you are earning. It might be because you&rsquo;re not earning enough to meet basic needs, or because you want to buy things that give you the lifestyle you aspire to but cannot afford.</p>
+    </div>
+    <div class="risk-card" style="background:#e8f8ee; border-color:#2e9e6a;">
+      <h4 style="color:#1a6a3a;">Risk that you might lose assets</h4>
+      <p>If something you own is stolen or damaged it may need to be replaced. The more expensive the item, the greater the financial risk to you if it is damaged or stolen.</p>
+    </div>
+    <div class="risk-card" style="background:#f0e8fe; border-color:#7a50c0;">
+      <h4 style="color:#5a30a0;">Risks associated with investing</h4>
+      <p>There is no guarantee that what you have invested in will increase in value &ndash; in some cases it could even decrease in value, meaning you could lose money.</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(1)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(3)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 3 : Scenario – Mei & Simone -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-3">
+  <span class="section-number">4</span>
+  <h2>Examples of Personal Financial Risks</h2>
+  <p class="intro">Read the scenario below carefully, then answer the questions.</p>
+
+  <div class="scenario-box">
+    <h4>Simone &amp; Mei</h4>
+    <p>Simone has met her friend Mei for a coffee. She is happy to order and get a table if Mei doesn&rsquo;t mind going to the cash machine for her to get some cash out. She gives Mei her debit card along with her PIN, which Mei puts into her phone notes so that she can remember it.</p>
+    <p style="margin-top:10px;">Over coffee, Mei tells Simone that she is planning to go on holiday soon and has seen a really great deal on an online travel agency. She has never heard of the agency, but the holiday is much cheaper than anywhere else she has seen it. While she has no savings at the moment, Mei is planning on getting herself a credit card to book the holiday.</p>
+    <p style="margin-top:10px;">Simone gives Mei the news that she has recently passed her driving test and is about to get a loan from the bank to buy a second hand car from a friend of a friend.</p>
+  </div>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#128269;</span> Activity: Identify the Risks</h3>
+    <div class="discuss-grid">
+      <div class="discuss-card">
+        <strong>1. Identify the financial risks that Mei and Simone are taking.</strong>
+        <textarea placeholder="List the risks you can identify..."></textarea>
+      </div>
+      <div class="discuss-card">
+        <strong>2. Decide whether each risk is a low, medium or high-risk activity.</strong>
+        <textarea placeholder="Rate each risk..."></textarea>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <div class="discuss-card">
+        <strong>3. Discuss the implications of each risk and decide how Mei and Simone could minimise each one.</strong>
+        <textarea placeholder="How could they reduce these risks?"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(2)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(4)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4 : Risk Analysis Table -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-4">
+  <span class="section-number">5</span>
+  <h2>Risk Analysis</h2>
+  <p class="intro">Here is a detailed analysis of the risks from the scenario. Match each risk to its level, then reveal the full analysis.</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#128200;</span> Risk Level Sorting</h3>
+    <p>Sort each risk into the correct risk level category.</p>
+    <div class="sort-items" id="sort-items-risk">
+      <div class="sort-item" draggable="true" data-bucket="high">Giving your debit card to a friend</div>
+      <div class="sort-item" draggable="true" data-bucket="high">Putting a friend&rsquo;s PIN into phone notes</div>
+      <div class="sort-item" draggable="true" data-bucket="high">Using an unknown holiday company</div>
+      <div class="sort-item" draggable="true" data-bucket="low">Getting a credit card</div>
+      <div class="sort-item" draggable="true" data-bucket="medium">Borrowing to buy a car from a friend of a friend</div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:12px;">
+      <div class="sort-bucket" id="bucket-low" data-bucket="low"><h4>Low Risk</h4></div>
+      <div class="sort-bucket" id="bucket-medium" data-bucket="medium"><h4>Medium Risk</h4></div>
+      <div class="sort-bucket" id="bucket-high" data-bucket="high"><h4>High Risk</h4></div>
+    </div>
+    <div style="margin-top:12px; display:flex; align-items:center; gap:12px;">
+      <button class="btn btn-check btn-sm" onclick="checkRiskSort()">Check Answers</button>
+      <span id="sort-risk-feedback"></span>
+    </div>
+  </div>
+
+  <div class="activity-box" style="margin-top:20px;">
+    <h3><span class="icon">&#128218;</span> Full Risk Analysis</h3>
+    <div class="reveal-btn" onclick="toggleReveal('risk-table-reveal')">Click to reveal the full risk analysis table</div>
+    <div class="reveal-content" id="risk-table-reveal">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Risk</th><th>Level</th><th>Implications</th><th>How to Minimise</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Giving your debit card to a friend</td>
+            <td>Medium to High</td>
+            <td>They could use your card without your knowledge to take money out or make payments.</td>
+            <td>Never give your card or your details to anyone. Always get money out of cash machines yourself.</td>
+          </tr>
+          <tr>
+            <td>Putting a friend&rsquo;s PIN into phone notes</td>
+            <td>High</td>
+            <td>They may use it without your knowledge. If the same PIN is used for multiple cards/accounts, it could leave you vulnerable to misuse.</td>
+            <td>Never give your PIN details to anyone. Never keep records or written notes about your PIN.</td>
+          </tr>
+          <tr>
+            <td>Using an unknown holiday company</td>
+            <td>High</td>
+            <td>It may be a scam. The company may not be protected so you would lose your money if they failed.</td>
+            <td>Use online review sites. Check if they are ATOL protected. See what other customers think of their service.</td>
+          </tr>
+          <tr>
+            <td>Getting a credit card</td>
+            <td>Low</td>
+            <td>Tempting to use and build up debts. Could affect your credit rating if payments are missed.</td>
+            <td>Keep the credit limit low. Only use for large purchases. Pay off the balance every month.</td>
+          </tr>
+          <tr>
+            <td>Buying a car from a friend of a friend</td>
+            <td>Medium</td>
+            <td>The car may have hidden mechanical problems. Limited consumer protection compared to a dealer.</td>
+            <td>Get an independent mechanic to inspect it. Check the car&rsquo;s history (HPI check). Get a written receipt.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(3)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(5)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5 : Types of Investments -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-5">
+  <span class="section-number">6</span>
+  <h2>Types of Investments</h2>
+  <p class="intro">All investments have the potential to grow in value, but they can also decrease in value, meaning you begin to lose money. This is different to a savings account, where your money is protected.</p>
+
+  <div class="invest-grid">
+    <div class="invest-card">
+      <div class="invest-icon">&#128200;</div>
+      <div class="invest-name">Stocks &amp; Shares</div>
+    </div>
+    <div class="invest-card">
+      <div class="invest-icon">&#127968;</div>
+      <div class="invest-name">Property</div>
+    </div>
+    <div class="invest-card">
+      <div class="invest-icon">&#129309;</div>
+      <div class="invest-name">Collective Investments</div>
+    </div>
+    <div class="invest-card">
+      <div class="invest-icon">&#128663;</div>
+      <div class="invest-name">Classic Cars</div>
+    </div>
+    <div class="invest-card">
+      <div class="invest-icon">&#127979;</div>
+      <div class="invest-name">Antiques</div>
+    </div>
+    <div class="invest-card">
+      <div class="invest-icon">&#127912;</div>
+      <div class="invest-name">Art</div>
+    </div>
+    <div class="invest-card">
+      <div class="invest-icon">&#129351;</div>
+      <div class="invest-name">Gold</div>
+    </div>
+    <div class="invest-card">
+      <div class="invest-icon">&#8383;</div>
+      <div class="invest-name">Cryptocurrencies</div>
+    </div>
+  </div>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#128202;</span> Rate the Risk</h3>
+    <p>For each investment type, use the slider to rate how risky you think it is (1 = very safe, 10 = very risky).</p>
+    <div id="risk-sliders">
+      <div class="risk-meter"><span class="risk-label">Savings Account</span><input type="range" min="1" max="10" value="1" oninput="this.nextElementSibling.textContent=this.value"><span>1</span></div>
+      <div class="risk-meter"><span class="risk-label">Stocks &amp; Shares</span><input type="range" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value"><span>5</span></div>
+      <div class="risk-meter"><span class="risk-label">Property</span><input type="range" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value"><span>5</span></div>
+      <div class="risk-meter"><span class="risk-label">Gold</span><input type="range" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value"><span>5</span></div>
+      <div class="risk-meter"><span class="risk-label">Crypto</span><input type="range" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value"><span>5</span></div>
+      <div class="risk-meter"><span class="risk-label">Classic Cars</span><input type="range" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value"><span>5</span></div>
+      <div class="risk-meter"><span class="risk-label">Art</span><input type="range" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value"><span>5</span></div>
+    </div>
+    <div class="reveal-btn" style="margin-top:16px;" onclick="toggleReveal('invest-reveal')">Click to reveal risk levels</div>
+    <div class="reveal-content" id="invest-reveal">
+      <p><strong>General risk levels:</strong></p>
+      <ul class="spaced" style="padding-left:20px; margin-top:8px;">
+        <li><strong>Savings Account:</strong> Very Low (1&ndash;2) &ndash; Your money is protected by the FSCS up to &pound;85,000</li>
+        <li><strong>Property:</strong> Medium (4&ndash;6) &ndash; Historically tends to rise, but can fall in crashes</li>
+        <li><strong>Gold:</strong> Medium (4&ndash;5) &ndash; Seen as a &ldquo;safe haven&rdquo; but price can fluctuate</li>
+        <li><strong>Stocks &amp; Shares:</strong> Medium&ndash;High (5&ndash;8) &ndash; Can rise and fall quickly</li>
+        <li><strong>Classic Cars / Art / Antiques:</strong> Medium&ndash;High (5&ndash;7) &ndash; Depends on demand, trends and condition</li>
+        <li><strong>Cryptocurrencies:</strong> Very High (8&ndash;10) &ndash; Extremely volatile, can gain or lose huge value rapidly</li>
+      </ul>
+      <p style="margin-top:8px;"><strong>Key principle:</strong> Generally, the higher the potential reward, the higher the risk.</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(4)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(6)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 6 : Gambling -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-6">
+  <span class="section-number">7</span>
+  <h2>Gambling</h2>
+  <p class="intro">Gambling is an activity that results in either a win or a loss. It is also known as betting, gaming or taking part in a lottery.</p>
+
+  <div class="info-red">
+    <p><strong>All gambling is high risk</strong> &ndash; the chances of losing money are far greater than winning it. This is how organisations in the gambling industry make their money.</p>
+  </div>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#127922;</span> Where might you be exposed to gambling?</h3>
+    <p>Think about all the places where young people might encounter gambling. Write your ideas below.</p>
+    <div class="discuss-card" style="margin-top:12px;">
+      <textarea placeholder="Think about: online games, social media adverts, apps, betting shops, scratch cards, the National Lottery..."></textarea>
+    </div>
+    <div class="reveal-btn" style="margin-top:16px;" onclick="toggleReveal('gambling-where')">Click to reveal examples</div>
+    <div class="reveal-content" id="gambling-where">
+      <ul class="spaced" style="padding-left:20px;">
+        <li>In-game purchases and loot boxes in video games</li>
+        <li>Betting adverts on social media and TV</li>
+        <li>Online betting websites and apps</li>
+        <li>Scratch cards and the National Lottery</li>
+        <li>Betting shops on the high street</li>
+        <li>Casino games and slot machines</li>
+        <li>Fantasy sports leagues with entry fees</li>
+        <li>Trading cards and mystery packs</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(5)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(7)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 7 : Case Study – Loot Boxes -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-7">
+  <span class="section-number">8</span>
+  <h2>Case Study: Loot Boxes</h2>
+  <p class="intro">Read Max&rsquo;s story and discuss the questions below.</p>
+
+  <div class="scenario-box">
+    <h4>Max&rsquo;s Story</h4>
+    <p>Max has received &pound;50 birthday money and wants to spend it on in-game purchases for his favourite computer football game.</p>
+    <p style="margin-top:8px;">He plans to buy one of the named top players for &pound;10 but then sees an offer to buy a mystery bundle containing three random players for the same price.</p>
+    <p style="margin-top:8px;">He decides to buy the bundle as he thinks there is a chance he might get three top players for the price of one but is disappointed when he doesn&rsquo;t.</p>
+    <p style="margin-top:8px;">Max decides to spend the rest of his birthday money on four more mystery bundles, as he thinks they will have to contain more of the top players, but is even more disappointed when, for &pound;50, he only gets one of the players he wanted.</p>
+    <p style="margin-top:8px;">To make it worse, his friend got three top players in just one bundle.</p>
+    <p style="margin-top:8px;">Max&rsquo;s mum was annoyed that he had wasted his birthday money and told him that he shouldn&rsquo;t be gambling on mystery bundles.</p>
+  </div>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#128172;</span> Discussion Questions</h3>
+    <div class="discuss-grid">
+      <div class="discuss-card">
+        <strong>1. In your opinion, do you think this is a form of gambling? Explain your answer.</strong>
+        <textarea placeholder="Type your thoughts..."></textarea>
+      </div>
+      <div class="discuss-card">
+        <strong>2. What are the potential risks for young people playing for mystery bundles?</strong>
+        <textarea placeholder="Type your thoughts..."></textarea>
+      </div>
+      <div class="discuss-card">
+        <strong>3. Do you think that Max will be more or less likely to gamble in the future based on this outcome?</strong>
+        <textarea placeholder="Type your thoughts..."></textarea>
+      </div>
+      <div class="discuss-card">
+        <strong>4. If Max had got eight top players in his mystery bundles, do you think he would be more or less likely to gamble in the future?</strong>
+        <textarea placeholder="Type your thoughts..."></textarea>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <div class="discuss-card">
+        <strong>5. Are there any similarities between these mystery bundles and other forms of gambling? Explain your answer.</strong>
+        <textarea placeholder="Type your thoughts..."></textarea>
+      </div>
+    </div>
+
+    <div class="reveal-btn" style="margin-top:16px;" onclick="toggleReveal('loot-answers')">Click to reveal the answers</div>
+    <div class="reveal-content" id="loot-answers">
+      <ol class="spaced" style="padding-left:20px;">
+        <li><strong>Is it gambling?</strong> Yes &ndash; the definition of gambling is playing a game of chance for money with an uncertain outcome. Max is not guaranteed to get the players he wants if he buys the mystery bundles, so he is taking a chance and is not guaranteed to get the outcome he wants.</li>
+        <li><strong>Risks for young people:</strong> Young people may become addicted to the thrill of not knowing the outcome and this may encourage them to spend more until they get what they want. They may be tempted to spend more money than they have and may be tempted to use parents&rsquo;/carers&rsquo; bank cards. It may encourage young people to consider other forms of gambling.</li>
+        <li><strong>More or less likely?</strong> Less likely &ndash; he didn&rsquo;t get what he wanted so may not want to take the chance in future.</li>
+        <li><strong>If he had won?</strong> More likely &ndash; if he had got all of the players he wanted, he would want to try this again in future.</li>
+        <li><strong>Similarities to gambling?</strong> Yes &ndash; mystery bundles are similar to scratch cards, national lottery, betting on horses, cards and casino games. All involve an initial payment but have a random outcome that cannot be predetermined.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(6)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(8)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 8 : How to Protect Yourself -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-8">
+  <span class="section-number">9</span>
+  <h2>How to Protect Yourself Against Financial Risk</h2>
+  <p class="intro">There are several strategies you can use to protect yourself against financial risk.</p>
+
+  <div class="info-green">
+    <p><strong>Insurance</strong> &ndash; Insurance is a way to protect yourself against the financial loss of something going wrong, for example, losing your income because you have fallen ill, breaking your mobile phone or having an accident in your car. We can&rsquo;t stop events like these occurring, but insurance is a way to protect yourself from financial losses if they do occur.</p>
+  </div>
+
+  <div class="risk-grid">
+    <div class="risk-card" style="background:#fef9e0; border-color:#d4a017;">
+      <h4 style="color:#8a6d0a;">Understand your attitude to risk</h4>
+      <p>Are you the sort of person who likes to take a risk and would not worry if things started to go wrong? Or, are you the type of person who would worry and be stressed about losing money, so may want to take lower risk options?</p>
+    </div>
+    <div class="risk-card" style="background:#e8f0fe; border-color:#4a90d9;">
+      <h4 style="color:#2a5a9a;">Budgeting and planning</h4>
+      <p>Having a budget allows you to see all of your day-to-day finances in one place, so you can make more informed choices around saving and investing depending upon your financial circumstances.</p>
+    </div>
+    <div class="risk-card" style="background:#fef0f0; border-color:#e04040;">
+      <h4 style="color:#c02020;">Preparation and research</h4>
+      <p>When deciding whether to make an investment you can reduce some of the risk by making sure you have talked to experts, such as a financial advisor or your bank.</p>
+    </div>
+    <div class="risk-card" style="background:#e8f8ee; border-color:#2e9e6a;">
+      <h4 style="color:#1a6a3a;">Spread the risk</h4>
+      <p>If possible, have your money invested in a range of assets, so that if something goes wrong with one of them you still have the others to fall back on.</p>
+    </div>
+  </div>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#129504;</span> Match the Protection Strategy</h3>
+    <p>Click a scenario on the left, then click the best protection strategy on the right.</p>
+    <div class="match-container" id="match-protect">
+      <div>
+        <div class="match-item" data-pair="insurance">Your phone is worth &pound;1,000 and could break or be stolen</div>
+        <div class="match-item" data-pair="budget">You&rsquo;re spending more each month than you earn</div>
+        <div class="match-item" data-pair="research">A friend tells you about a &ldquo;guaranteed&rdquo; investment opportunity</div>
+        <div class="match-item" data-pair="spread">You have &pound;10,000 to invest and want to minimise risk</div>
+      </div>
+      <div>
+        <div class="match-target" data-pair="spread">Spread the risk &ndash; invest in a range of different assets</div>
+        <div class="match-target" data-pair="insurance">Insurance &ndash; take out protection against loss or damage</div>
+        <div class="match-target" data-pair="research">Preparation &amp; research &ndash; speak to a financial advisor first</div>
+        <div class="match-target" data-pair="budget">Budgeting &amp; planning &ndash; track your income and expenses</div>
+      </div>
+    </div>
+    <div style="margin-top:12px; display:flex; align-items:center; gap:12px;">
+      <button class="btn btn-check btn-sm" onclick="checkMatch('match-protect')">Check Answers</button>
+      <span id="match-protect-feedback"></span>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(7)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(9)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 9 : Insurance – Risks for House, Car, Holiday -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-9">
+  <span class="section-number">10</span>
+  <h2>Insurance: Identifying Risks</h2>
+  <p class="intro">Think about the possible risks attached to owning a house, a car, and going on holiday. Type your ideas for each, then reveal the answers.</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#127968;</span> Risks for a House</h3>
+    <div class="spider-container">
+      <input class="spider-input" placeholder="Risk 1...">
+      <input class="spider-input" placeholder="Risk 2...">
+      <input class="spider-input" placeholder="Risk 3...">
+      <input class="spider-input" placeholder="Risk 4...">
+    </div>
+  </div>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#128663;</span> Risks for a Car</h3>
+    <div class="spider-container">
+      <input class="spider-input" placeholder="Risk 1...">
+      <input class="spider-input" placeholder="Risk 2...">
+      <input class="spider-input" placeholder="Risk 3...">
+    </div>
+  </div>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#9992;&#65039;</span> Risks for a Holiday</h3>
+    <div class="spider-container">
+      <input class="spider-input" placeholder="Risk 1...">
+      <input class="spider-input" placeholder="Risk 2...">
+      <input class="spider-input" placeholder="Risk 3...">
+    </div>
+  </div>
+
+  <div class="reveal-btn" style="margin-top:20px;" onclick="toggleReveal('insurance-table')">Click to reveal the possible risks</div>
+  <div class="reveal-content" id="insurance-table">
+    <table class="compare-table">
+      <thead><tr><th>Item</th><th>Possible Risks</th></tr></thead>
+      <tbody>
+        <tr><td><strong>House</strong></td><td>Fire/flood damage, broken into, broken windows, paint spilt on carpet, subsidence, storm damage</td></tr>
+        <tr><td><strong>Car</strong></td><td>Breaks down, gets stolen, involved in accident, vandalism, weather damage</td></tr>
+        <tr><td><strong>Holiday</strong></td><td>Flight cancelled or delayed, money/camera stolen, personal injury or accident, lost luggage, illness abroad</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-blue" style="margin-top:16px;">
+      <ul class="spaced" style="padding-left:20px;">
+        <li>Mostly the risks are often beyond your control so the likelihood really depends on the circumstances. However, the likelihood of a flight being delayed is greater than your house being damaged by a flood.</li>
+        <li>All of these risks may be disastrous, upsetting and expensive to the individuals concerned.</li>
+        <li><strong>Third party motor insurance</strong> is legally required if you own and drive a car, but other forms of cover (third party, fire and theft or comprehensive) should be considered.</li>
+        <li>Other types of insurance: <strong>pets, phones, health, life, loan/income protection</strong>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="activity-box" style="margin-top:20px;">
+    <h3><span class="icon">&#128172;</span> Discussion</h3>
+    <div class="discuss-grid">
+      <div class="discuss-card">
+        <strong>What is the likelihood of these risks happening?</strong>
+        <textarea placeholder="Type your thoughts..."></textarea>
+      </div>
+      <div class="discuss-card">
+        <strong>Would you consider taking out insurance for any of these risks?</strong>
+        <textarea placeholder="Type your thoughts..."></textarea>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <div class="discuss-card">
+        <strong>Other than these three things, what else do you think you might have to take out insurance for?</strong>
+        <textarea placeholder="Type your thoughts..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(8)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(10)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 10 : QUIZ -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-10">
+  <span class="section-number">Q</span>
+  <h2>End of Lesson Quiz</h2>
+  <p class="intro">Test your knowledge with these 15 questions. When you&rsquo;re done, click <strong>Submit Quiz</strong> to see your results.</p>
+
+  <div id="quiz-container"></div>
+
+  <div style="text-align:center; margin-top:24px;">
+    <button class="btn btn-primary" style="font-size:1.1rem; padding:14px 40px;" onclick="submitQuiz()">Submit Quiz</button>
+  </div>
+
+  <div class="quiz-score hidden" id="quiz-score">
+    <div class="score-number" id="score-number"></div>
+    <div class="score-text" id="score-text"></div>
+    <div class="score-bar"><div class="score-fill" id="score-fill"></div></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(9)">&larr; Back to Lesson</button>
+    <button class="btn btn-primary" onclick="resetQuiz()">Retake Quiz</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT -->
+<!-- ============================================================ -->
+<script>
+/* ===== SECTIONS & PROGRESS ===== */
+const totalSections = 11;
+let currentSection = 0;
+
+function goSection(n) {
+  document.getElementById('sec-' + currentSection).classList.add('hidden');
+  document.getElementById('sec-' + n).classList.remove('hidden');
+  currentSection = n;
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress() {
+  const steps = document.querySelectorAll('#progress-bar .step');
+  steps.forEach((s, i) => {
+    s.classList.remove('done', 'active');
+    if (i < currentSection) s.classList.add('done');
+    if (i === currentSection) s.classList.add('active');
+  });
+  const pct = Math.round((currentSection / (totalSections - 1)) * 100);
+  document.getElementById('progress-label').textContent = pct + '%';
+}
+
+document.querySelectorAll('#progress-bar .step').forEach(s => {
+  s.addEventListener('click', () => goSection(parseInt(s.dataset.section)));
+});
+updateProgress();
+
+/* ===== REVEAL BOXES ===== */
+function toggleReveal(id) {
+  document.getElementById(id).classList.toggle('show');
+}
+
+/* ===== DRAG-TO-RANK LIST ===== */
+(function initRankList() {
+  const list = document.getElementById('rank-list');
+  let dragEl = null;
+
+  list.querySelectorAll('li').forEach(li => {
+    li.addEventListener('dragstart', function(e) {
+      dragEl = this;
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    li.addEventListener('dragend', function() {
+      this.classList.remove('dragging');
+      dragEl = null;
+    });
+    li.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      if (this === dragEl) return;
+      const rect = this.getBoundingClientRect();
+      const mid = rect.top + rect.height / 2;
+      if (e.clientY < mid) {
+        list.insertBefore(dragEl, this);
+      } else {
+        list.insertBefore(dragEl, this.nextSibling);
+      }
+    });
+    // Touch support
+    li.addEventListener('touchstart', function(e) {
+      dragEl = this;
+      this.classList.add('dragging');
+    }, {passive: true});
+    li.addEventListener('touchmove', function(e) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (target && target.closest && target.closest('.rank-list li') && target.closest('.rank-list li') !== dragEl) {
+        const li2 = target.closest('.rank-list li');
+        const rect = li2.getBoundingClientRect();
+        const mid = rect.top + rect.height / 2;
+        if (touch.clientY < mid) {
+          list.insertBefore(dragEl, li2);
+        } else {
+          list.insertBefore(dragEl, li2.nextSibling);
+        }
+      }
+    }, {passive: false});
+    li.addEventListener('touchend', function() {
+      this.classList.remove('dragging');
+      dragEl = null;
+    });
+  });
+})();
+
+/* ===== SORTING ACTIVITY (Risk Levels) ===== */
+(function initRiskSort() {
+  const items = document.querySelectorAll('#sort-items-risk .sort-item');
+  const buckets = document.querySelectorAll('.sort-bucket');
+  let dragItem = null;
+
+  items.forEach(item => {
+    item.addEventListener('dragstart', e => {
+      dragItem = item;
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    item.addEventListener('click', () => {
+      if (item.classList.contains('placed')) return;
+      if (dragItem === item) { dragItem = null; item.style.outline = ''; return; }
+      items.forEach(i => i.style.outline = '');
+      dragItem = item;
+      item.style.outline = '3px solid #d4a017';
+    });
+  });
+
+  buckets.forEach(bucket => {
+    bucket.addEventListener('dragover', e => { e.preventDefault(); bucket.classList.add('over'); });
+    bucket.addEventListener('dragleave', () => bucket.classList.remove('over'));
+    bucket.addEventListener('drop', e => {
+      e.preventDefault(); bucket.classList.remove('over');
+      if (!dragItem) return;
+      placeItem(dragItem, bucket);
+      dragItem = null;
+    });
+    bucket.addEventListener('click', () => {
+      if (!dragItem) return;
+      placeItem(dragItem, bucket);
+      dragItem.style.outline = '';
+      dragItem = null;
+    });
+  });
+
+  function placeItem(item, bucket) {
+    item.classList.add('placed');
+    const placed = document.createElement('span');
+    placed.className = 'sort-placed-item';
+    placed.dataset.correctBucket = item.dataset.bucket;
+    placed.innerHTML = item.textContent + ' <span class="remove" title="Remove">&times;</span>';
+    placed.querySelector('.remove').addEventListener('click', () => {
+      item.classList.remove('placed');
+      placed.remove();
+    });
+    bucket.appendChild(placed);
+  }
+})();
+
+function checkRiskSort() {
+  const bucketIds = ['bucket-low', 'bucket-medium', 'bucket-high'];
+  let correct = 0, total = 0;
+  bucketIds.forEach(bId => {
+    const b = document.getElementById(bId);
+    b.querySelectorAll('.sort-placed-item').forEach(el => {
+      total++;
+      if (el.dataset.correctBucket === b.dataset.bucket) {
+        el.style.background = '#d4f5e0'; el.style.border = '1px solid #2e9e6a'; correct++;
+      } else {
+        el.style.background = '#fde0e0'; el.style.border = '1px solid #e04040';
+      }
+    });
+  });
+  const fb = document.getElementById('sort-risk-feedback');
+  if (total === 0) { fb.innerHTML = '<span style="color:#e04040;">Place items into the buckets first!</span>'; return; }
+  if (correct === total) fb.innerHTML = '<span style="color:#2e9e6a; font-weight:600;">All correct! Well done!</span>';
+  else fb.innerHTML = '<span style="color:#e04040; font-weight:600;">' + correct + '/' + total + ' correct. Items in red are in the wrong bucket.</span>';
+}
+
+/* ===== MATCHING GAME ===== */
+let matchState = {};
+function initMatch(containerId) {
+  matchState[containerId] = { selected: null, selectedTarget: null, pairs: {} };
+  const c = document.getElementById(containerId);
+  c.querySelectorAll('.match-item').forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.classList.contains('correct')) return;
+      c.querySelectorAll('.match-item').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      matchState[containerId].selected = el;
+      tryPair(containerId);
+    });
+  });
+  c.querySelectorAll('.match-target').forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.classList.contains('correct')) return;
+      c.querySelectorAll('.match-target').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      matchState[containerId].selectedTarget = el;
+      tryPair(containerId);
+    });
+  });
+}
+function tryPair(id) {
+  const s = matchState[id];
+  if (!s.selected || !s.selectedTarget) return;
+  s.pairs[s.selected.dataset.pair] = s.selectedTarget.dataset.pair;
+  s.selected.classList.remove('selected');
+  s.selectedTarget.classList.remove('selected');
+  s.selected.style.opacity = '0.6';
+  s.selectedTarget.style.borderStyle = 'solid';
+  s.selectedTarget.innerHTML += ' &#10004;';
+  s.selected = null;
+  s.selectedTarget = null;
+}
+function checkMatch(id) {
+  const c = document.getElementById(id);
+  const items = c.querySelectorAll('.match-item');
+  const targets = c.querySelectorAll('.match-target');
+  let correct = 0, total = items.length;
+  const s = matchState[id];
+  items.forEach(el => {
+    const pair = el.dataset.pair;
+    if (s.pairs[pair] === pair) {
+      el.classList.add('correct'); el.classList.remove('wrong'); correct++;
+    } else {
+      el.classList.add('wrong'); el.classList.remove('correct');
+    }
+  });
+  targets.forEach(el => {
+    let ok = false;
+    for (let k in s.pairs) { if (s.pairs[k] === el.dataset.pair && k === el.dataset.pair) ok = true; }
+    if (ok) { el.classList.add('correct'); el.classList.remove('wrong'); }
+    else { el.classList.add('wrong'); el.classList.remove('correct'); }
+  });
+  const fb = document.getElementById(id + '-feedback');
+  if (correct === total) fb.innerHTML = '<span style="color:#2e9e6a; font-weight:600;">All correct! Well done!</span>';
+  else fb.innerHTML = '<span style="color:#e04040; font-weight:600;">' + correct + '/' + total + ' correct. Try again!</span>';
+}
+initMatch('match-protect');
+
+/* ===== QUIZ ===== */
+const quizData = [
+  {
+    q: "What is financial risk?",
+    opts: ["A guaranteed way to make money", "The possibility that a financial decision may not have the expected outcome", "A type of insurance", "A government policy"],
+    ans: 1,
+    fb: "Financial risk is the possibility that the outcome of a financial decision may not be certain or guaranteed."
+  },
+  {
+    q: "Which of these is the LOWEST risk activity?",
+    opts: ["Lending your debit card to a friend", "Investing in cryptocurrency", "Keeping money in a bank savings account", "Booking a holiday with an unknown company"],
+    ans: 2,
+    fb: "A bank savings account is protected by the FSCS (up to &pound;85,000), making it very low risk."
+  },
+  {
+    q: "What are the four main types of personal financial risk?",
+    opts: ["Income, spending, assets, investing", "Savings, credit, loans, pensions", "Tax, insurance, gambling, debt", "Wages, bills, rent, food"],
+    ans: 0,
+    fb: "The four types are: risks to income, spending &amp; borrowing, losing assets, and investing."
+  },
+  {
+    q: "Why is giving someone your PIN considered high risk?",
+    opts: ["They might forget it", "They could use it without your knowledge for multiple accounts", "It&rsquo;s against the law", "It costs money to change your PIN"],
+    ans: 1,
+    fb: "If the same PIN is used for multiple cards or accounts, sharing it could leave you vulnerable to misuse."
+  },
+  {
+    q: "What should you check when booking a holiday with an unfamiliar travel company?",
+    opts: ["If they have a nice website", "If they are ATOL protected and have good reviews", "If they accept cash only", "If they are on social media"],
+    ans: 1,
+    fb: "Check online reviews, whether they are ATOL protected, and what other customers think of their service."
+  },
+  {
+    q: "How is investing different from keeping money in a savings account?",
+    opts: ["Investments are always safe", "Savings accounts pay more interest", "Investments can decrease in value; savings are protected", "There is no difference"],
+    ans: 2,
+    fb: "Investments can both increase and decrease in value, whereas savings accounts protect your money and grow according to the interest rate."
+  },
+  {
+    q: "Which investment type is generally considered the MOST volatile?",
+    opts: ["Property", "Gold", "Government bonds", "Cryptocurrencies"],
+    ans: 3,
+    fb: "Cryptocurrencies are extremely volatile and can gain or lose huge value rapidly."
+  },
+  {
+    q: "What is the key principle linking risk and reward?",
+    opts: ["Higher risk always means higher reward", "Lower risk always means no reward", "Generally, the higher the potential reward, the higher the risk", "Risk and reward are unrelated"],
+    ans: 2,
+    fb: "Generally, the higher the potential reward, the higher the risk. But higher risk does not guarantee higher reward."
+  },
+  {
+    q: "Why is all gambling considered high risk?",
+    opts: ["Because it&rsquo;s illegal", "Because the chances of losing money are far greater than winning", "Because it&rsquo;s only for adults", "Because it always involves large sums of money"],
+    ans: 1,
+    fb: "The chances of losing money in gambling are far greater than winning it &ndash; this is how gambling companies make their money."
+  },
+  {
+    q: "Why are loot boxes considered a form of gambling?",
+    opts: ["They cost a lot of money", "They involve paying money for a random, uncertain outcome", "They are only available to adults", "They always contain valuable items"],
+    ans: 1,
+    fb: "Loot boxes involve an initial payment for a random outcome that cannot be predetermined, which is the definition of gambling."
+  },
+  {
+    q: "What is insurance?",
+    opts: ["A type of savings account", "A way to protect yourself against financial loss from unexpected events", "A government tax", "A type of investment"],
+    ans: 1,
+    fb: "Insurance is a way to protect yourself against the financial loss of something going wrong."
+  },
+  {
+    q: "Which type of motor insurance is legally required in the UK?",
+    opts: ["Comprehensive", "Fire and theft", "Third party", "None &ndash; it&rsquo;s optional"],
+    ans: 2,
+    fb: "Third party motor insurance is legally required if you own and drive a car."
+  },
+  {
+    q: "What does &lsquo;spreading the risk&rsquo; mean?",
+    opts: ["Telling everyone about your investments", "Investing all your money in one thing", "Investing in a range of different assets", "Avoiding all investments"],
+    ans: 2,
+    fb: "Spreading the risk means having your money invested in a range of assets, so if one goes wrong you still have the others."
+  },
+  {
+    q: "What should you do before making any investment?",
+    opts: ["Ask a friend on social media", "Preparation and research &ndash; talk to financial experts", "Invest all your savings immediately", "Wait for a &lsquo;guaranteed&rsquo; opportunity"],
+    ans: 1,
+    fb: "You should do preparation and research, including talking to experts such as a financial advisor or your bank."
+  },
+  {
+    q: "Which of these is NOT a way to minimise financial risk?",
+    opts: ["Taking out insurance", "Creating a budget", "Ignoring the risks and hoping for the best", "Researching before investing"],
+    ans: 2,
+    fb: "Ignoring risks is not a strategy &ndash; the other options (insurance, budgeting, research) are all effective ways to minimise financial risk."
+  }
+];
+
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  quizData.forEach((q, i) => {
+    let optsHtml = '';
+    q.opts.forEach((o, j) => {
+      optsHtml += '<label><input type="radio" name="q' + i + '" value="' + j + '"> ' + o + '</label>';
+    });
+    container.innerHTML += '<div class="quiz-question" id="qq-' + i + '">' +
+      '<h4>Q' + (i + 1) + '. ' + q.q + '</h4>' +
+      '<div class="options">' + optsHtml + '</div>' +
+      '<div class="feedback" id="qfb-' + i + '"></div></div>';
+  });
+}
+
+function submitQuiz() {
+  let score = 0;
+  quizData.forEach((q, i) => {
+    const el = document.getElementById('qq-' + i);
+    const fb = document.getElementById('qfb-' + i);
+    const sel = document.querySelector('input[name="q' + i + '"]:checked');
+    el.classList.remove('correct', 'wrong');
+    if (sel && parseInt(sel.value) === q.ans) {
+      el.classList.add('correct');
+      fb.textContent = 'Correct!';
+      score++;
+    } else {
+      el.classList.add('wrong');
+      fb.textContent = q.fb;
+    }
+  });
+  const scoreDiv = document.getElementById('quiz-score');
+  scoreDiv.classList.remove('hidden');
+  document.getElementById('score-number').textContent = score + ' / ' + quizData.length;
+  const pct = Math.round((score / quizData.length) * 100);
+  let msg = pct >= 80 ? 'Excellent work!' : pct >= 60 ? 'Good effort! Review the topics you missed.' : 'Keep studying! Review the lesson and try again.';
+  document.getElementById('score-text').textContent = pct + '% \u2014 ' + msg;
+  const fill = document.getElementById('score-fill');
+  fill.style.width = pct + '%';
+  fill.style.background = pct >= 80 ? '#2e9e6a' : pct >= 60 ? '#d4a017' : '#e04040';
+  scoreDiv.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  document.getElementById('quiz-score').classList.add('hidden');
+  quizData.forEach((q, i) => {
+    const el = document.getElementById('qq-' + i);
+    el.classList.remove('correct', 'wrong');
+    document.getElementById('qfb-' + i).textContent = '';
+    document.querySelectorAll('input[name="q' + i + '"]').forEach(r => r.checked = false);
+  });
+  window.scrollTo({ top: document.getElementById('sec-10').offsetTop, behavior: 'smooth' });
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

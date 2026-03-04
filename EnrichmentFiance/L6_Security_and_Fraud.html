@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 6 &ndash; Security and Fraud</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #fdf8ef;
+  color: #1a1a1a;
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+
+/* ===== PROGRESS BAR ===== */
+#progress-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: #fff; border-bottom: 1px solid #e0d6c0;
+  padding: 8px 16px;
+  display: flex; align-items: center; gap: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+#progress-bar .step {
+  flex: 1; height: 8px; border-radius: 4px;
+  background: #e8dfc8; transition: background 0.4s;
+  cursor: pointer; position: relative;
+}
+#progress-bar .step.done { background: #d4a017; }
+#progress-bar .step.active { background: #f0c850; }
+#progress-bar .step:hover::after {
+  content: attr(data-label);
+  position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+  background: #3a2a0a; color: #fff; padding: 4px 10px; border-radius: 4px;
+  font-size: 0.72rem; white-space: nowrap; pointer-events: none;
+}
+#progress-label {
+  font-size: 0.75rem; color: #6a5a2a; min-width: 40px; text-align: right; font-weight: 600;
+}
+
+/* ===== SECTIONS ===== */
+.section { max-width: 860px; margin: 0 auto; padding: 50px 20px 40px; }
+.section:first-of-type { padding-top: 80px; }
+.section-number {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #d4a017; color: #fff; font-weight: 700; font-size: 1rem;
+  margin-bottom: 8px;
+}
+.section h2 { font-size: 1.7rem; color: #3a2a0a; margin-bottom: 8px; }
+.section .intro { font-size: 1.05rem; color: #5a4a2a; margin-bottom: 24px; max-width: 700px; }
+
+/* ===== CARDS ===== */
+.activity-box {
+  background: #fff; border-radius: 16px; padding: 28px;
+  box-shadow: 0 2px 12px rgba(100,80,0,0.07); margin-top: 20px;
+}
+.activity-box h3 {
+  font-size: 1.2rem; color: #8a6d0a; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.activity-box h3 .icon { font-size: 1.4rem; }
+
+/* ===== INFO BOXES ===== */
+.info-blue { background: #e8f0fe; border-left: 4px solid #4a90d9; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 16px 0; }
+.info-green { background: #e8f8ee; border-left: 4px solid #2e9e6a; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 16px 0; }
+.info-yellow { background: #fef9e0; border-left: 4px solid #d4a017; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 16px 0; }
+.info-red { background: #fef0f0; border-left: 4px solid #e04040; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 16px 0; }
+
+/* ===== STAT CARDS ===== */
+.stat-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px; margin: 20px 0;
+}
+.stat-card {
+  background: #fff; border-radius: 12px; padding: 20px; text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid #d4a017;
+}
+.stat-card .number { font-size: 2rem; font-weight: 800; color: #d4a017; }
+.stat-card .label { font-size: 0.85rem; color: #6a5a2a; margin-top: 4px; }
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 22px; border: none; border-radius: 8px;
+  font-size: 0.95rem; font-weight: 600; cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: #d4a017; color: #fff; }
+.btn-primary:hover { background: #b8890f; }
+.btn-secondary { background: #fef3d0; color: #8a6d0a; }
+.btn-secondary:hover { background: #fde9a8; }
+.btn-sm { padding: 6px 14px; font-size: 0.85rem; }
+.btn-check { background: #2e9e6a; color: #fff; }
+.btn-check:hover { background: #258a5a; }
+
+/* ===== DISCUSSION CARDS ===== */
+.discuss-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+@media (max-width: 600px) { .discuss-grid { grid-template-columns: 1fr; } }
+.discuss-card {
+  background: #f8f4e8; border-radius: 12px; padding: 18px; border: 2px solid #e8dfc8;
+}
+.discuss-card textarea {
+  width: 100%; min-height: 70px; border: 1px solid #d0c8a8;
+  border-radius: 8px; padding: 10px; font-family: inherit;
+  font-size: 0.92rem; resize: vertical; margin-top: 8px; background: #fff;
+}
+
+/* ===== COMPARISON TABLE ===== */
+.compare-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+.compare-table th { background: #3a2a0a; color: #fff; padding: 12px; text-align: left; }
+.compare-table td { padding: 10px 12px; border-bottom: 1px solid #e8dfc8; }
+.compare-table tr:nth-child(even) td { background: #fdf8ef; }
+.compare-table tr:hover td { background: #fef3d0; }
+
+/* ===== MATCHING GAME ===== */
+.match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px; }
+@media (max-width: 600px) { .match-container { grid-template-columns: 1fr; } }
+.match-item {
+  background: #fef9e0; border: 2px solid #e8dfc8; border-radius: 10px;
+  padding: 14px; cursor: grab; user-select: none; transition: all 0.2s; font-size: 0.92rem;
+}
+.match-item:hover { border-color: #d4a017; box-shadow: 0 2px 8px rgba(200,160,0,0.15); }
+.match-item.selected { border-color: #d4a017; background: #fde9a8; }
+.match-item.correct { border-color: #2e9e6a; background: #d4f5e0; }
+.match-item.wrong { border-color: #e04040; background: #fde0e0; }
+.match-target {
+  background: #f0f7ff; border: 2px dashed #a0c0e0; border-radius: 10px;
+  padding: 14px; min-height: 60px; cursor: pointer; transition: all 0.2s; font-size: 0.92rem;
+}
+.match-target:hover { border-color: #4a90d9; }
+.match-target.selected { border-color: #4a90d9; background: #d8eaff; }
+.match-target.correct { border-color: #2e9e6a; background: #d4f5e0; }
+.match-target.wrong { border-color: #e04040; background: #fde0e0; }
+
+/* ===== SORTING ACTIVITY ===== */
+.sort-items { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+.sort-item {
+  background: #fff; border: 2px solid #e8dfc8; border-radius: 8px;
+  padding: 10px 18px; cursor: pointer; transition: all 0.2s;
+  user-select: none; font-size: 0.9rem;
+}
+.sort-item:hover { border-color: #d4a017; }
+.sort-item.placed { opacity: 0.4; pointer-events: none; }
+.sort-bucket {
+  border: 2px dashed #d0c8a8; border-radius: 12px; padding: 16px;
+  min-height: 80px; margin: 10px 0; transition: all 0.2s;
+}
+.sort-bucket h4 { color: #8a6d0a; margin-bottom: 8px; font-size: 0.95rem; }
+.sort-bucket.over { border-color: #d4a017; background: #fef9e0; }
+.sort-placed-item {
+  display: inline-block; background: #fde9a8; border-radius: 6px;
+  padding: 6px 12px; margin: 4px; font-size: 0.85rem;
+}
+.sort-placed-item .remove { cursor: pointer; margin-left: 6px; color: #c04040; font-weight: 700; }
+
+/* ===== REVEAL BOXES ===== */
+.reveal-btn {
+  background: #e8f0fe; border: 2px solid #a0c0e0; border-radius: 10px;
+  padding: 14px; cursor: pointer; text-align: center; transition: all 0.3s;
+  font-weight: 600; color: #2a5a9a;
+}
+.reveal-btn:hover { background: #d8eaff; }
+.reveal-content {
+  display: none; background: #f0f7ff; border-radius: 10px;
+  padding: 16px; margin-top: 8px; animation: fadeIn 0.3s;
+}
+.reveal-content.show { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== SCENARIO BOX ===== */
+.scenario-box {
+  background: #f0f7ff; border-radius: 12px; padding: 22px;
+  border-left: 4px solid #4a90d9; margin: 16px 0;
+}
+.scenario-box h4 { color: #2a5a9a; margin-bottom: 8px; }
+
+/* ===== CHECKLIST ===== */
+.checklist { list-style: none; margin: 16px 0; }
+.checklist li {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 16px; margin-bottom: 6px;
+  background: #fff; border: 2px solid #e8dfc8; border-radius: 10px;
+  cursor: pointer; transition: all 0.2s; font-size: 0.95rem;
+}
+.checklist li:hover { border-color: #d4a017; }
+.checklist li .check-box {
+  width: 24px; height: 24px; border-radius: 6px; border: 2px solid #d0c8a8;
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; font-size: 0.9rem; color: transparent;
+}
+.checklist li.checked { border-color: #2e9e6a; background: #edfbf2; }
+.checklist li.checked .check-box { background: #2e9e6a; border-color: #2e9e6a; color: #fff; }
+
+/* ===== QUIZ ===== */
+.quiz-question {
+  background: #fff; border-radius: 12px; padding: 22px;
+  margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border-left: 4px solid #d4a017; transition: border-color 0.3s, background 0.3s;
+}
+.quiz-question.correct { border-color: #2e9e6a; background: #edfbf2; }
+.quiz-question.wrong { border-color: #e04040; background: #fef0f0; }
+.quiz-question h4 { margin-bottom: 12px; color: #3a2a0a; }
+.quiz-question .options label {
+  display: block; padding: 10px 14px; margin: 6px 0;
+  background: #fdf8ef; border: 2px solid #e8dfc8; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.quiz-question .options label:hover { border-color: #d4a017; background: #fef3d0; }
+.quiz-question .options input { margin-right: 8px; }
+.quiz-question .feedback {
+  display: none; margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem;
+}
+.quiz-question.correct .feedback { display: block; background: #d4f5e0; color: #1a6a3a; }
+.quiz-question.wrong .feedback { display: block; background: #fde0e0; color: #a02020; }
+.quiz-score {
+  background: #fff; border-radius: 16px; padding: 30px; text-align: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-top: 24px;
+}
+.quiz-score .score-number { font-size: 3rem; font-weight: 800; color: #d4a017; }
+.quiz-score .score-text { font-size: 1.1rem; color: #5a4a2a; margin-top: 8px; }
+.quiz-score .score-bar { height: 12px; border-radius: 6px; background: #e8dfc8; margin-top: 16px; overflow: hidden; }
+.quiz-score .score-fill { height: 100%; border-radius: 6px; transition: width 0.6s; }
+
+/* ===== NAVIGATION ===== */
+.nav-buttons { display: flex; justify-content: space-between; margin-top: 30px; }
+
+/* ===== MISC ===== */
+.hidden { display: none; }
+ul.spaced li { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<!-- ===== PROGRESS BAR ===== -->
+<div id="progress-bar">
+  <div class="step" data-label="Malware Starter" data-section="0"></div>
+  <div class="step" data-label="Learning Objectives" data-section="1"></div>
+  <div class="step" data-label="Identity Theft" data-section="2"></div>
+  <div class="step" data-label="Methods of Theft" data-section="3"></div>
+  <div class="step" data-label="Prevention" data-section="4"></div>
+  <div class="step" data-label="Case Study: Dev &amp; Lena" data-section="5"></div>
+  <div class="step" data-label="Protection Tips" data-section="6"></div>
+  <div class="step" data-label="Money Muling" data-section="7"></div>
+  <div class="step" data-label="Quiz" data-section="8"></div>
+  <span id="progress-label">0%</span>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 0 : DNA Starter – Malware Matching -->
+<!-- ============================================================ -->
+<div class="section" id="sec-0">
+  <span class="section-number">1</span>
+  <h2>DNA: How Well Do You Know Your Malware?</h2>
+  <p class="intro">Match each malware type to its description. Click a term on the left, then click the matching description on the right.</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#128187;</span> Match the Malware</h3>
+    <div class="match-container" id="match-malware">
+      <div>
+        <div class="match-item" data-pair="virus">Virus</div>
+        <div class="match-item" data-pair="trojan">Trojan</div>
+        <div class="match-item" data-pair="bots">Bots</div>
+        <div class="match-item" data-pair="worm">Worm</div>
+        <div class="match-item" data-pair="spyware">Spyware</div>
+        <div class="match-item" data-pair="adware">Adware</div>
+        <div class="match-item" data-pair="ransomware">Ransomware</div>
+      </div>
+      <div>
+        <div class="match-target" data-pair="ransomware">Prevents or limits users from accessing their system unless money is paid</div>
+        <div class="match-target" data-pair="virus">Code that reproduces itself; damages a computer by corrupting or destroying data</div>
+        <div class="match-target" data-pair="spyware">Installed without your knowledge; can monitor your activity</div>
+        <div class="match-target" data-pair="trojan">Disguised as legitimate software; steals data or takes over systems remotely</div>
+        <div class="match-target" data-pair="adware">Automatically displays banners or pop-ups; tracks browsing habits</div>
+        <div class="match-target" data-pair="worm">Acts like a virus but spreads via network connections to multiple computers</div>
+        <div class="match-target" data-pair="bots">Performs automated tasks; can gather passwords, emails and financial info</div>
+      </div>
+    </div>
+    <div style="margin-top:12px; display:flex; align-items:center; gap:12px;">
+      <button class="btn btn-check btn-sm" onclick="checkMatch('match-malware')">Check Answers</button>
+      <span id="match-malware-feedback"></span>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <span></span>
+    <button class="btn btn-primary" onclick="goSection(1)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 1 : Learning Objectives & Statistics -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-1">
+  <span class="section-number">2</span>
+  <h2>Security and Fraud</h2>
+  <p class="intro">Fraud and identity theft are growing problems, especially for young people.</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#127919;</span> By the end of this lesson, you will know:</h3>
+    <ul class="spaced" style="padding-left:20px; margin-top:8px;">
+      <li>How identity theft can happen, and how your information may be used fraudulently</li>
+      <li>What to do if someone steals your identity and how you can protect yourself against identity theft</li>
+      <li>What &lsquo;money muling&rsquo; is and how to avoid it</li>
+    </ul>
+  </div>
+
+  <div class="stat-grid" style="margin-top:24px;">
+    <div class="stat-card" style="border-top-color:#e04040;">
+      <div class="number" style="color:#e04040;">+30%</div>
+      <div class="label">Increase in reported identity theft since 2015</div>
+    </div>
+    <div class="stat-card" style="border-top-color:#4a90d9;">
+      <div class="number" style="color:#4a90d9;">225,000</div>
+      <div class="label">Cases of identity theft in 2019</div>
+    </div>
+    <div class="stat-card" style="border-top-color:#d4a017;">
+      <div class="number" style="color:#d4a017;">+27%</div>
+      <div class="label">Increase in &lsquo;Money Mule&rsquo; cases in 3 years</div>
+    </div>
+    <div class="stat-card" style="border-top-color:#2e9e6a;">
+      <div class="number" style="color:#2e9e6a;">21&ndash;30</div>
+      <div class="label">Age group most targeted for money muling</div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(0)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(2)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 2 : What Happens If Someone Steals Your Identity? -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-2">
+  <span class="section-number">3</span>
+  <h2>What Happens If Someone Steals Your Identity?</h2>
+  <p class="intro">Identity theft can have devastating financial and emotional consequences.</p>
+
+  <div class="info-red">
+    <ul class="spaced" style="padding-left:20px;">
+      <li>If fraudsters gain direct access to your bank account or credit cards, they may leave you with <strong>no money or income</strong></li>
+      <li>The more serious and complex the identity fraud, the <strong>longer it can take to recover</strong> any stolen funds</li>
+      <li>Identity fraud can <strong>affect your credit history</strong>. It is possible to correct this, but it can take a while to sort out and to demonstrate to your credit provider that you have been the victim of crime</li>
+      <li>It may make it harder for you to <strong>borrow money</strong> &ndash; a big problem if you are opening a new bank account, buying a car or applying for a mortgage</li>
+      <li>While it is possible for a victim to recoup stolen funds and clear their name, the <strong>emotional toll</strong> of identity theft can last far longer than any financial worries</li>
+      <li>Victims can <strong>blame themselves</strong> for their identity being stolen and feel more vulnerable to it happening again</li>
+    </ul>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(1)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(3)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 3 : Methods of Identity Theft -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-3">
+  <span class="section-number">4</span>
+  <h2>Methods of Identity Theft</h2>
+  <p class="intro">There are three main categories of identity theft methods. Sort each method into the correct category.</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#128269;</span> Sort the Identity Theft Methods</h3>
+    <div class="sort-items" id="sort-items-theft">
+      <div class="sort-item" draggable="true" data-bucket="physical">Bank card skimming</div>
+      <div class="sort-item" draggable="true" data-bucket="digital">Hacking of personal accounts</div>
+      <div class="sort-item" draggable="true" data-bucket="social">Phishing</div>
+      <div class="sort-item" draggable="true" data-bucket="physical">Bank card scanning (contactless NFC)</div>
+      <div class="sort-item" draggable="true" data-bucket="digital">Hacking of commercial organisations</div>
+      <div class="sort-item" draggable="true" data-bucket="social">Family/friends using your information</div>
+      <div class="sort-item" draggable="true" data-bucket="physical">Wallet or purse theft</div>
+      <div class="sort-item" draggable="true" data-bucket="digital">Malware from spam emails or pop-ups</div>
+      <div class="sort-item" draggable="true" data-bucket="social">Money mules</div>
+      <div class="sort-item" draggable="true" data-bucket="physical">Bin raiding</div>
+      <div class="sort-item" draggable="true" data-bucket="digital">Fake Wi-Fi spots</div>
+      <div class="sort-item" draggable="true" data-bucket="social">Smishing (phishing via SMS)</div>
+      <div class="sort-item" draggable="true" data-bucket="physical">Diverting post</div>
+      <div class="sort-item" draggable="true" data-bucket="social">Phone scams</div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:12px;">
+      <div class="sort-bucket" id="bucket-physical" data-bucket="physical"><h4>Physical (access to your property)</h4></div>
+      <div class="sort-bucket" id="bucket-digital" data-bucket="digital"><h4>Digital (carried out online)</h4></div>
+      <div class="sort-bucket" id="bucket-social" data-bucket="social"><h4>Social (social interactions)</h4></div>
+    </div>
+    <div style="margin-top:12px; display:flex; align-items:center; gap:12px;">
+      <button class="btn btn-check btn-sm" onclick="checkTheftSort()">Check Answers</button>
+      <span id="sort-theft-feedback"></span>
+    </div>
+  </div>
+
+  <div class="reveal-btn" style="margin-top:20px;" onclick="toggleReveal('theft-methods-table')">Click to reveal the full table</div>
+  <div class="reveal-content" id="theft-methods-table">
+    <table class="compare-table">
+      <thead><tr><th>Physical</th><th>Digital</th><th>Social</th></tr></thead>
+      <tbody>
+        <tr><td>Bank card skimming (magnetic strip or chip)</td><td>Hacking of personal accounts</td><td>Phishing</td></tr>
+        <tr><td>Bank card scanning (contactless NFC)</td><td>Hacking of commercial organisations; gaining access to millions of account details</td><td>Family and friends using/stealing your information</td></tr>
+        <tr><td>Wallet or purse theft</td><td>Malware from installed software, spam emails, pop-up windows or infected flash drive</td><td>Money mules</td></tr>
+        <tr><td>Bin raiding</td><td>Fake Wi-Fi spots</td><td>Smishing (phishing via SMS)</td></tr>
+        <tr><td>Diverting post</td><td></td><td>Phone scams</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(2)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(4)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4 : How to Prevent Fraud -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-4">
+  <span class="section-number">5</span>
+  <h2>How Do You Prevent These Types of Fraud?</h2>
+  <p class="intro">For each category of identity theft, think about how you could prevent it from happening.</p>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#128737;</span> Prevention Strategies</h3>
+    <div class="discuss-grid">
+      <div class="discuss-card" style="border-color:#e04040;">
+        <strong style="color:#c02020;">Physical Prevention</strong>
+        <p style="font-size:0.85rem; margin-top:4px;">How can you prevent physical identity theft methods?</p>
+        <textarea placeholder="e.g. Shield your PIN, shred documents, keep cards secure..."></textarea>
+      </div>
+      <div class="discuss-card" style="border-color:#4a90d9;">
+        <strong style="color:#2a5a9a;">Digital Prevention</strong>
+        <p style="font-size:0.85rem; margin-top:4px;">How can you prevent digital/online identity theft?</p>
+        <textarea placeholder="e.g. Strong passwords, anti-virus, avoid public Wi-Fi..."></textarea>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <div class="discuss-card" style="border-color:#2e9e6a;">
+        <strong style="color:#1a6a3a;">Social Prevention</strong>
+        <p style="font-size:0.85rem; margin-top:4px;">How can you prevent social identity theft methods?</p>
+        <textarea placeholder="e.g. Don't share personal info, verify callers, be wary of unexpected messages..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(3)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(5)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5 : Case Study – Dev & Lena -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-5">
+  <span class="section-number">6</span>
+  <h2>Avoiding Identity Theft: Dev &amp; Lena</h2>
+  <p class="intro">Read the case study and discuss what could have been done differently.</p>
+
+  <div class="scenario-box">
+    <h4>Dev &amp; Lena&rsquo;s Story</h4>
+    <p>Dev and his partner Lena have both been victims of identity theft in the last three years. They told their neighbours about this, and it turned out that several people who live in the same building have also been victims. All their letterboxes are on the street outside, so it is easy for thieves to access their mail, including bills and bank statements.</p>
+    <p style="margin-top:10px;">When a thief gets hold of a bill or bank statement they then have enough details to be able to apply for credit accounts (e.g. credit cards or shopping accounts) and then steal the cards or account details.</p>
+    <p style="margin-top:10px;">Dev only knew that this had happened to him when he received a statement showing that he owed a credit card company over &pound;2,500. He didn&rsquo;t have an account with this provider, but the thief had been able to take one out in his name and spend thousands of pounds that he was now being billed for. He had no idea what else they might have done with his personal details; they could have signed up to websites or even applied for a passport.</p>
+    <p style="margin-top:10px;">He contacted the credit card provider who helped him get the money back, but he found the whole experience very worrying.</p>
+  </div>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#128172;</span> What could they have done?</h3>
+    <div class="discuss-card">
+      <strong>What could Dev, Lena and their neighbours have done to avoid having their identities stolen?</strong>
+      <textarea placeholder="Think about how they could have protected their mail and personal information..."></textarea>
+    </div>
+    <div class="reveal-btn" style="margin-top:16px;" onclick="toggleReveal('dev-answers')">Click to reveal the answers</div>
+    <div class="reveal-content" id="dev-answers">
+      <ul class="spaced" style="padding-left:20px;">
+        <li>Receive all statements and bills <strong>online</strong></li>
+        <li>Check statements regularly and use secure apps to <strong>track spending</strong></li>
+        <li><strong>Check your credit report</strong> regularly</li>
+        <li>If possible, <strong>move the letterboxes</strong> to a more secure area inside the building</li>
+        <li><strong>Pick up mail regularly</strong> or, if they go on holiday, ask a friend or a neighbour they know well to collect it</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(4)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(6)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 6 : How to Protect Yourself -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-6">
+  <span class="section-number">7</span>
+  <h2>How to Protect Yourself from Identity Theft</h2>
+  <p class="intro">Here are 8 essential tips to protect yourself. Click each one to mark it as understood.</p>
+
+  <div class="activity-box">
+    <ul class="checklist" id="protection-checklist">
+      <li onclick="toggleCheck(this)">
+        <span class="check-box">&#10003;</span>
+        <span><strong>1.</strong> Never share passwords or PINs with others.</span>
+      </li>
+      <li onclick="toggleCheck(this)">
+        <span class="check-box">&#10003;</span>
+        <span><strong>2.</strong> Use strong passwords and PINs &ndash; don&rsquo;t use family names; include a mix of upper and lower-case letters, numbers and symbols. Aim for a minimum of 8 characters.</span>
+      </li>
+      <li onclick="toggleCheck(this)">
+        <span class="check-box">&#10003;</span>
+        <span><strong>3.</strong> Do not use the same password or PIN for more than one account.</span>
+      </li>
+      <li onclick="toggleCheck(this)">
+        <span class="check-box">&#10003;</span>
+        <span><strong>4.</strong> Shred or burn any unwanted financial documents &ndash; do not put them straight into recycling.</span>
+      </li>
+      <li onclick="toggleCheck(this)">
+        <span class="check-box">&#10003;</span>
+        <span><strong>5.</strong> Make sure your computer has up to date firewall, anti-virus and anti-spyware programs.</span>
+      </li>
+      <li onclick="toggleCheck(this)">
+        <span class="check-box">&#10003;</span>
+        <span><strong>6.</strong> Limit the amount of personal information that you give away on social networking sites. Make use of any security settings offered.</span>
+      </li>
+      <li onclick="toggleCheck(this)">
+        <span class="check-box">&#10003;</span>
+        <span><strong>7.</strong> Only accept online friend requests from people who are familiar.</span>
+      </li>
+      <li onclick="toggleCheck(this)">
+        <span class="check-box">&#10003;</span>
+        <span><strong>8.</strong> Always review your bank account statements (and credit card statements when you get one).</span>
+      </li>
+    </ul>
+    <p id="checklist-progress" style="margin-top:12px; font-weight:600; color:#6a5a2a;">0 / 8 tips acknowledged</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(5)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(7)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 7 : Money Muling -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-7">
+  <span class="section-number">8</span>
+  <h2>Money Muling: Financial Crime</h2>
+  <p class="intro">Money muling is a serious crime that particularly targets young people.</p>
+
+  <div class="info-red">
+    <p><strong>What is money muling?</strong> A money mule is someone who transfers illegally obtained money through their own bank account on behalf of someone else. Even if you don&rsquo;t know the money is from crime, you are <strong>committing a criminal offence</strong>.</p>
+  </div>
+
+  <div class="activity-box">
+    <h3><span class="icon">&#128172;</span> Discussion Questions</h3>
+    <div class="discuss-grid">
+      <div class="discuss-card">
+        <strong>What are the consequences of money muling?</strong>
+        <textarea placeholder="Think about criminal records, bank accounts, future prospects..."></textarea>
+      </div>
+      <div class="discuss-card">
+        <strong>How can you spot that an offer is linked to fraud or organised crime?</strong>
+        <textarea placeholder="Think about warning signs..."></textarea>
+      </div>
+    </div>
+    <div class="reveal-btn" style="margin-top:16px;" onclick="toggleReveal('mule-answers')">Click to reveal the answers</div>
+    <div class="reveal-content" id="mule-answers">
+      <p><strong>Consequences of money muling:</strong></p>
+      <ul class="spaced" style="padding-left:20px;">
+        <li>Up to <strong>14 years in prison</strong></li>
+        <li>A <strong>criminal record</strong> which can affect future employment, travel and education</li>
+        <li>Your <strong>bank account will be closed</strong> and you may find it very difficult to open a new one</li>
+        <li>Difficulty getting a <strong>mobile phone contract, mortgage or loan</strong></li>
+      </ul>
+      <p style="margin-top:12px;"><strong>Warning signs of money mule recruitment:</strong></p>
+      <ul class="spaced" style="padding-left:20px;">
+        <li>Being contacted out of the blue with an offer to make &ldquo;easy money&rdquo;</li>
+        <li>Being asked to receive money into your account and transfer it elsewhere</li>
+        <li>Job adverts for &ldquo;money transfer agents&rdquo; or &ldquo;payment processors&rdquo;</li>
+        <li>Being asked to use your own bank account for someone else&rsquo;s money</li>
+        <li>Offers through social media, messaging apps or from people you&rsquo;ve just met</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="info-yellow" style="margin-top:20px;">
+    <p><strong>Remember:</strong> If it sounds too good to be true, it probably is. Never allow anyone to use your bank account to transfer money. If you suspect you are being recruited as a money mule, report it to your bank and the police.</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(6)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="goSection(8)">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 8 : QUIZ -->
+<!-- ============================================================ -->
+<div class="section hidden" id="sec-8">
+  <span class="section-number">Q</span>
+  <h2>End of Lesson Quiz</h2>
+  <p class="intro">Test your knowledge with these 15 questions. When you&rsquo;re done, click <strong>Submit Quiz</strong> to see your results.</p>
+
+  <div id="quiz-container"></div>
+
+  <div style="text-align:center; margin-top:24px;">
+    <button class="btn btn-primary" style="font-size:1.1rem; padding:14px 40px;" onclick="submitQuiz()">Submit Quiz</button>
+  </div>
+
+  <div class="quiz-score hidden" id="quiz-score">
+    <div class="score-number" id="score-number"></div>
+    <div class="score-text" id="score-text"></div>
+    <div class="score-bar"><div class="score-fill" id="score-fill"></div></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(7)">&larr; Back to Lesson</button>
+    <button class="btn btn-primary" onclick="resetQuiz()">Retake Quiz</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT -->
+<!-- ============================================================ -->
+<script>
+/* ===== SECTIONS & PROGRESS ===== */
+const totalSections = 9;
+let currentSection = 0;
+
+function goSection(n) {
+  document.getElementById('sec-' + currentSection).classList.add('hidden');
+  document.getElementById('sec-' + n).classList.remove('hidden');
+  currentSection = n;
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress() {
+  const steps = document.querySelectorAll('#progress-bar .step');
+  steps.forEach((s, i) => {
+    s.classList.remove('done', 'active');
+    if (i < currentSection) s.classList.add('done');
+    if (i === currentSection) s.classList.add('active');
+  });
+  const pct = Math.round((currentSection / (totalSections - 1)) * 100);
+  document.getElementById('progress-label').textContent = pct + '%';
+}
+
+document.querySelectorAll('#progress-bar .step').forEach(s => {
+  s.addEventListener('click', () => goSection(parseInt(s.dataset.section)));
+});
+updateProgress();
+
+/* ===== REVEAL BOXES ===== */
+function toggleReveal(id) {
+  document.getElementById(id).classList.toggle('show');
+}
+
+/* ===== CHECKLIST ===== */
+function toggleCheck(li) {
+  li.classList.toggle('checked');
+  const total = document.querySelectorAll('#protection-checklist li').length;
+  const checked = document.querySelectorAll('#protection-checklist li.checked').length;
+  document.getElementById('checklist-progress').textContent = checked + ' / ' + total + ' tips acknowledged';
+  if (checked === total) {
+    document.getElementById('checklist-progress').innerHTML = '<span style="color:#2e9e6a;">All 8 tips acknowledged! Well done!</span>';
+  }
+}
+
+/* ===== MATCHING GAME ===== */
+let matchState = {};
+function initMatch(containerId) {
+  matchState[containerId] = { selected: null, selectedTarget: null, pairs: {} };
+  const c = document.getElementById(containerId);
+  c.querySelectorAll('.match-item').forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.classList.contains('correct')) return;
+      c.querySelectorAll('.match-item').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      matchState[containerId].selected = el;
+      tryPair(containerId);
+    });
+  });
+  c.querySelectorAll('.match-target').forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.classList.contains('correct')) return;
+      c.querySelectorAll('.match-target').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      matchState[containerId].selectedTarget = el;
+      tryPair(containerId);
+    });
+  });
+}
+function tryPair(id) {
+  const s = matchState[id];
+  if (!s.selected || !s.selectedTarget) return;
+  s.pairs[s.selected.dataset.pair] = s.selectedTarget.dataset.pair;
+  s.selected.classList.remove('selected');
+  s.selectedTarget.classList.remove('selected');
+  s.selected.style.opacity = '0.6';
+  s.selectedTarget.style.borderStyle = 'solid';
+  s.selectedTarget.innerHTML += ' &#10004;';
+  s.selected = null;
+  s.selectedTarget = null;
+}
+function checkMatch(id) {
+  const c = document.getElementById(id);
+  const items = c.querySelectorAll('.match-item');
+  const targets = c.querySelectorAll('.match-target');
+  let correct = 0, total = items.length;
+  const s = matchState[id];
+  items.forEach(el => {
+    const pair = el.dataset.pair;
+    if (s.pairs[pair] === pair) {
+      el.classList.add('correct'); el.classList.remove('wrong'); correct++;
+    } else {
+      el.classList.add('wrong'); el.classList.remove('correct');
+    }
+  });
+  targets.forEach(el => {
+    let ok = false;
+    for (let k in s.pairs) { if (s.pairs[k] === el.dataset.pair && k === el.dataset.pair) ok = true; }
+    if (ok) { el.classList.add('correct'); el.classList.remove('wrong'); }
+    else { el.classList.add('wrong'); el.classList.remove('correct'); }
+  });
+  const fb = document.getElementById(id + '-feedback');
+  if (correct === total) fb.innerHTML = '<span style="color:#2e9e6a; font-weight:600;">All correct! Well done!</span>';
+  else fb.innerHTML = '<span style="color:#e04040; font-weight:600;">' + correct + '/' + total + ' correct. Try again!</span>';
+}
+initMatch('match-malware');
+
+/* ===== SORTING ACTIVITY (Identity Theft Methods) ===== */
+(function initTheftSort() {
+  const items = document.querySelectorAll('#sort-items-theft .sort-item');
+  const buckets = document.querySelectorAll('.sort-bucket');
+  let dragItem = null;
+
+  items.forEach(item => {
+    item.addEventListener('dragstart', e => {
+      dragItem = item;
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    item.addEventListener('click', () => {
+      if (item.classList.contains('placed')) return;
+      if (dragItem === item) { dragItem = null; item.style.outline = ''; return; }
+      items.forEach(i => i.style.outline = '');
+      dragItem = item;
+      item.style.outline = '3px solid #d4a017';
+    });
+  });
+
+  buckets.forEach(bucket => {
+    bucket.addEventListener('dragover', e => { e.preventDefault(); bucket.classList.add('over'); });
+    bucket.addEventListener('dragleave', () => bucket.classList.remove('over'));
+    bucket.addEventListener('drop', e => {
+      e.preventDefault(); bucket.classList.remove('over');
+      if (!dragItem) return;
+      placeItem(dragItem, bucket);
+      dragItem = null;
+    });
+    bucket.addEventListener('click', () => {
+      if (!dragItem) return;
+      placeItem(dragItem, bucket);
+      dragItem.style.outline = '';
+      dragItem = null;
+    });
+  });
+
+  function placeItem(item, bucket) {
+    item.classList.add('placed');
+    const placed = document.createElement('span');
+    placed.className = 'sort-placed-item';
+    placed.dataset.correctBucket = item.dataset.bucket;
+    placed.innerHTML = item.textContent + ' <span class="remove" title="Remove">&times;</span>';
+    placed.querySelector('.remove').addEventListener('click', () => {
+      item.classList.remove('placed');
+      placed.remove();
+    });
+    bucket.appendChild(placed);
+  }
+})();
+
+function checkTheftSort() {
+  const bucketIds = ['bucket-physical', 'bucket-digital', 'bucket-social'];
+  let correct = 0, total = 0;
+  bucketIds.forEach(bId => {
+    const b = document.getElementById(bId);
+    b.querySelectorAll('.sort-placed-item').forEach(el => {
+      total++;
+      if (el.dataset.correctBucket === b.dataset.bucket) {
+        el.style.background = '#d4f5e0'; el.style.border = '1px solid #2e9e6a'; correct++;
+      } else {
+        el.style.background = '#fde0e0'; el.style.border = '1px solid #e04040';
+      }
+    });
+  });
+  const fb = document.getElementById('sort-theft-feedback');
+  if (total === 0) { fb.innerHTML = '<span style="color:#e04040;">Place items into the buckets first!</span>'; return; }
+  if (correct === total) fb.innerHTML = '<span style="color:#2e9e6a; font-weight:600;">All correct! Well done!</span>';
+  else fb.innerHTML = '<span style="color:#e04040; font-weight:600;">' + correct + '/' + total + ' correct. Items in red are in the wrong bucket.</span>';
+}
+
+/* ===== QUIZ ===== */
+const quizData = [
+  {
+    q: "What is a virus?",
+    opts: ["Software that displays adverts", "Code that reproduces itself and damages a computer by corrupting or destroying data", "Software disguised as a legitimate program", "A program that locks your files until you pay"],
+    ans: 1,
+    fb: "A virus is code that can reproduce itself and is used to damage computers by corrupting or destroying data."
+  },
+  {
+    q: "What is ransomware?",
+    opts: ["Software that monitors your browsing", "An automated bot that collects passwords", "Malware that locks your system or files unless money is paid", "A virus that spreads over networks"],
+    ans: 2,
+    fb: "Ransomware prevents users from accessing their system by locking files unless money is paid."
+  },
+  {
+    q: "What is the difference between a virus and a worm?",
+    opts: ["There is no difference", "A worm spreads via network connections; a virus requires user action to spread", "A virus is more dangerous", "A worm only targets mobile phones"],
+    ans: 1,
+    fb: "A worm acts like a virus but uses network connections to spread itself to multiple computers automatically."
+  },
+  {
+    q: "What is a Trojan?",
+    opts: ["A type of adware", "Malware disguised as legitimate software to gain access to your computer", "A network security tool", "An anti-virus program"],
+    ans: 1,
+    fb: "A Trojan is malware disguised as legitimate software, used to steal data or take over systems remotely."
+  },
+  {
+    q: "By how much has reported identity theft increased since 2015?",
+    opts: ["10%", "20%", "30%", "50%"],
+    ans: 2,
+    fb: "Reported identity theft has increased by 30% since 2015."
+  },
+  {
+    q: "Which age group is MOST targeted for money muling?",
+    opts: ["Under 21", "21&ndash;30", "31&ndash;40", "51&ndash;60"],
+    ans: 1,
+    fb: "The 21&ndash;30 age group is the most targeted for money muling."
+  },
+  {
+    q: "What is &lsquo;phishing&rsquo;?",
+    opts: ["Stealing someone&rsquo;s wallet", "A social method of identity theft using fake emails or websites to trick people into giving personal information", "Hacking a company&rsquo;s database", "Scanning someone&rsquo;s bank card"],
+    ans: 1,
+    fb: "Phishing is a social method that uses fake emails or websites to trick people into revealing personal information."
+  },
+  {
+    q: "What is &lsquo;smishing&rsquo;?",
+    opts: ["Phishing carried out via SMS text messages", "A type of computer virus", "Stealing mail from letterboxes", "A method of card skimming"],
+    ans: 0,
+    fb: "Smishing is phishing carried out via SMS text messages."
+  },
+  {
+    q: "Which of these is a PHYSICAL method of identity theft?",
+    opts: ["Hacking personal accounts", "Phishing emails", "Bin raiding", "Fake Wi-Fi spots"],
+    ans: 2,
+    fb: "Bin raiding is a physical method &ndash; thieves search bins for discarded bank statements and financial documents."
+  },
+  {
+    q: "What should you do with unwanted financial documents?",
+    opts: ["Put them in recycling", "Leave them in a drawer", "Shred or burn them", "Give them to a friend"],
+    ans: 2,
+    fb: "You should shred or burn any unwanted financial documents &ndash; never put them straight into recycling."
+  },
+  {
+    q: "What makes a strong password?",
+    opts: ["Your pet&rsquo;s name", "A mix of upper/lower case letters, numbers and symbols, minimum 8 characters", "The word &lsquo;password&rsquo;", "Your date of birth"],
+    ans: 1,
+    fb: "Strong passwords use a mix of upper/lower case letters, numbers and symbols, with a minimum of 8 characters."
+  },
+  {
+    q: "What is a money mule?",
+    opts: ["A type of cryptocurrency", "Someone who transfers illegally obtained money through their own bank account", "A financial advisor", "A type of bank account"],
+    ans: 1,
+    fb: "A money mule is someone who transfers illegally obtained money through their own bank account on behalf of someone else."
+  },
+  {
+    q: "What can happen if you are caught money muling?",
+    opts: ["Nothing &ndash; you didn&rsquo;t steal the money", "A small fine", "Up to 14 years in prison and a criminal record", "You just have to return the money"],
+    ans: 2,
+    fb: "Money muling can result in up to 14 years in prison, a criminal record, and your bank account being closed."
+  },
+  {
+    q: "Which of these is a warning sign of money mule recruitment?",
+    opts: ["A job advert from a well-known company", "Being asked to receive money and transfer it elsewhere for a fee", "A bank offering you a savings account", "A friend asking to borrow &pound;10"],
+    ans: 1,
+    fb: "Being asked to receive money into your account and transfer it elsewhere is a classic warning sign of money mule recruitment."
+  },
+  {
+    q: "How can identity fraud affect your credit history?",
+    opts: ["It improves your credit score", "It has no effect", "It can damage your credit rating, making it harder to borrow money", "It automatically closes all your accounts"],
+    ans: 2,
+    fb: "Identity fraud can affect your credit history and make it harder to borrow money, open accounts, or get a mortgage."
+  }
+];
+
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  quizData.forEach((q, i) => {
+    let optsHtml = '';
+    q.opts.forEach((o, j) => {
+      optsHtml += '<label><input type="radio" name="q' + i + '" value="' + j + '"> ' + o + '</label>';
+    });
+    container.innerHTML += '<div class="quiz-question" id="qq-' + i + '">' +
+      '<h4>Q' + (i + 1) + '. ' + q.q + '</h4>' +
+      '<div class="options">' + optsHtml + '</div>' +
+      '<div class="feedback" id="qfb-' + i + '"></div></div>';
+  });
+}
+
+function submitQuiz() {
+  let score = 0;
+  quizData.forEach((q, i) => {
+    const el = document.getElementById('qq-' + i);
+    const fb = document.getElementById('qfb-' + i);
+    const sel = document.querySelector('input[name="q' + i + '"]:checked');
+    el.classList.remove('correct', 'wrong');
+    if (sel && parseInt(sel.value) === q.ans) {
+      el.classList.add('correct'); fb.textContent = 'Correct!'; score++;
+    } else {
+      el.classList.add('wrong'); fb.textContent = q.fb;
+    }
+  });
+  const scoreDiv = document.getElementById('quiz-score');
+  scoreDiv.classList.remove('hidden');
+  document.getElementById('score-number').textContent = score + ' / ' + quizData.length;
+  const pct = Math.round((score / quizData.length) * 100);
+  let msg = pct >= 80 ? 'Excellent work!' : pct >= 60 ? 'Good effort! Review the topics you missed.' : 'Keep studying! Review the lesson and try again.';
+  document.getElementById('score-text').textContent = pct + '% \u2014 ' + msg;
+  const fill = document.getElementById('score-fill');
+  fill.style.width = pct + '%';
+  fill.style.background = pct >= 80 ? '#2e9e6a' : pct >= 60 ? '#d4a017' : '#e04040';
+  scoreDiv.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  document.getElementById('quiz-score').classList.add('hidden');
+  quizData.forEach((q, i) => {
+    const el = document.getElementById('qq-' + i);
+    el.classList.remove('correct', 'wrong');
+    document.getElementById('qfb-' + i).textContent = '';
+    document.querySelectorAll('input[name="q' + i + '"]').forEach(r => r.checked = false);
+  });
+  window.scrollTo({ top: document.getElementById('sec-8').offsetTop, behavior: 'smooth' });
+}
+
+buildQuiz();
+</script>
+</body>
+</html>
