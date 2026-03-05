@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic 7 Test: Using Tools to Manage Money | LIBF FCMME</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/test-styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>LIBF FCMME Assessment</h1>
+            <p class="subtitle">Topic 7: Using Tools to Manage Money</p>
+        </div>
+    </header>
+
+    <nav class="breadcrumb">
+        <div class="container">
+            <a href="../index.html">Home</a>
+            <span>›</span>
+            <a href="../topics/topic-7-managing-money/index.html">Topic 7</a>
+            <span>›</span>
+            <span>Test</span>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="section">
+                <div class="info-box tip">
+                    <strong>Instructions:</strong> Answer all questions by selecting one option for each. When you have finished, click "Submit Test" to see your results. A PDF certificate will be automatically downloaded with your score.
+                </div>
+
+                <div id="topic-7-test"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>LIBF FCMME Revision | Assessment Centre</p>
+        </div>
+    </footer>
+
+    <script src="../js/test-engine.js"></script>
+    <script>
+        // Topic 7 Test: Using Tools to Manage Money
+        new FISTest('topic-7-test', {
+            topicNumber: 7,
+            topicName: 'Using Tools to Manage Money',
+            questions: [
+                {
+                    question: 'Which of the following is the main advantage of internet banking over branch banking?',
+                    options: [
+                        'You can manage your account 24/7 from any location with internet access',
+                        'You can only access it during business hours',
+                        'It is more secure because no passwords are required',
+                        'It allows you to withdraw physical cash directly'
+                    ],
+                    correct: 0,
+                    explanation: 'Internet banking allows customers to access their accounts at any time of day from anywhere with an internet connection, unlike branch banking which is limited to opening hours and physical locations.'
+                },
+                {
+                    question: 'A bank statement shows all of the following EXCEPT:',
+                    options: [
+                        'Money paid into the account (credits)',
+                        'Money taken out of the account (debits)',
+                        'The current balance after each transaction',
+                        'The customer\'s credit score'
+                    ],
+                    correct: 3,
+                    explanation: 'A bank statement records credits (money in), debits (money out), dates of transactions, and the running balance. It does not show a customer\'s credit score, which is held by credit reference agencies.'
+                },
+                {
+                    question: 'Use of cheques in the UK has declined significantly. Which of the following best explains why?',
+                    options: [
+                        'Cheques have been made illegal by the UK government',
+                        'Banks no longer accept cheques for any purpose',
+                        'Faster and more convenient electronic payment methods have replaced them',
+                        'Cheques are too expensive for banks to process'
+                    ],
+                    correct: 2,
+                    explanation: 'The rise of debit cards, online banking, contactless payments, and faster electronic transfers has made cheques largely unnecessary. They are slow to clear (typically 2-4 working days) and inconvenient compared to modern alternatives.'
+                },
+                {
+                    question: 'What is the key difference between a debit card and a credit card?',
+                    options: [
+                        'A debit card can only be used in shops, while a credit card can only be used online',
+                        'There is no difference; they work in exactly the same way',
+                        'A credit card is free to use, while a debit card always charges fees',
+                        'A debit card takes money directly from your bank account, while a credit card borrows money that must be repaid later'
+                    ],
+                    correct: 3,
+                    explanation: 'A debit card withdraws funds directly from your current account at the time of purchase. A credit card allows you to borrow money from the card provider, which you must repay, usually with interest if not paid in full each month.'
+                },
+                {
+                    question: 'The UK contactless payment limit allows single transactions up to:',
+                    options: [
+                        '£30',
+                        '£45',
+                        '£100',
+                        '£250'
+                    ],
+                    correct: 2,
+                    explanation: 'The UK contactless payment limit is £100 per transaction. This was increased from £45 in October 2021 to make contactless payments more convenient for everyday purchases.'
+                },
+                {
+                    question: 'Which of the following best describes the difference between a standing order and a direct debit?',
+                    options: [
+                        'A standing order pays a fixed amount on a set date, while a direct debit allows the payee to collect varying amounts',
+                        'A standing order is set up by the payee, while a direct debit is set up by the payer',
+                        'A direct debit can only be used for charity donations',
+                        'A standing order can only be cancelled by the bank, not the account holder'
+                    ],
+                    correct: 0,
+                    explanation: 'A standing order is an instruction from the account holder to pay a fixed amount on a regular date. A direct debit is an agreement allowing a company (the payee) to collect payments that can vary in amount, such as energy bills or mobile phone contracts.'
+                },
+                {
+                    question: 'BACS, CHAPS, and Faster Payments are all methods of transferring money. Which statement is correct?',
+                    options: [
+                        'BACS transfers arrive instantly and are free',
+                        'Faster Payments take 3-5 working days to arrive',
+                        'CHAPS transfers are guaranteed same-day but usually carry a fee',
+                        'All three methods cost the same and take the same time'
+                    ],
+                    correct: 2,
+                    explanation: 'CHAPS (Clearing House Automated Payment System) guarantees same-day payment but typically charges a fee (often £20-£30). BACS takes 2-3 working days. Faster Payments usually arrive within minutes and are typically free for personal use.'
+                },
+                {
+                    question: 'PayPal and other digital wallets are popular because they:',
+                    options: [
+                        'Allow users to make online payments without sharing their bank or card details with the retailer',
+                        'Eliminate the need for a bank account entirely',
+                        'Are the only way to pay for items online',
+                        'Guarantee that you will never be a victim of fraud'
+                    ],
+                    correct: 0,
+                    explanation: 'Digital wallets like PayPal act as an intermediary, so your actual bank or card details are not shared with the retailer. This adds a layer of security and convenience for online transactions.'
+                },
+                {
+                    question: 'Which of the following is a risk associated with mobile banking apps?',
+                    options: [
+                        'They can only be used on expensive smartphones',
+                        'They do not allow you to check your balance',
+                        'Mobile banking apps charge a monthly subscription fee',
+                        'If your phone is lost or stolen, someone could potentially access your financial information'
+                    ],
+                    correct: 3,
+                    explanation: 'If a phone is lost, stolen, or not properly secured with passwords/biometrics, there is a risk that someone could access banking apps and financial information. This is why strong phone security (PIN, fingerprint, face recognition) is essential.'
+                },
+                {
+                    question: 'If a direct debit is taken from your account in error, what protection do you have?',
+                    options: [
+                        'None; once the money is taken, it cannot be returned',
+                        'The Direct Debit Guarantee entitles you to a full and immediate refund from your bank',
+                        'You can only claim a refund if the amount is over £100',
+                        'You must contact the police to recover the money'
+                    ],
+                    correct: 1,
+                    explanation: 'The Direct Debit Guarantee protects consumers. If a payment is taken in error (wrong amount or wrong date), your bank must provide a full and immediate refund. This is one of the key advantages of paying by direct debit.'
+                }
+            ],
+            caseStudies: [
+                {
+                    title: 'Choosing the Right Payment Method',
+                    scenario: `
+                        <p><strong>Priya</strong> is a 24-year-old graduate who has recently started her first full-time job. She needs to make several different payments this month and is trying to choose the most appropriate method for each.</p>
+                        <p><strong>Payment 1:</strong> Monthly rent of £750 to her landlord, due on the 1st of every month (always the same amount).</p>
+                        <p><strong>Payment 2:</strong> A one-off purchase of a £45 jacket from a high street shop.</p>
+                        <p><strong>Payment 3:</strong> Her monthly mobile phone bill, which varies depending on usage (usually between £25 and £40).</p>
+                        <p><strong>Payment 4:</strong> Buying a £350 camera from an online marketplace seller she has never used before.</p>
+                    `,
+                    questions: [
+                        {
+                            question: 'Which payment method is most appropriate for Priya\'s monthly rent of £750?',
+                            options: [
+                                'A standing order for £750 on the 1st of each month',
+                                'A cheque posted to the landlord each month',
+                                'Paying cash in person to the landlord',
+                                'A credit card payment'
+                            ],
+                            correct: 0,
+                            explanation: 'A standing order is ideal for Priya\'s rent because it is a fixed amount (£750) paid on a regular date (1st of each month). It is automated so she will not forget, and she controls the instruction.'
+                        },
+                        {
+                            question: 'For her variable mobile phone bill, which method should Priya use?',
+                            options: [
+                                'A standing order for £25',
+                                'A direct debit, which allows the phone company to collect the correct variable amount',
+                                'Paying by cheque each month',
+                                'A CHAPS transfer'
+                            ],
+                            correct: 1,
+                            explanation: 'A direct debit is best for variable bills because the phone company can collect the exact amount owed each month. Unlike a standing order (which is fixed), a direct debit adjusts to the correct amount and is protected by the Direct Debit Guarantee.'
+                        },
+                        {
+                            question: 'Why might Priya choose to pay for the £350 camera using PayPal rather than entering her card details directly on the marketplace website?',
+                            options: [
+                                'PayPal is always cheaper than card payments',
+                                'Card payments are not accepted on any online marketplaces',
+                                'PayPal hides her bank details from the seller and offers buyer protection if the item does not arrive',
+                                'PayPal payments are always instant, while card payments take several days'
+                            ],
+                            correct: 2,
+                            explanation: 'When buying from an unfamiliar seller, PayPal provides an extra layer of security by not sharing bank or card details. PayPal also offers buyer protection, meaning Priya can claim a refund if the camera does not arrive or is not as described.'
+                        }
+                    ]
+                },
+                {
+                    title: 'Checking a Bank Statement',
+                    scenario: `
+                        <p><strong>Daniel</strong> is reviewing his bank statement for the month of March. He notices the following transactions:</p>
+                        <table style="width:100%; border-collapse:collapse; margin:10px 0;">
+                            <tr style="background:#f0f0f0;"><th style="padding:8px; border:1px solid #ddd; text-align:left;">Date</th><th style="padding:8px; border:1px solid #ddd; text-align:left;">Description</th><th style="padding:8px; border:1px solid #ddd; text-align:right;">Out (£)</th><th style="padding:8px; border:1px solid #ddd; text-align:right;">In (£)</th><th style="padding:8px; border:1px solid #ddd; text-align:right;">Balance (£)</th></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">1 Mar</td><td style="padding:8px; border:1px solid #ddd;">Opening Balance</td><td style="padding:8px; border:1px solid #ddd; text-align:right;"></td><td style="padding:8px; border:1px solid #ddd; text-align:right;"></td><td style="padding:8px; border:1px solid #ddd; text-align:right;">1,200.00</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">3 Mar</td><td style="padding:8px; border:1px solid #ddd;">DD - GreenEnergy Ltd</td><td style="padding:8px; border:1px solid #ddd; text-align:right;">85.00</td><td style="padding:8px; border:1px solid #ddd; text-align:right;"></td><td style="padding:8px; border:1px solid #ddd; text-align:right;">1,115.00</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">5 Mar</td><td style="padding:8px; border:1px solid #ddd;">SO - Landlord</td><td style="padding:8px; border:1px solid #ddd; text-align:right;">600.00</td><td style="padding:8px; border:1px solid #ddd; text-align:right;"></td><td style="padding:8px; border:1px solid #ddd; text-align:right;">515.00</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">10 Mar</td><td style="padding:8px; border:1px solid #ddd;">Contactless - Supermarket</td><td style="padding:8px; border:1px solid #ddd; text-align:right;">47.50</td><td style="padding:8px; border:1px solid #ddd; text-align:right;"></td><td style="padding:8px; border:1px solid #ddd; text-align:right;">467.50</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">15 Mar</td><td style="padding:8px; border:1px solid #ddd;">FP - Employer Salary</td><td style="padding:8px; border:1px solid #ddd; text-align:right;"></td><td style="padding:8px; border:1px solid #ddd; text-align:right;">1,850.00</td><td style="padding:8px; border:1px solid #ddd; text-align:right;">2,317.50</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">18 Mar</td><td style="padding:8px; border:1px solid #ddd;">DD - GymFit Membership</td><td style="padding:8px; border:1px solid #ddd; text-align:right;">45.00</td><td style="padding:8px; border:1px solid #ddd; text-align:right;"></td><td style="padding:8px; border:1px solid #ddd; text-align:right;">2,272.50</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">22 Mar</td><td style="padding:8px; border:1px solid #ddd;">Card - Online Retailer</td><td style="padding:8px; border:1px solid #ddd; text-align:right;">120.00</td><td style="padding:8px; border:1px solid #ddd; text-align:right;"></td><td style="padding:8px; border:1px solid #ddd; text-align:right;">2,152.50</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">25 Mar</td><td style="padding:8px; border:1px solid #ddd;">DD - StreamTV</td><td style="padding:8px; border:1px solid #ddd; text-align:right;">15.99</td><td style="padding:8px; border:1px solid #ddd; text-align:right;"></td><td style="padding:8px; border:1px solid #ddd; text-align:right;">2,136.51</td></tr>
+                        </table>
+                        <p>Daniel cancelled his GymFit membership two months ago, but the direct debit of £45 is still being taken. He also does not recognise the £120 payment to the online retailer on 22 March.</p>
+                    `,
+                    questions: [
+                        {
+                            question: 'Daniel\'s GymFit direct debit of £45 is still being taken despite cancelling his membership. What should he do first?',
+                            options: [
+                                'Ignore it because it is only a small amount',
+                                'Contact GymFit to confirm the cancellation and request a refund, and if unsuccessful, contact his bank to claim under the Direct Debit Guarantee',
+                                'Close his bank account to stop all payments',
+                                'Set up a standing order to GymFit for £0 to override the direct debit'
+                            ],
+                            correct: 1,
+                            explanation: 'Daniel should first contact GymFit to resolve the issue directly. If they do not refund the money, he can claim under the Direct Debit Guarantee, which requires his bank to give a full and immediate refund for any incorrect direct debit payment.'
+                        },
+                        {
+                            question: 'What does "DD" next to the GreenEnergy Ltd payment indicate about the payment method?',
+                            options: [
+                                'It was a debit card payment',
+                                'It was a standing order set up by Daniel',
+                                'It was a cash withdrawal',
+                                'It was a direct debit, meaning GreenEnergy collected the amount from Daniel\'s account'
+                            ],
+                            correct: 3,
+                            explanation: '"DD" stands for Direct Debit. This means Daniel has authorised GreenEnergy Ltd to collect payments from his account. The amount can vary each month depending on energy usage, which is why a direct debit is appropriate for utility bills.'
+                        },
+                        {
+                            question: 'Daniel does not recognise the £120 payment on 22 March. What is the most appropriate course of action?',
+                            options: [
+                                'Assume it was a purchase he forgot about and take no action',
+                                'Contact his bank immediately to report the unrecognised transaction and potentially have his card frozen to prevent further unauthorised payments',
+                                'Wait until next month to see if it happens again',
+                                'Post about it on social media to warn others'
+                            ],
+                            correct: 1,
+                            explanation: 'An unrecognised transaction could be a sign of fraud. Daniel should contact his bank immediately to report it. The bank can investigate, potentially refund the money, and freeze or replace his card to prevent further unauthorised transactions.'
+                        }
+                    ]
+                }
+            ]
+        });
+    </script>
+</body>
+</html>

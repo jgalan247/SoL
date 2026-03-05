@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic 8 Test: Pay and Tax | LIBF FCMME</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/test-styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>LIBF FCMME Assessment</h1>
+            <p class="subtitle">Topic 8: Pay and Tax</p>
+        </div>
+    </header>
+
+    <nav class="breadcrumb">
+        <div class="container">
+            <a href="../index.html">Home</a>
+            <span>›</span>
+            <a href="../topics/topic-8-pay-tax/index.html">Topic 8</a>
+            <span>›</span>
+            <span>Test</span>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="section">
+                <div class="info-box tip">
+                    <strong>Instructions:</strong> Answer all questions by selecting one option for each. When you have finished, click "Submit Test" to see your results. A PDF certificate will be automatically downloaded with your score.
+                </div>
+
+                <div id="topic-8-test"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>LIBF FCMME Revision | Assessment Centre</p>
+        </div>
+    </footer>
+
+    <script src="../js/test-engine.js"></script>
+    <script>
+        // Topic 8 Test: Pay and Tax
+        new FISTest('topic-8-test', {
+            topicNumber: 8,
+            topicName: 'Pay and Tax',
+            questions: [
+                {
+                    question: 'Which of the following is an example of UNEARNED income?',
+                    options: [
+                        'A monthly salary from an employer',
+                        'Wages from a part-time weekend job',
+                        'Interest received on a savings account',
+                        'Tips earned from working as a waiter'
+                    ],
+                    correct: 2,
+                    explanation: 'Unearned income is money received without directly working for it, such as interest on savings, dividends from shares, or rental income. A salary, wages, and tips are all examples of earned income because they result from employment.'
+                },
+                {
+                    question: 'The personal allowance for the 2024/25 tax year is £12,570. This means:',
+                    options: [
+                        'Everyone pays tax on all their income',
+                        'The first £12,570 of income is tax-free',
+                        'You only pay tax if you earn more than £50,000',
+                        'You receive £12,570 from the government each year'
+                    ],
+                    correct: 1,
+                    explanation: 'The personal allowance is the amount of income you can earn each year before you start paying income tax. For 2024/25, this is £12,570. Any income above this amount is subject to income tax at the appropriate rate.'
+                },
+                {
+                    question: 'Someone earns £30,000 per year. If the personal allowance is £12,570 and the basic rate of tax is 20%, how much income tax do they pay?',
+                    options: [
+                        '£3,486',
+                        '£6,000',
+                        '£2,514',
+                        '£4,000'
+                    ],
+                    correct: 0,
+                    explanation: 'Taxable income = £30,000 - £12,570 = £17,430. Income tax at 20% = £17,430 x 0.20 = £3,486. Only the income above the personal allowance is taxed.'
+                },
+                {
+                    question: 'PAYE stands for Pay As You Earn. Under this system:',
+                    options: [
+                        'Employees must calculate and pay their own tax at the end of each year',
+                        'The employer deducts income tax and National Insurance from wages before paying the employee',
+                        'Tax is only paid when you withdraw money from your bank account',
+                        'Self-employed workers have tax deducted automatically by their clients'
+                    ],
+                    correct: 1,
+                    explanation: 'Under PAYE, the employer is responsible for calculating and deducting income tax and National Insurance contributions from the employee\'s wages before they are paid. This means employees receive their net pay after deductions.'
+                },
+                {
+                    question: 'A tax code tells the employer:',
+                    options: [
+                        'How much the employee earns per hour',
+                        'How many hours the employee has worked',
+                        'The employee\'s bank account details',
+                        'How much tax-free income the employee is entitled to, so the correct tax is deducted'
+                    ],
+                    correct: 3,
+                    explanation: 'A tax code (e.g., 1257L) indicates the employee\'s personal allowance and any adjustments. The employer uses this to calculate the correct amount of tax to deduct from each pay. "1257L" means a tax-free allowance of £12,570.'
+                },
+                {
+                    question: 'On a payslip, "gross pay" refers to:',
+                    options: [
+                        'The total pay before any deductions are made',
+                        'The amount of money paid into the employee\'s bank account',
+                        'The amount of tax deducted',
+                        'The employee\'s annual salary divided by 12'
+                    ],
+                    correct: 0,
+                    explanation: 'Gross pay is the total amount earned before deductions such as income tax, National Insurance, pension contributions, and student loan repayments. Net pay (take-home pay) is what remains after all deductions.'
+                },
+                {
+                    question: 'What is the difference between a P45 and a P60?',
+                    options: [
+                        'A P45 is given when you start a new job; a P60 is given when you leave',
+                        'There is no difference; they contain exactly the same information',
+                        'A P45 is for self-employed people; a P60 is for employed people',
+                        'A P45 is given when you leave a job and shows tax paid to date; a P60 is given at the end of the tax year and shows total pay and tax for the year'
+                    ],
+                    correct: 3,
+                    explanation: 'A P45 is issued when you leave employment, showing your total pay and tax deducted up to your leaving date. A P60 is issued at the end of each tax year (5 April) to all current employees, summarising total pay and tax for the whole year.'
+                },
+                {
+                    question: 'Self-employed individuals in the UK must pay their tax through:',
+                    options: [
+                        'Self-assessment, by calculating their own tax liability and filing a tax return',
+                        'The PAYE system, with tax deducted automatically from their earnings',
+                        'Voluntary donations to HMRC',
+                        'Having their clients deduct tax before paying them'
+                    ],
+                    correct: 0,
+                    explanation: 'Self-employed individuals are responsible for calculating their own tax through self-assessment. They must register with HMRC, keep records of income and expenses, file a tax return (usually by 31 January), and pay any tax owed.'
+                },
+                {
+                    question: 'The higher rate of income tax in the UK is 40%. At what income level does this rate begin to apply?',
+                    options: [
+                        'On all income over £12,570',
+                        'On income between £12,571 and £50,270',
+                        'On income over £50,270',
+                        'On income over £125,140'
+                    ],
+                    correct: 2,
+                    explanation: 'The higher rate of 40% applies to income over £50,270 (for 2024/25). Income between £12,571 and £50,270 is taxed at the basic rate of 20%. The additional rate of 45% applies to income over £125,140.'
+                },
+                {
+                    question: 'National Insurance contributions are paid by:',
+                    options: [
+                        'Only employers',
+                        'Only employees',
+                        'Both employers and employees, funding state benefits such as the State Pension and NHS',
+                        'Only self-employed people'
+                    ],
+                    correct: 2,
+                    explanation: 'Both employers and employees pay National Insurance contributions. Employee NI is deducted from wages alongside income tax. Employer NI is an additional cost paid by the employer. Self-employed people pay NI through self-assessment (Class 2 and Class 4).'
+                }
+            ],
+            caseStudies: [
+                {
+                    title: 'Reading and Understanding a Payslip',
+                    scenario: `
+                        <p><strong>Emma</strong> has just received her first payslip from her new job as a marketing assistant. Her annual salary is £26,000. Here is a summary of her monthly payslip:</p>
+                        <table style="width:100%; border-collapse:collapse; margin:10px 0;">
+                            <tr style="background:#f0f0f0;"><th style="padding:8px; border:1px solid #ddd; text-align:left;">Item</th><th style="padding:8px; border:1px solid #ddd; text-align:right;">Amount (£)</th></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">Gross Pay (monthly)</td><td style="padding:8px; border:1px solid #ddd; text-align:right;">2,166.67</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">Income Tax (PAYE)</td><td style="padding:8px; border:1px solid #ddd; text-align:right;">-223.83</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">National Insurance</td><td style="padding:8px; border:1px solid #ddd; text-align:right;">-120.07</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">Pension Contribution (5%)</td><td style="padding:8px; border:1px solid #ddd; text-align:right;">-108.33</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd; font-weight:bold;">Net Pay (Take-Home)</td><td style="padding:8px; border:1px solid #ddd; text-align:right; font-weight:bold;">1,714.44</td></tr>
+                        </table>
+                        <p>Emma\'s tax code is 1257L and she is confused about why her take-home pay is so much less than her gross pay.</p>
+                    `,
+                    questions: [
+                        {
+                            question: 'Emma\'s monthly gross pay is £2,166.67. How is this calculated from her annual salary of £26,000?',
+                            options: [
+                                '£26,000 divided by 52 weeks',
+                                '£26,000 divided by 12 months',
+                                '£26,000 minus tax, divided by 12',
+                                '£26,000 divided by 10 months (excluding holidays)'
+                            ],
+                            correct: 1,
+                            explanation: 'Monthly gross pay is calculated by dividing the annual salary by 12 months: £26,000 / 12 = £2,166.67. This is before any deductions are made.'
+                        },
+                        {
+                            question: 'Emma\'s tax code is 1257L. What does this tell her employer?',
+                            options: [
+                                'Emma earns £12,570 per month',
+                                'Emma\'s tax bill for the year will be £1,257',
+                                'Emma must pay 12.57% tax on all her income',
+                                'Emma has a personal allowance of £12,570, so only income above this is taxed'
+                            ],
+                            correct: 3,
+                            explanation: 'The tax code 1257L indicates a personal allowance of £12,570 (the numbers are multiplied by 10). The "L" means she is entitled to the standard personal allowance. Her employer uses this to calculate how much tax to deduct each month.'
+                        },
+                        {
+                            question: 'What percentage of Emma\'s gross pay is taken in deductions (tax, NI, and pension combined)?',
+                            options: [
+                                'Approximately 11%',
+                                'Approximately 15%',
+                                'Approximately 21%',
+                                'Approximately 33%'
+                            ],
+                            correct: 2,
+                            explanation: 'Total deductions = £223.83 + £120.07 + £108.33 = £452.23. As a percentage of gross pay: (£452.23 / £2,166.67) x 100 = approximately 20.9%, or about 21%. This shows Emma keeps about 79% of her gross pay.'
+                        }
+                    ]
+                },
+                {
+                    title: 'Self-Employed Tax Calculation',
+                    scenario: `
+                        <p><strong>Tom</strong> is a self-employed freelance graphic designer. In the 2024/25 tax year, his total business income was £48,000. He had allowable business expenses of £6,000 (software subscriptions, equipment, and travel).</p>
+                        <p>The tax rates and thresholds for 2024/25 are:</p>
+                        <ul>
+                            <li>Personal Allowance: £12,570 (tax-free)</li>
+                            <li>Basic Rate: 20% on income from £12,571 to £50,270</li>
+                            <li>Higher Rate: 40% on income over £50,270</li>
+                        </ul>
+                        <p>Tom also needs to pay National Insurance: Class 2 at £3.45 per week, and Class 4 at 6% on profits between £12,570 and £50,270.</p>
+                        <p>Tom must file a self-assessment tax return and pay his tax by 31 January following the end of the tax year.</p>
+                    `,
+                    questions: [
+                        {
+                            question: 'What is Tom\'s taxable profit after deducting his allowable business expenses?',
+                            options: [
+                                '£42,000',
+                                '£48,000',
+                                '£36,000',
+                                '£29,430'
+                            ],
+                            correct: 0,
+                            explanation: 'Taxable profit = Total income minus allowable expenses. £48,000 - £6,000 = £42,000. This is the figure used to calculate Tom\'s tax liability. Allowable expenses reduce the amount of income subject to tax.'
+                        },
+                        {
+                            question: 'How much income tax does Tom owe on his taxable profit of £42,000?',
+                            options: [
+                                '£8,400',
+                                '£4,200',
+                                '£2,943',
+                                '£5,886'
+                            ],
+                            correct: 3,
+                            explanation: 'Tom\'s taxable income after the personal allowance = £42,000 - £12,570 = £29,430. All of this falls within the basic rate band. Income tax = £29,430 x 20% = £5,886. None of his income reaches the higher rate threshold of £50,270.'
+                        },
+                        {
+                            question: 'What is one key disadvantage for Tom of being self-employed compared to being employed under PAYE?',
+                            options: [
+                                'Self-employed people pay higher rates of income tax',
+                                'Tom must calculate and pay his own tax, manage his records, and could face penalties for late filing or payment',
+                                'Self-employed people cannot claim any business expenses',
+                                'Self-employed people are not allowed to have a pension'
+                            ],
+                            correct: 1,
+                            explanation: 'Unlike PAYE employees who have tax automatically deducted, Tom must keep records, calculate his own tax, file a self-assessment return by 31 January, and pay any tax owed. Late filing incurs an automatic £100 penalty, and late payment incurs interest charges.'
+                        }
+                    ]
+                }
+            ]
+        });
+    </script>
+</body>
+</html>
